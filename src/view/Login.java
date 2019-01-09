@@ -2,10 +2,16 @@ package view;
 
 import client.server.remote.interfaces.UserAccountHandler;
 import client.server.remote.interfaces.UserModel;
+import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -13,12 +19,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import multimode.MyListView;
 import utils.Utils;
 
-
 public class Login extends AnchorPane {
-public Stage primaryStage;
+
+    public Stage primaryStage;
     protected final AnchorPane anchorPane;
     protected final AnchorPane anchorPane0;
     protected final Button loginBtn;
@@ -62,13 +69,28 @@ public Stage primaryStage;
             UserAccountHandler accountHandler = null;
             try {
                 accountHandler = Utils.establishConnection();
-                boolean b = accountHandler.login(tfName.getText(), passwordField.getText());
-                MyListView listView= new MyListView(PrimaryStage);
-              //  listView.launch();
+                if (accountHandler.login("aa@a.com", "1111")) {
+                    //accountHandler = Utils.establishConnection();
+                       
+//            List<UserModel> list;
+//             list = 
+//accountHandler.getOnlinePlayer();
+           //  System.out.println(list.size());
+//                    Stage selectMode = new Stage();
+//                    Parent root = FXMLLoader.load(getClass().getResource("MultiMode.fxml"));
+//                    Scene scene = new Scene(root);
+//                    selectMode.setScene(scene);
+//                    selectMode.initStyle(StageStyle.UNDECORATED);
+//                    selectMode.show();
+                }
+
+                //  listView.launch();
             } catch (RemoteException | NotBoundException ex) {
                 Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
             }
-          
+
         });
 
         passwordField.setLayoutX(77.0);
