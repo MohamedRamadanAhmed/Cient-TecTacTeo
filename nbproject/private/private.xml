@@ -3,12 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Abdelrahman/Desktop/client-tic-tac-toe/src/view/Login.java</file>
-            <file>file:/C:/Users/Abdelrahman/Desktop/client-tic-tac-toe/src/view/XmlGenerator.java</file>
-            <file>file:/C:/Users/Abdelrahman/Desktop/client-tic-tac-toe/src/view/TicTacToeProject.java</file>
-            <file>file:/C:/Users/Abdelrahman/Desktop/client-tic-tac-toe/src/demo/MoveContent.java</file>
-            <file>file:/C:/Users/Abdelrahman/Desktop/client-tic-tac-toe/src/demo/ObjectFactory.java</file>
-            <file>file:/C:/Users/Abdelrahman/Desktop/client-tic-tac-toe/src/view/Client.java</file>
+            <file>file:/C:/Users/Abdelrahman/Desktop/client-tic-tac-toe/src/view/NewMultiMode.java</file>
+            <file>file:/C:/Users/Abdelrahman/Desktop/client-tic-tac-toe/src/multimode/MyListView.java</file>
+            <file>file:/C:/Users/Abdelrahman/Desktop/client-tic-tac-toe/src/view/MultiModeController.java</file>
+            <file>file:/C:/Users/Abdelrahman/Desktop/client-tic-tac-toe/src/model/ClintImp.java</file>
+            <file>file:/C:/Users/Abdelrahman/Desktop/client-tic-tac-toe/src/view/MultiMode.fxml</file>
         </group>
     </open-files>
 </project-private>
