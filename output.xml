@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <game>
     <move>
+<<<<<<< HEAD
         <PlayerName>n</PlayerName>
+=======
+        <PlayerName>kk</PlayerName>
+>>>>>>> 8c6a614b569c0e17307ff5ec3e88be6a773d953b
         <position>0</position>
         <draw>x</draw>
     </move>

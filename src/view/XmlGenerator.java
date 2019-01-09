@@ -17,14 +17,15 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 public class XmlGenerator {
-
-    public static void main(String[] args) throws JAXBException {
-        set();
-
+    
+   File f= new File("output.xml");
+   
   //      get();
-    }
+    
 
-    public static void set() {
+    
+    public void set() {
+
         try {
             JAXBContext context = JAXBContext.newInstance("output");
             Unmarshaller unmarsh = context.createUnmarshaller();
@@ -58,7 +59,7 @@ public class XmlGenerator {
             JAXBElement game = factory.createGame(m);
             Marshaller marsh = context.createMarshaller();
             marsh.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-            marsh.marshal(game, new FileOutputStream("output.xml"));
+            marsh.marshal(game, new FileOutputStream(f));
             //System.err.println(jaxbElement.getName());
         } catch (JAXBException ex) {
             Logger.getLogger(XmlGenerator.class.getName()).log(Level.SEVERE, null, ex);
@@ -67,12 +68,12 @@ public class XmlGenerator {
         }
     }
 
-    private static void get() throws JAXBException {
+    private void get() throws JAXBException {
 
        /* JAXBContext context = JAXBContext.newInstance("demo");
         Unmarshaller unmarsh = context.createUnmarshaller();
 
-        JAXBElement jaxbElement = (JAXBElement) unmarsh.unmarshal(new File("output.xml"));
+        JAXBElement jaxbElement = (JAXBElement) unmarsh.unmarshal(f);
         ObjectFactory factory = new ObjectFactory();
         Move m = (Move) jaxbElement.getValue();
         System.out.println(m.getMove().get(0).getPlayerName());

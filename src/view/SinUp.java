@@ -142,8 +142,8 @@ public class SinUp extends AnchorPane {
                         Utils.showAlert(Alert.AlertType.ERROR, anchorPane.getScene().getWindow(), "Form Error!", "Please enter your email id");
                         return;
                     }
-                    if (passwordField.getText().trim().isEmpty() || passwordField.getText().trim().length() <= 7) {
-                        Utils.showAlert(Alert.AlertType.ERROR, anchorPane.getScene().getWindow(), "Form Error!", "password must be 8 digits at least");
+                    if (passwordField.getText().trim().isEmpty() || passwordField.getText().trim().length() <= 3) {
+                        Utils.showAlert(Alert.AlertType.ERROR, anchorPane.getScene().getWindow(), "Form Error!", "password must be 3 digits at least");
                         return;
                     }
                     if (!(passwordField.getText().equals(confirmPasswordField.getText()))) {
@@ -152,6 +152,7 @@ public class SinUp extends AnchorPane {
                     }
                     UserAccountHandler accountHandler = Utils.establishConnection();
                     accountHandler.signUp(new UserModel(tfName.getText(), tfEmail.getText(), passwordField.getText(), Utils.getIpAddress()));
+                    //System.out.println(Utils.getIpAddress());
                     //SingleMode mode=new SingleMode(primaryStage);
                 } catch (RemoteException | NotBoundException | UnknownHostException ex) {
                     Logger.getLogger(SinUp.class.getName()).log(Level.SEVERE, null, ex);

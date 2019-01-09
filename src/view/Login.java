@@ -13,10 +13,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import multimode.MyListView;
 import utils.Utils;
 
-public class Login extends AnchorPane {
 
+public class Login extends AnchorPane {
+public Stage primaryStage;
     protected final AnchorPane anchorPane;
     protected final AnchorPane anchorPane0;
     protected final Button loginBtn;
@@ -60,18 +62,13 @@ public class Login extends AnchorPane {
             UserAccountHandler accountHandler = null;
             try {
                 accountHandler = Utils.establishConnection();
-            } catch (RemoteException ex) {
-                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (NotBoundException ex) {
-                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            try {
                 boolean b = accountHandler.login(tfName.getText(), passwordField.getText());
-                System.err.println("login " + b);
-            } catch (RemoteException ex) {
+                MyListView listView= new MyListView(PrimaryStage);
+              //  listView.launch();
+            } catch (RemoteException | NotBoundException ex) {
                 Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
             }
-
+          
         });
 
         passwordField.setLayoutX(77.0);

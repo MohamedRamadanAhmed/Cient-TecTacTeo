@@ -24,7 +24,6 @@ public class Utils {
         alert.initOwner(owner);
         alert.show();
     }
-
     public static void switchWindow(Stage window, Application app) {
         try {
             app.start(window);
@@ -32,21 +31,18 @@ public class Utils {
             e.printStackTrace();
         }
     }
-
     public static boolean validate(String emailStr) {
         Matcher matcher = Constants.VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
         return matcher.find();
     }
-
     public static UserAccountHandler establishConnection() throws RemoteException, NotBoundException {
         Registry registry = LocateRegistry.getRegistry(Constants.SERVER_IP_ADDRESS, Constants.PORT);
         UserAccountHandler userAccountHandler = (UserAccountHandler) registry.lookup(Constants.ACCOUNT_SERVICE);
         return userAccountHandler;
-
     }
-    public static String getIpAddress() throws UnknownHostException{
+    public static String getIpAddress() throws UnknownHostException {
         InetAddress inetAddress = InetAddress.getLocalHost();
-        System.out.println("IP Address:- " + inetAddress.getHostAddress());
+        // System.out.println("IP Address:- " + inetAddress.getHostAddress());
         return inetAddress.getHostAddress();
     }
 

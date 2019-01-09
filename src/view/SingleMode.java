@@ -45,11 +45,10 @@ public class SingleMode extends BorderPane {
 
     public SingleMode(Stage primarystage) {
         primarystage.getScene().setRoot(this);
+        
         while (userName.equals("")){
         userName=JOptionPane.showInputDialog("please enter your name = ");
         }
-           
-            
         
         primarystage.setWidth(800);
         primarystage.setHeight(500);
@@ -127,7 +126,7 @@ public class SingleMode extends BorderPane {
         lblCell1.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         lblCell1.setTextFill(javafx.scene.paint.Color.valueOf("#3f5290"));
         lblCell1.setFont(new Font("Viner Hand ITC", 69.0));
-        lblCell1.setOnMouseClicked((event) -> game.gameStart(lblCell1, 0));
+        lblCell1.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell1, 0));
 
         GridPane.setColumnIndex(lblCell2, 1);
         lblCell2.setAlignment(javafx.geometry.Pos.CENTER);
@@ -139,7 +138,7 @@ public class SingleMode extends BorderPane {
         lblCell2.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         lblCell2.setTextFill(javafx.scene.paint.Color.valueOf("#3f5290"));
         lblCell2.setFont(new Font("Viner Hand ITC", 69.0));
-        lblCell2.setOnMouseClicked((event) -> game.gameStart(lblCell2, 1));
+        lblCell2.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell2, 1));
         GridPane.setColumnIndex(lblCell3, 2);
         lblCell3.setAlignment(javafx.geometry.Pos.CENTER);
         lblCell3.setGraphicTextGap(8.0);
@@ -150,7 +149,7 @@ public class SingleMode extends BorderPane {
         lblCell3.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         lblCell3.setTextFill(javafx.scene.paint.Color.valueOf("#3f5290"));
         lblCell3.setFont(new Font("Viner Hand ITC", 69.0));
-        lblCell3.setOnMouseClicked((event) -> game.gameStart(lblCell3, 2));
+        lblCell3.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell3, 2));
         GridPane.setRowIndex(lblCell4, 1);
         lblCell4.setAlignment(javafx.geometry.Pos.CENTER);
         lblCell4.setGraphicTextGap(8.0);
@@ -161,7 +160,7 @@ public class SingleMode extends BorderPane {
         lblCell4.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         lblCell4.setTextFill(javafx.scene.paint.Color.valueOf("#3f5290"));
         lblCell4.setFont(new Font("Viner Hand ITC", 69.0));
-        lblCell4.setOnMouseClicked((event) -> game.gameStart(lblCell4, 3));
+        lblCell4.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell4, 3));
         GridPane.setColumnIndex(lblCell5, 1);
         GridPane.setRowIndex(lblCell5, 1);
         lblCell5.setAlignment(javafx.geometry.Pos.CENTER);
@@ -173,7 +172,7 @@ public class SingleMode extends BorderPane {
         lblCell5.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         lblCell5.setTextFill(javafx.scene.paint.Color.valueOf("#3f5290"));
         lblCell5.setFont(new Font("Viner Hand ITC", 69.0));
-        lblCell5.setOnMouseClicked((event) -> game.gameStart(lblCell5, 4));
+        lblCell5.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell5, 4));
         GridPane.setColumnIndex(lblCell6, 2);
         GridPane.setRowIndex(lblCell6, 1);
         lblCell6.setAlignment(javafx.geometry.Pos.CENTER);
@@ -185,7 +184,7 @@ public class SingleMode extends BorderPane {
         lblCell6.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         lblCell6.setTextFill(javafx.scene.paint.Color.valueOf("#3f5290"));
         lblCell6.setFont(new Font("Viner Hand ITC", 69.0));
-        lblCell6.setOnMouseClicked((event) -> game.gameStart(lblCell6, 5));
+        lblCell6.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell6, 5));
         GridPane.setRowIndex(lblCell7, 2);
         lblCell7.setAlignment(javafx.geometry.Pos.CENTER);
         lblCell7.setGraphicTextGap(8.0);
@@ -194,7 +193,7 @@ public class SingleMode extends BorderPane {
         lblCell7.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         lblCell7.setTextFill(javafx.scene.paint.Color.valueOf("#3f5290"));
         lblCell7.setFont(new Font("Viner Hand ITC", 69.0));
-        lblCell7.setOnMouseClicked((event) -> game.gameStart(lblCell7, 6));
+        lblCell7.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell7, 6));
         GridPane.setColumnIndex(lblCell8, 1);
         GridPane.setRowIndex(lblCell8, 2);
         lblCell8.setAlignment(javafx.geometry.Pos.CENTER);
@@ -206,7 +205,7 @@ public class SingleMode extends BorderPane {
         lblCell8.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         lblCell8.setTextFill(javafx.scene.paint.Color.valueOf("#3f5290"));
         lblCell8.setFont(new Font("Viner Hand ITC", 69.0));
-        lblCell8.setOnMouseClicked((event) -> game.gameStart(lblCell8, 7));
+        lblCell8.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell8, 7));
         GridPane.setColumnIndex(lblCell9, 2);
         GridPane.setRowIndex(lblCell9, 2);
         lblCell9.setAlignment(javafx.geometry.Pos.CENTER);
@@ -218,7 +217,7 @@ public class SingleMode extends BorderPane {
         lblCell9.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         lblCell9.setTextFill(javafx.scene.paint.Color.valueOf("#3f5290"));
         lblCell9.setFont(new Font("Viner Hand ITC", 69.0));
-        lblCell9.setOnMouseClicked((event) -> game.gameStart(lblCell9, 8));
+        lblCell9.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell9, 8));
         setLeft(gameGrid);
 
         BorderPane.setAlignment(anchorPane, javafx.geometry.Pos.CENTER);

@@ -1,16 +1,18 @@
 package model;
 
-import java.util.stream.IntStream;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
+import client.server.remote.interfaces.UserModel;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
-import jdk.nashorn.internal.objects.NativeArray;
 import view.NewModeBase;
 import view.SingleMode;
 
 public class TicTacTocGame {
+
+    /**
+     * @return the user2
+     */
+   
 //game variable
 
     private String current_player;
@@ -19,11 +21,29 @@ public class TicTacTocGame {
     private int counter;
     private boolean winFlag;
     SingleMode tcUI;
+    private UserModel user2;
     private static int Score;
     private static int ComputerScore;
     private static int gameNum;
     private Stage primaryStage;
 
+      public TicTacTocGame(SingleMode tc, Stage _primaryStage) {
+        current_player = "X";
+        start_game_flag = false;
+        game_arr = new int[9];
+        counter = 0;
+        tcUI = tc;
+        primaryStage = _primaryStage;
+        user2=null;
+    }
+       public UserModel getUser2() {
+        return user2;
+    }
+
+    
+    public void setUser2(UserModel user2) {
+        this.user2 = user2;
+    }
     public int getScore() {
         return Score;
     }
@@ -56,14 +76,7 @@ public class TicTacTocGame {
         this.counter = counter;
     }
 
-    public TicTacTocGame(SingleMode tc, Stage _primaryStage) {
-        current_player = "X";
-        start_game_flag = false;
-        game_arr = new int[9];
-        counter = 0;
-        tcUI = tc;
-        primaryStage = _primaryStage;
-    }
+  
 
     public int[] getGame_arr() {
 
@@ -241,8 +254,8 @@ public class TicTacTocGame {
         }
 
     }
-
-    public void gameStart(Label l, int move) {
+    
+    public void gameStartSingleMode(Label l, int move) {
 
         if (!winFlag) {
             if ("X".equals(getCurrent_player())) {
