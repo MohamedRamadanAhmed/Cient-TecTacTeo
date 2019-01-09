@@ -1,7 +1,8 @@
 package view;
 
-import demo.Move;
+
 import demo.MoveContent;
+import demo.Moves;
 import demo.ObjectFactory;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -20,15 +21,17 @@ public class XmlGenerator {
     public static void main(String[] args) throws JAXBException {
         set();
 
-     //   get();
+  //      get();
     }
 
     public static void set() {
         try {
-
-            JAXBContext context = JAXBContext.newInstance("demo");
+            JAXBContext context = JAXBContext.newInstance("output");
+            Unmarshaller unmarsh = context.createUnmarshaller();
+         
+            JAXBElement JAXBPerson = (JAXBElement) unmarsh.unmarshal(new File("output.xml"));
             ObjectFactory factory = new ObjectFactory();
-            Move m = factory.createMove();
+            Moves m = factory.createMoves();
             List list = m.getMove();
             list.clear();
             MoveContent content = factory.createMoveContent();
@@ -36,8 +39,8 @@ public class XmlGenerator {
             MoveContent content2 = factory.createMoveContent();
 
             content.setPosition(0);
-            content.setDraw("x");
-            content.setPlayerName("hhhhh");
+            content.setDraw("yyyy");
+            content.setPlayerName("yy");
 
             content1.setPosition(1);
             content1.setDraw("o");
@@ -51,8 +54,7 @@ public class XmlGenerator {
             list.add(content1);
             list.add(content2);
 
-           
-           // m.setMove(list);
+            // m.setMove(list);
             JAXBElement game = factory.createGame(m);
             Marshaller marsh = context.createMarshaller();
             marsh.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
@@ -67,7 +69,7 @@ public class XmlGenerator {
 
     private static void get() throws JAXBException {
 
-        JAXBContext context = JAXBContext.newInstance("demo");
+       /* JAXBContext context = JAXBContext.newInstance("demo");
         Unmarshaller unmarsh = context.createUnmarshaller();
 
         JAXBElement jaxbElement = (JAXBElement) unmarsh.unmarshal(new File("output.xml"));
@@ -76,7 +78,7 @@ public class XmlGenerator {
         System.out.println(m.getMove().get(0).getPlayerName());
         System.out.println(m.getMove().get(0).getPosition());
         System.out.println(m.getMove().get(0).getDraw());
-
+*/
     }
 
 }

@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified" attributeFormDefault="unqualified">
-    <xs:element name="game" type="move"/>
-    
-    
-    
-    
-   <xs:complexType name="move">
+    <xs:element name="game" type="moves"/>    
+   <xs:complexType name="moves">
        <xs:sequence>
            <xs:element  name="move" type="moveContent"  maxOccurs="unbounded"/>
        </xs:sequence>
