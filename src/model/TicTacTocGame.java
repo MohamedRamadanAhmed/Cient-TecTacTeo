@@ -1,12 +1,8 @@
 package model;
 
-import java.util.stream.IntStream;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
-import jdk.nashorn.internal.objects.NativeArray;
 import view.NewModeBase;
 import view.SingleMode;
 

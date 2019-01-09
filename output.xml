@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<game>
+    <move>
+        <PlayerName>kk</PlayerName>
+        <position>0</position>
+        <draw>x</draw>
+    </move>
+    <move>
+        <PlayerName>nesmaa</PlayerName>
+        <position>1</position>
+        <draw>o</draw>
+    </move>
+    <move>
+        <PlayerName>abdo</PlayerName>
+        <position>2</position>
+        <draw>x</draw>
+    </move>
+</game>

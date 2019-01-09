@@ -18,6 +18,14 @@ public class MoveContent {
     @XmlElement(required = true)
     protected String draw;
 
+    public MoveContent(String nesma, String x, int i) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    MoveContent() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public String getPlayerName() {
         return playerName;
     }
