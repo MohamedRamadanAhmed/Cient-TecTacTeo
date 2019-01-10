@@ -23,6 +23,7 @@ public class ClintImp extends UnicastRemoteObject implements ClientInterface {
 
     }
 
+    @Override
     public void startGame(UserModel player1, UserModel player2) throws RemoteException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

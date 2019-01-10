@@ -1,5 +1,9 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package view;
-
 
 import demo.MoveContent;
 import demo.Moves;
@@ -16,9 +20,18 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
-public class XmlGenerator {
+/**
+ *
+ * @author hp
+ */
+public class XMLRecord {
     
-   File f= new File("output.xml");
+      public static void main (String []args)
+    {
+         XMLRecord x=new  XMLRecord();
+        x.set();
+    }
+    File f= new File("output.xml");
    
   //      get();
     
@@ -27,10 +40,10 @@ public class XmlGenerator {
     public void set() {
 
         try {
-            JAXBContext context = JAXBContext.newInstance("output");
+            JAXBContext context = JAXBContext.newInstance("demo");
             Unmarshaller unmarsh = context.createUnmarshaller();
          
-            JAXBElement JAXBPerson = (JAXBElement) unmarsh.unmarshal(new File("output.xml"));
+            JAXBElement JAXBPerson = (JAXBElement) unmarsh.unmarshal(new File("demo.xml"));
             ObjectFactory factory = new ObjectFactory();
             Moves m = factory.createMoves();
             List list = m.getMove();
@@ -40,7 +53,7 @@ public class XmlGenerator {
             MoveContent content2 = factory.createMoveContent();
 
             content.setPosition(0);
-            content.setDraw("yyyy");
+            content.setDraw("nn");
             content.setPlayerName("yy");
 
             content1.setPosition(1);
@@ -62,9 +75,9 @@ public class XmlGenerator {
             marsh.marshal(game, new FileOutputStream(f));
             //System.err.println(jaxbElement.getName());
         } catch (JAXBException ex) {
-            Logger.getLogger(XmlGenerator.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger( XMLRecord.class.getName()).log(Level.SEVERE, null, ex);
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(XmlGenerator.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger( XMLRecord.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -80,6 +93,5 @@ public class XmlGenerator {
         System.out.println(m.getMove().get(0).getPosition());
         System.out.println(m.getMove().get(0).getDraw());
 */
-    }
-
+    } 
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package newmultimode;
+package view;
 
 import java.io.IOException;
 import javafx.application.Application;
@@ -34,9 +34,7 @@ public class NewMultiMode extends Application {
         primaryStage.show();
     }
 
-    /**
-     * @param args the command line arguments
-     */
+    
     public static void main(String[] args) {
         launch(args);
     }
