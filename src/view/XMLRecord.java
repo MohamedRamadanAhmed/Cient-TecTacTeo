@@ -53,7 +53,7 @@ public class XMLRecord {
             MoveContent content2 = factory.createMoveContent();
 
             content.setPosition(0);
-            content.setDraw("nn");
+            content.setDraw("bhiohio");
             content.setPlayerName("yy");
 
             content1.setPosition(1);
