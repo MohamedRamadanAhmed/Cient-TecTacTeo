@@ -1,6 +1,7 @@
 package utils;
 
 import client.server.remote.interfaces.UserAccountHandler;
+import client.server.remote.interfaces.UserModel;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -23,6 +24,7 @@ import javafx.stage.Window;
 public class Utils {
 
     static UserAccountHandler userAccountHandler;
+    private static UserModel model;
 
     public static void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
         Alert alert = new Alert(alertType);
@@ -37,7 +39,7 @@ public class Utils {
         Stage login = new Stage();
         Scene scene = new Scene(root);
         login.setScene(scene);
-          login.initStyle(StageStyle.UNIFIED);
+        login.initStyle(StageStyle.UNIFIED);
         login.show();
     }
 
@@ -62,13 +64,14 @@ public class Utils {
         Matcher matcher = Constants.VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
         return matcher.find();
     }
-            public static void switchWindow(Stage window, Application app) {
-    try {
-        app.start(window);
-    } catch (Exception e) {
-        e.printStackTrace();
+
+    public static void switchWindow(Stage window, Application app) {
+        try {
+            app.start(window);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-}
 
     public static boolean validateName(String emailStr) {
         Matcher matcher = Constants.VALID_Name_REGEX.matcher(emailStr);
@@ -77,6 +80,7 @@ public class Utils {
 
     public static UserAccountHandler establishConnection() throws RemoteException, NotBoundException {
         if (userAccountHandler == null) {
+            // java.security.AllPermission;
             Registry registry = LocateRegistry.getRegistry(Constants.SERVER_IP_ADDRESS, Constants.PORT);
             userAccountHandler = (UserAccountHandler) registry.lookup(Constants.ACCOUNT_SERVICE);
         }
@@ -88,5 +92,16 @@ public class Utils {
         // System.out.println("IP Address:- " + inetAddress.getHostAddress());
         return inetAddress.getHostAddress();
     }
+
+    public static void setCurrentUser(UserModel currentUser) {
+
+        model = currentUser;
+   }
+    
+     public static UserModel getCurrentUser() {
+
+        return model;
+   }
+    
 
 }
