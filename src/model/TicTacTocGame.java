@@ -15,9 +15,7 @@ import view.SingleModeController;
 
 public class TicTacTocGame {
 
-    /**
-     * @return the MySymbol
-     */
+
     public String getMySymbol() {
         return MySymbol;
     }
@@ -31,8 +29,8 @@ public class TicTacTocGame {
 
     
    
-//game variable
 
+//game variable
     private String current_player;
     private  String MySymbol;
     private boolean start_game_flag;
@@ -47,25 +45,31 @@ public class TicTacTocGame {
     private Stage primaryStage;
     
 
-      public TicTacTocGame(SingleModeController tc) {
+    public TicTacTocGame(SingleModeController tc) {
         current_player = "X";
         start_game_flag = false;
         game_arr = new int[9];
         counter = 0;
         tcUI = tc;
+
         user2=null;
         MySymbol="X";
     }
 
    
-       public UserModel getUser2() {
+    
+
+    
+
+    public UserModel getUser2() {
+
         return user2;
     }
 
-    
     public void setUser2(UserModel user2) {
         this.user2 = user2;
     }
+
     public int getScore() {
         return Score;
     }
@@ -97,8 +101,6 @@ public class TicTacTocGame {
     public void setCounter(int counter) {
         this.counter = counter;
     }
-
-  
 
     public int[] getGame_arr() {
 
@@ -276,7 +278,7 @@ public class TicTacTocGame {
         }
 
     }
-    
+
     public void gameStartSingleMode(Label l, int move) {
 
         if (!winFlag) {
@@ -318,7 +320,9 @@ public class TicTacTocGame {
             }
               
         } else if (x == 1) {
+
            
+
             try {
                 root = FXMLLoader.load(getClass().getResource("signup.fxml"));
                 Utils.switchWindow(root);
