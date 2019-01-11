@@ -24,7 +24,7 @@ import javafx.stage.Window;
 public class Utils {
 
     static UserAccountHandler userAccountHandler;
-    private static UserModel model;
+    private static UserModel model = new UserModel();
 
     public static void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
         Alert alert = new Alert(alertType);
@@ -96,12 +96,11 @@ public class Utils {
     public static void setCurrentUser(UserModel currentUser) {
 
         model = currentUser;
-   }
-    
-     public static UserModel getCurrentUser() {
+    }
+
+    public static UserModel getCurrentUser() {
 
         return model;
-   }
-    
+    }
 
 }
