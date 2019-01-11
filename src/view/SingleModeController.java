@@ -19,7 +19,7 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 import model.TicTacTocGame;
-import static view.SingleMode.userName;
+
 
 /**
  * FXML Controller class
@@ -61,22 +61,27 @@ public class SingleModeController implements Initializable {
 
     @FXML
     public Label lblCell9;
-    
+
     @FXML
     private Label username;
     public static String userName = "";
+    @FXML
+    private Label numMatch;
+
+    @FXML
+    private Label userScoreLbl;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-       
-              TicTacTocGame game = new TicTacTocGame(this);
-              while (userName.equals("")) {
+        TicTacTocGame game = new TicTacTocGame(this);
+        while (userName.equals("")) {
             userName = JOptionPane.showInputDialog("please enter your name = ");
         }
-                      lblCell1.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell1, 0));
-                              lblCell2.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell2, 1));
-                                      lblCell3.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell3, 2));
+        username.setText(userName);
+        lblCell1.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell1, 0));
+        lblCell2.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell2, 1));
+        lblCell3.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell3, 2));
 
         lblCell4.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell4, 3));
         lblCell5.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell5, 4));
@@ -84,9 +89,8 @@ public class SingleModeController implements Initializable {
         lblCell7.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell7, 6));
         lblCell8.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell8, 7));
         lblCell9.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell9, 8));
-
-
-
+        numMatch.setText(game.getGameNum() +"");
+        userScoreLbl.setText(game.getScore() +"");
     }
 
     @FXML

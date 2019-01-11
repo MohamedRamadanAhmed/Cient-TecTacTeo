@@ -4,8 +4,11 @@ package view;
 import client.server.remote.interfaces.UserAccountHandler;
 import java.io.IOException;
 import java.net.URL;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -40,9 +43,9 @@ public class LoginController implements Initializable {
     private void loginAction(ActionEvent event) throws IOException {
         
            try {
-              //  accountHandler = Utils.establishConnection();
+               UserAccountHandler accountHandler = Utils.establishConnection();
                 
-               // accountHandler.login("aa@a.com", "1111")) {
+                accountHandler.login("aa@a.com", "1111") ;
                     Parent root = FXMLLoader.load(getClass().getResource("MultiMode.fxml"));
                     utils.Utils.switchWindow(root);
                     
@@ -59,12 +62,12 @@ public class LoginController implements Initializable {
 //
 //                }
 
-            } catch (RemoteException ex) {
-                //Utils.showAlert(Alert.AlertType.ERROR, PrimaryStage, "server is un available", "try again later");
             } catch (IOException ex) {
                 System.err.println("IOException");
                 ex.printStackTrace();
-            }
+            } catch (NotBoundException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML

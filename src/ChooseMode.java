@@ -11,7 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import utils.Utils;
-import view.SingleMode;
+
 
 public class ChooseMode extends AnchorPane {
 

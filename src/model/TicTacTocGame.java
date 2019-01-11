@@ -2,32 +2,50 @@ package model;
 
 import client.server.remote.interfaces.UserModel;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 import utils.Utils;
-import view.SingleMode;
+
 import view.SingleModeController;
 
 public class TicTacTocGame {
+
+    /**
+     * @return the MySymbol
+     */
+    public String getMySymbol() {
+        return MySymbol;
+    }
+
+    /**
+     * @param MySymbol the MySymbol to set
+     */
+    public void setMySymbol(String MySymbol) {
+        this.MySymbol = MySymbol;
+    }
 
     
    
 //game variable
 
     private String current_player;
+    private  String MySymbol;
     private boolean start_game_flag;
     private int game_arr[];
     private int counter;
     private boolean winFlag;
     SingleModeController tcUI;
     private UserModel user2;
-    private static int Score;
+    private static int Score=0;
     private static int ComputerScore;
-    private static int gameNum;
+    private static int gameNum=0;
     private Stage primaryStage;
+    
 
       public TicTacTocGame(SingleModeController tc) {
         current_player = "X";
@@ -36,11 +54,10 @@ public class TicTacTocGame {
         counter = 0;
         tcUI = tc;
         user2=null;
+        MySymbol="X";
     }
 
-    public TicTacTocGame(SingleMode aThis) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+   
        public UserModel getUser2() {
         return user2;
     }
@@ -202,7 +219,7 @@ public class TicTacTocGame {
     //start game
     public boolean play(int move, Label l) {
 
-        if (getCurrent_player() == "X") {
+        if (getCurrent_player().equals(MySymbol)) {
             if (setGame_arr(move)) {
                 l.setText(current_player);
                 switchPlayerSymbol();
@@ -263,7 +280,7 @@ public class TicTacTocGame {
     public void gameStartSingleMode(Label l, int move) {
 
         if (!winFlag) {
-            if ("X".equals(getCurrent_player())) {
+            if (MySymbol.equals(getCurrent_player())) {
                 if (play(move, l)) {
                     checkWining();
                 }
@@ -291,10 +308,17 @@ public class TicTacTocGame {
     public void newGame() {
         int x = JOptionPane.showConfirmDialog(null, "play again");
         System.out.println(x + "");
+        Parent root = null;
         if (x == 0) {
-            new SingleMode();
+            try {
+                root = FXMLLoader.load(getClass().getResource("SingleMode.fxml"));
+                  Utils.switchWindow(root);
+            } catch (IOException ex) {
+                Logger.getLogger(TicTacTocGame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+              
         } else if (x == 1) {
-           Parent root = null;
+           
             try {
                 root = FXMLLoader.load(getClass().getResource("signup.fxml"));
                 Utils.switchWindow(root);

@@ -81,7 +81,7 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" layoutX="208.0" layoutY="24.0" prefHeight="23.0" prefWidth="55.0" text="0" textFill="#fcfcfc">
+                  <Label fx:id="numMatch" alignment="CENTER" layoutX="208.0" layoutY="24.0" prefHeight="23.0" prefWidth="55.0" text="0" textFill="#fcfcfc">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -91,7 +91,7 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" layoutX="202.0" layoutY="74.0" prefHeight="26.0" prefWidth="68.0" text="0" textFill="#fcfafa">
+                  <Label fx:id="userScoreLbl" alignment="CENTER" layoutX="202.0" layoutY="74.0" prefHeight="26.0" prefWidth="68.0" text="0" textFill="#fcfafa">
                      <font>
                         <Font size="18.0" />
                      </font>
