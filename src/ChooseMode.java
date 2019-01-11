@@ -1,14 +1,18 @@
-package view;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import utils.Utils;
 
-public  class NewModeBase extends AnchorPane {
+public class ChooseMode extends AnchorPane {
 
     protected final AnchorPane anchorPane;
     protected final AnchorPane anchorPane0;
@@ -16,7 +20,7 @@ public  class NewModeBase extends AnchorPane {
     protected final Button multiBtn;
     protected final Label label;
 
-    public NewModeBase(Stage primarystage) {
+    public ChooseMode(Stage primarystage) {
 
         anchorPane = new AnchorPane();
         anchorPane0 = new AnchorPane();
@@ -45,7 +49,16 @@ public  class NewModeBase extends AnchorPane {
         sigleBtn.setPrefWidth(158.0);
         sigleBtn.setStyle("-fx-background-color: #54beda;");
         sigleBtn.setText("Single Mode");
-        sigleBtn.setOnAction((event) -> new SingleMode(primarystage));
+        sigleBtn.setOnAction((event) -> {
+            Parent root = null;
+            try {
+                root = FXMLLoader.load(getClass().getResource("signup.fxml"));
+                Utils.switchWindow(root);
+            } catch (IOException ex) {
+                Logger.getLogger(ChooseMode.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        });
 
         multiBtn.setLayoutX(276.0);
         multiBtn.setLayoutY(123.0);
@@ -54,7 +67,17 @@ public  class NewModeBase extends AnchorPane {
         multiBtn.setPrefWidth(158.0);
         multiBtn.setStyle("-fx-background-color: #54beda;");
         multiBtn.setText("Multi Mode");
-        multiBtn.setOnAction((event) -> new Login(primarystage));
+        multiBtn.setOnAction((event) -> {
+            multiBtn.getScene().getWindow().hide();
+            Parent root = null;
+            try {
+                root = FXMLLoader.load(getClass().getResource("login.fxml"));
+                Utils.switchWindow(root);
+            } catch (IOException ex) {
+                Logger.getLogger(ChooseMode.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        });
 
         label.setLayoutX(109.0);
         label.setLayoutY(28.0);

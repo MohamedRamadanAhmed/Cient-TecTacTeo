@@ -2,11 +2,11 @@ package view;
 
 import utils.Utils;
 
-public class Client {
+public class ClientMain {
     public static void main(String[] args) {
-        new Client();
+        new ClientMain();
     }
-    public Client() {
+    public ClientMain() {
         TicTacToeProject game =new TicTacToeProject();
         game.launch();
        

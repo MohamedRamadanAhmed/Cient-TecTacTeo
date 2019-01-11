@@ -1,7 +1,8 @@
-package view;
+
 
 import client.server.remote.interfaces.UserAccountHandler;
 import client.server.remote.interfaces.UserModel;
+import java.io.IOException;
 import java.net.UnknownHostException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -9,6 +10,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -17,7 +20,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import utils.Constants;
 import utils.Utils;
 
 public class SinUp extends AnchorPane {
@@ -77,7 +79,18 @@ public class SinUp extends AnchorPane {
         btnLogIn.setPrefWidth(125.0);
         btnLogIn.setStyle("-fx-background-color: #54beda;");
         btnLogIn.setText("Log in");
-        btnLogIn.setOnAction((event) -> new Login(PrimaryStage));
+        btnLogIn.setOnAction((event) -> {
+             btnLogIn.getScene().getWindow().hide();
+        
+                Parent root;
+            try {
+                root = FXMLLoader.load(getClass().getResource("login.fxml"));
+                Utils.switchWindow(root);
+            } catch (IOException ex) {
+                Logger.getLogger(SinUp.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                
+        });
 
         labelSinUp.setLayoutX(74.0);
         labelSinUp.setLayoutY(14.0);
@@ -134,11 +147,11 @@ public class SinUp extends AnchorPane {
             public void handle(ActionEvent event) {
 
                 try {
-                    if (tfName.getText().trim().isEmpty()) {
+                    if (!(Utils.validateName(tfName.getText()))) {
                         Utils.showAlert(Alert.AlertType.ERROR, anchorPane.getScene().getWindow(), "Form Error!", "Please enter your name");
                         return;
                     }
-                    if (!(Utils.validate(tfEmail.getText()))) {
+                    if (!(Utils.validateEmail(tfEmail.getText()))) {
                         Utils.showAlert(Alert.AlertType.ERROR, anchorPane.getScene().getWindow(), "Form Error!", "Please enter your email id");
                         return;
                     }
@@ -160,4 +173,5 @@ public class SinUp extends AnchorPane {
             }
         });
     }
+
 }

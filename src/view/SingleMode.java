@@ -1,6 +1,11 @@
 package view;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -13,6 +18,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 import model.TicTacTocGame;
+import utils.Utils;
 
 public class SingleMode extends BorderPane {
 
@@ -270,7 +276,17 @@ public class SingleMode extends BorderPane {
         onlineBtn.setPrefHeight(25.0);
         onlineBtn.setPrefWidth(95.0);
         onlineBtn.setText("Go Online");
-        onlineBtn.setOnAction((event)->new Login(primarystage));
+        onlineBtn.setOnAction((event)->{
+              onlineBtn.getScene().getWindow().hide();
+        
+                Parent root;
+            try {
+                root = FXMLLoader.load(getClass().getResource("login.fxml"));
+                Utils.switchWindow(root);
+            } catch (IOException ex) {
+             //   Logger.getLogger(SinUp.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
 
         button0.setLayoutX(173.0);
         button0.setLayoutY(226.0);

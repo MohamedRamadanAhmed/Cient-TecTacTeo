@@ -20,10 +20,6 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
-/**
- *
- * @author hp
- */
 public class XMLRecord {
     
       public static void main (String []args)
@@ -36,8 +32,7 @@ public class XMLRecord {
   //      get();
     
 
-    
-    public void set() {
+       public void set() {
 
         try {
             JAXBContext context = JAXBContext.newInstance("demo");
@@ -53,16 +48,16 @@ public class XMLRecord {
             MoveContent content2 = factory.createMoveContent();
 
             content.setPosition(0);
-            content.setDraw("bhiohio");
-            content.setPlayerName("yy");
+            content.setDraw("yaser");
+            content.setPlayerName("ahmed");
 
             content1.setPosition(1);
             content1.setDraw("o");
-            content1.setPlayerName("nesmaa");
+            content1.setPlayerName("ahmed");
 
             content2.setPosition(2);
             content2.setDraw("x");
-            content2.setPlayerName("abdo");
+            content2.setPlayerName("ahmed");
 
             list.add(content);
             list.add(content1);

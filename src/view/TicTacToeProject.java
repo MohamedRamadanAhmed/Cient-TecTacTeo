@@ -1,27 +1,23 @@
 package view;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
-import javafx.scene.Scene;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.stage.Stage;
+import utils.Utils;
 
 public class TicTacToeProject extends Application {
     
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws IOException {
     
-        
-        NewModeBase root = new NewModeBase(primaryStage);
-        
-        
-        Scene scene = new Scene(root, 600, 400);
-        
-        primaryStage.setTitle("");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
-
-    /**
-     * @param args the command line arguments
-     */
+   Parent root = null;
+           
+               
+                    root = FXMLLoader.load(getClass().getResource("SelectMode.fxml"));
+             Utils.switchWindow(root);
     
-    
+}
 }

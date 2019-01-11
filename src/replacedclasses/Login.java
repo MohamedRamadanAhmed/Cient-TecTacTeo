@@ -1,17 +1,13 @@
-package view;
+package replacedclasses;
 
 import client.server.remote.interfaces.UserAccountHandler;
-import client.server.remote.interfaces.UserModel;
 import java.io.IOException;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -19,8 +15,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import multimode.MyListView;
 import utils.Utils;
 
 public class Login extends AnchorPane {
@@ -68,27 +62,29 @@ public class Login extends AnchorPane {
         loginBtn.setOnAction((event) -> {
             UserAccountHandler accountHandler = null;
             try {
-                accountHandler = Utils.establishConnection();
-                if (accountHandler.login("aa@a.com", "1111")) {
-                    //accountHandler = Utils.establishConnection();
-                       
-//            List<UserModel> list;
-//             list = 
-//accountHandler.getOnlinePlayer();
-           //  System.out.println(list.size());
+              //  accountHandler = Utils.establishConnection();
+                
+               // accountHandler.login("aa@a.com", "1111")) {
+                    Stage selectMode = new Stage();
+                    Parent root = FXMLLoader.load(getClass().getResource("MultiMode.fxml"));
+
+                    Utils.switchWindow(root);
+//                if (accountHandler.login("aa@a.com", "1111")) {
 //                    Stage selectMode = new Stage();
 //                    Parent root = FXMLLoader.load(getClass().getResource("MultiMode.fxml"));
 //                    Scene scene = new Scene(root);
 //                    selectMode.setScene(scene);
 //                    selectMode.initStyle(StageStyle.UNDECORATED);
 //                    selectMode.show();
-                }
+//                } else {
+//                    Utils.showAlert(Alert.AlertType.ERROR, PrimaryStage, "error", "");
+//
+//                }
 
-                //  listView.launch();
-            } catch (RemoteException | NotBoundException ex) {
-                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (RemoteException ex) {
+                Utils.showAlert(Alert.AlertType.ERROR, PrimaryStage, "server is un available", "try again later");
             } catch (IOException ex) {
-                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                System.err.println("IOException");
             }
 
         });
@@ -120,7 +116,13 @@ public class Login extends AnchorPane {
         signUpBtn.setPrefWidth(131.0);
         signUpBtn.setStyle("-fx-background-color: #54beda;");
         signUpBtn.setText("Sign Up");
-        signUpBtn.setOnAction((event) -> new SinUp(PrimaryStage));
+        signUpBtn.setOnAction((event) -> {
+            try {
+                utils.Utils.switchWindow(FXMLLoader.load(getClass().getResource("signup.fxml")));
+            } catch (IOException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
 
         anchorPane0.getChildren().add(loginBtn);
         anchorPane0.getChildren().add(passwordField);

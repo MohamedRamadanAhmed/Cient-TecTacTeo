@@ -1,10 +1,13 @@
 package model;
 
 import client.server.remote.interfaces.UserModel;
+import java.io.IOException;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
-import view.NewModeBase;
+import utils.Utils;
 import view.SingleMode;
 
 public class TicTacTocGame {
@@ -289,7 +292,12 @@ public class TicTacTocGame {
         if (x == 0) {
             new SingleMode(primaryStage);
         } else if (x == 1) {
-            new NewModeBase(primaryStage);
+           Parent root = null;
+            try {
+                root = FXMLLoader.load(getClass().getResource("signup.fxml"));
+                Utils.switchWindow(root);
+            } catch (IOException ex) {
+            }
         }
     }
 }

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <game>
     <move>
-        <PlayerName>yy</PlayerName>
+        <PlayerName>yaser</PlayerName>
         <position>0</position>
-        <draw>bhiohio</draw>
+        <draw>yaser</draw>
     </move>
     <move>
-        <PlayerName>nesmaa</PlayerName>
+        <PlayerName>yaser</PlayerName>
         <position>1</position>
         <draw>o</draw>
     </move>
     <move>
-        <PlayerName>abdo</PlayerName>
+        <PlayerName>yaser</PlayerName>
         <position>2</position>
         <draw>x</draw>
     </move>
