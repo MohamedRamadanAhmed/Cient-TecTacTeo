@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -30,8 +29,8 @@ import utils.Utils;
 public class MultiModeController implements Initializable {
 
     UserAccountHandler accountHandler = null;
-    
-     @FXML
+
+    @FXML
     private Label lable1;
 
     @FXML
@@ -73,6 +72,8 @@ public class MultiModeController implements Initializable {
     @FXML
     private Button back;
     @FXML
+    private GridPane myGridPane;
+    @FXML
     private JFXListView<UserModel> listView;
     //ObservableList<UserModel> list;
 
@@ -98,12 +99,12 @@ public class MultiModeController implements Initializable {
             listView.setOnMouseClicked(event -> {
                 int x = listView.getSelectionModel().getSelectedIndex();
                 System.out.println(x);
-                UserModel model =listView.getSelectionModel().getSelectedItem();
-                try {
-                    accountHandler.requestGame(Utils.getCurrentUser(),model);
-                } catch (RemoteException ex) {
-                    Logger.getLogger(MultiModeController.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                UserModel model = listView.getSelectionModel().getSelectedItem();
+//                try {
+//                   // accountHandler.requestGame(Utils.getCurrentUser(), model);
+//                } catch (RemoteException ex) {
+//                    Logger.getLogger(MultiModeController.class.getName()).log(Level.SEVERE, null, ex);
+//                }
 
             });
 
