@@ -47,18 +47,18 @@ public class SingleMode extends BorderPane {
     protected final Button onlineBtn;
     protected final Button button0;
     protected final Label usrNameLbl;
-    public static String userName="";
+    public static String userName = "";
 
-    public SingleMode(Stage primarystage) {
-        primarystage.getScene().setRoot(this);
-        
-        while (userName.equals("")){
-        userName=JOptionPane.showInputDialog("please enter your name = ");
+    public SingleMode() {
+//        primarystage.getScene().setRoot(this);
+
+        while (userName.equals("")) {
+            userName = JOptionPane.showInputDialog("please enter your name = ");
         }
-        
-        primarystage.setWidth(800);
-        primarystage.setHeight(500);
-        TicTacTocGame game = new TicTacTocGame(this, primarystage);
+
+//        primarystage.setWidth(800);
+//        primarystage.setHeight(500);
+       TicTacTocGame game = new TicTacTocGame(this);
         gameGrid = new GridPane();
         columnConstraints = new ColumnConstraints();
         columnConstraints0 = new ColumnConstraints();
@@ -266,7 +266,7 @@ public class SingleMode extends BorderPane {
         label11.setLayoutY(74.0);
         label11.setPrefHeight(26.0);
         label11.setPrefWidth(68.0);
-        label11.setText(game.getScore()+"");
+        label11.setText(game.getScore() + "");
         label11.setTextFill(javafx.scene.paint.Color.valueOf("#fcfafa"));
         label11.setFont(new Font(18.0));
 
@@ -276,15 +276,15 @@ public class SingleMode extends BorderPane {
         onlineBtn.setPrefHeight(25.0);
         onlineBtn.setPrefWidth(95.0);
         onlineBtn.setText("Go Online");
-        onlineBtn.setOnAction((event)->{
-              onlineBtn.getScene().getWindow().hide();
-        
-                Parent root;
+        onlineBtn.setOnAction((event) -> {
+            onlineBtn.getScene().getWindow().hide();
+
+            Parent root;
             try {
                 root = FXMLLoader.load(getClass().getResource("login.fxml"));
                 Utils.switchWindow(root);
             } catch (IOException ex) {
-             //   Logger.getLogger(SinUp.class.getName()).log(Level.SEVERE, null, ex);
+                //   Logger.getLogger(SinUp.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
 
@@ -330,4 +330,6 @@ public class SingleMode extends BorderPane {
         anchorPane.getChildren().add(usrNameLbl);
 
     }
+
+    
 }

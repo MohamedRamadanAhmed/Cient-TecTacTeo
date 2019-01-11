@@ -9,12 +9,11 @@ import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 import utils.Utils;
 import view.SingleMode;
+import view.SingleModeController;
 
 public class TicTacTocGame {
 
-    /**
-     * @return the user2
-     */
+    
    
 //game variable
 
@@ -23,21 +22,24 @@ public class TicTacTocGame {
     private int game_arr[];
     private int counter;
     private boolean winFlag;
-    SingleMode tcUI;
+    SingleModeController tcUI;
     private UserModel user2;
     private static int Score;
     private static int ComputerScore;
     private static int gameNum;
     private Stage primaryStage;
 
-      public TicTacTocGame(SingleMode tc, Stage _primaryStage) {
+      public TicTacTocGame(SingleModeController tc) {
         current_player = "X";
         start_game_flag = false;
         game_arr = new int[9];
         counter = 0;
         tcUI = tc;
-        primaryStage = _primaryStage;
         user2=null;
+    }
+
+    public TicTacTocGame(SingleMode aThis) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
        public UserModel getUser2() {
         return user2;
@@ -290,7 +292,7 @@ public class TicTacTocGame {
         int x = JOptionPane.showConfirmDialog(null, "play again");
         System.out.println(x + "");
         if (x == 0) {
-            new SingleMode(primaryStage);
+            new SingleMode();
         } else if (x == 1) {
            Parent root = null;
             try {

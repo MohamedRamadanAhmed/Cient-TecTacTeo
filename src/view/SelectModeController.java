@@ -27,31 +27,25 @@ public class SelectModeController implements Initializable {
     @FXML
     private Button multiMode;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+       
+        
     }
 
     @FXML
     private void singleModeAction(ActionEvent event) throws IOException {
         multiMode.getScene().getWindow().hide();
         
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("SingleMode.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("SingleMode.fxml"));
             Utils.switchWindow(root);
-        } catch (IOException ex) {
-            
-        }
     }
 
     @FXML
     private void multiModeAction(ActionEvent event) throws IOException {
         singleMode.getScene().getWindow().hide();
          try {
-            Parent root = FXMLLoader.load(getClass().getResource("MultiMode.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("signup.fxml"));
             Utils.switchWindow(root);
         } catch (IOException ex) {
         }

@@ -11,7 +11,6 @@ import java.rmi.registry.Registry;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -63,6 +62,13 @@ public class Utils {
         Matcher matcher = Constants.VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
         return matcher.find();
     }
+            public static void switchWindow(Stage window, Application app) {
+    try {
+        app.start(window);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
 
     public static boolean validateName(String emailStr) {
         Matcher matcher = Constants.VALID_Name_REGEX.matcher(emailStr);

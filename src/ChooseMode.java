@@ -11,6 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import utils.Utils;
+import view.SingleMode;
 
 public class ChooseMode extends AnchorPane {
 
@@ -51,12 +52,9 @@ public class ChooseMode extends AnchorPane {
         sigleBtn.setText("Single Mode");
         sigleBtn.setOnAction((event) -> {
             Parent root = null;
-            try {
-                root = FXMLLoader.load(getClass().getResource("signup.fxml"));
-                Utils.switchWindow(root);
-            } catch (IOException ex) {
-                Logger.getLogger(ChooseMode.class.getName()).log(Level.SEVERE, null, ex);
-            }
+          
+               // Utils.switchWindow(sigleBtn.getScene().getWindow(), new SingleMode());
+           
 
         });
 
