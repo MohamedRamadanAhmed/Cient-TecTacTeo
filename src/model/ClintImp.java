@@ -6,6 +6,7 @@ import client.server.remote.interfaces.UserModel;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import javax.swing.JOptionPane;
 import utils.Utils;
 
 public class ClintImp extends UnicastRemoteObject implements ClientInterface {
@@ -13,22 +14,27 @@ public class ClintImp extends UnicastRemoteObject implements ClientInterface {
     UserAccountHandler accountHandler;
 
     public ClintImp() throws RemoteException, NotBoundException {
+        
         accountHandler = Utils.establishConnection();
-
     }
 
     @Override
     public boolean requestGame(UserModel model1, UserModel player2) throws RemoteException {
-        if (Utils.showRequestDialouge(player2.getUserName())) {
-            return true;
+        System.out.println("ay haga");
+        int x=JOptionPane.showConfirmDialog(null, player2.getUserName());
+        if( x==0){
+             return true;
         }
-        return false;
-
+        else 
+            return false;
+     
+        
     }
 
     @Override
     public void startGame(UserModel player1, UserModel player2) throws RemoteException {
-
+        System.out.println("ee"+player2.getUserName());
+       
     }
 
 }

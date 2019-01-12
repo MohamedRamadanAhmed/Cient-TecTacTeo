@@ -11,7 +11,10 @@ import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 import utils.Utils;
 
-import view.SingleModeController;
+
+
+import singlemode.SingleModeController;
+
 
 public class TicTacTocGame {
 
