@@ -211,7 +211,6 @@ public class MultiModeController implements Initializable {
     @FXML
     private void backAction(ActionEvent event) throws IOException {
         exit.getScene().getWindow().hide();
-
         Utils.switchWindow(FXMLLoader.load(getClass().getResource("/choosemode/SelectMode.fxml")));
 
     }
@@ -233,7 +232,6 @@ public class MultiModeController implements Initializable {
     @FXML
     void lable1Action(MouseEvent event) {
         lable1.setText("x");
-
         MyControoler.transmitMove(0,"x",model);
 
     }

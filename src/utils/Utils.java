@@ -9,9 +9,11 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import java.util.regex.Matcher;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -30,6 +32,8 @@ public class Utils {
 
     static UserAccountHandler userAccountHandler;
     private static UserModel model = new UserModel();
+        private static UserModel player2 = new UserModel();
+
     static boolean b = false;
     public static boolean isPlaying=false;
     public static void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
@@ -130,6 +134,7 @@ public class Utils {
 
         return model;
     }
+
     public  void missingConnection()
     {
         JOptionPane.showMessageDialog(null,"Connection lost");
@@ -139,6 +144,17 @@ public class Utils {
         } catch (IOException ex) {
             Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+     public static void setPlayer(UserModel currentUser) {
+
+        player2 = currentUser;
+    }
+
+    public static UserModel getlayer() {
+
+        return player2;
+
     }
 
 }

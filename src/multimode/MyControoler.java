@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package multimode;
 
 import client.server.remote.interfaces.Step;
@@ -33,7 +28,9 @@ public class MyControoler {
     static void transmitMove(int i, String x, UserModel model) {
         try {
             accountHandler = Utils.establishConnection();
-            accountHandler.transmitMove(new Step(model.getEmailAddress(),Utils.getCurrentUser().getEmailAddress(), i, x));
+
+            accountHandler.transmitMove(new Step(model.getEmailAddress(), Utils.getCurrentUser().getEmailAddress(), i, x));
+
         } catch (RemoteException ex) {
             Logger.getLogger(MyControoler.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NotBoundException ex) {
@@ -41,17 +38,20 @@ public class MyControoler {
         }
 
     }
-
     public static void drawMove(Step s) {
-        if(s!=null)
-        {
-        System.out.println(s.getDraw());
-        System.out.println(s.getPlayer());
-        System.out.println(s.getPosition());
-        }else
-        {
-            System.out.println("error");
+
+
+        if (s != null) {
+            System.out.println(s.getDraw());
+            System.out.println(s.getPlayer());
+            System.out.println(s.getPosition());
+
+        } else {
+            System.out.println(s.getDraw() + "object is null");
+
         }
+
+
     }
 
     MultiModeController multiModeController = new MultiModeController();
