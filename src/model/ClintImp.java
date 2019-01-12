@@ -29,7 +29,9 @@ public class ClintImp extends UnicastRemoteObject implements ClientInterface {
         System.out.println("ay haga");
         int x = JOptionPane.showConfirmDialog(null, player2.getUserName());
         if (x == 0) {
+            Utils.setPlayer(model1);
             return true;
+            
         } else {
             return false;
         }
