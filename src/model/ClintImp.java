@@ -32,31 +32,22 @@ public class ClintImp extends UnicastRemoteObject implements ClientInterface {
     @Override
     public boolean requestGame(UserModel model1, UserModel player2) throws RemoteException {
         System.out.println("ay haga");
-
         int x=JOptionPane.showConfirmDialog(null, player2.getUserName());
         if( x==0){
              return true;
         }
         else 
             return false;
-     
-        
-
-
     }
 
     @Override
     public void startGame(UserModel player1, UserModel player2) throws RemoteException {
-
-        controoler.startGame();
+        controoler.startGame();        
     }
 
     @Override
     public void drawMove(Step s) throws RemoteException {
-
         MyControoler.drawMove(s);
-
-
     }
 
 }

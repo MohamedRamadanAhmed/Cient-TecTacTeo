@@ -13,6 +13,7 @@ import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import sun.applet.AppletViewer;
 import utils.Utils;
 
 public class MyControoler {
@@ -32,7 +33,7 @@ public class MyControoler {
     static void transmitMove(int i, String x, UserModel model) {
         try {
             accountHandler = Utils.establishConnection();
-            accountHandler.transmitMove(new Step(model.getEmailAddress(), i, x));
+            accountHandler.transmitMove(new Step(model.getEmailAddress(),Utils.getCurrentUser().getEmailAddress(), i, x));
         } catch (RemoteException ex) {
             Logger.getLogger(MyControoler.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NotBoundException ex) {
@@ -42,11 +43,15 @@ public class MyControoler {
     }
 
     public static void drawMove(Step s) {
-
+        if(s!=null)
+        {
         System.out.println(s.getDraw());
         System.out.println(s.getPlayer());
         System.out.println(s.getPosition());
-
+        }else
+        {
+            System.out.println("error");
+        }
     }
 
     MultiModeController multiModeController = new MultiModeController();
