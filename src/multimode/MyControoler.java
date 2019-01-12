@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package utils;
+package multimode;
 
+import client.server.remote.interfaces.Step;
 import client.server.remote.interfaces.UserAccountHandler;
 import client.server.remote.interfaces.UserModel;
 import java.rmi.NotBoundException;
@@ -12,12 +13,10 @@ import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import utils.Utils;
 
-/**
- *
- * @author Abdelrahman
- */
 public class MyControoler {
+
     Utils util=new Utils();
     static UserAccountHandler accountHandler = null;
 
@@ -27,26 +26,62 @@ public class MyControoler {
 
       return accountHandler.logOut(Utils.getCurrentUser().getEmailAddress());
         }else
-        
-           return false;
-           
        
+           return false;
     }
+    static void transmitMove(int i, String x, UserModel model) {
+        try {
+            accountHandler = Utils.establishConnection();
+            accountHandler.transmitMove(new Step(model.getEmailAddress(), i, x));
+        } catch (RemoteException ex) {
+            Logger.getLogger(MyControoler.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NotBoundException ex) {
+            Logger.getLogger(MyControoler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public static void drawMove(Step s) {
+
+        System.out.println(s.getDraw());
+        System.out.println(s.getPlayer());
+        System.out.println(s.getPosition());
+
+    }
+
+    MultiModeController multiModeController = new MultiModeController();
+
+    public void startGame() {
+        Utils.isPlaying = true;
+
+    }
+
+    boolean accept = false;
+
+
+
+   
 
     public static void requestGame(UserModel selectedItem) throws RemoteException, NotBoundException {
 
-        Thread thread = new Thread(new Runnable() {
+        Thread thread;
+        thread = new Thread(new Runnable() {
 
             @Override
             public void run() {
-                Runnable updater = new Runnable() {
+                Runnable updater;
+                updater = new Runnable() {
 
                     @Override
                     public void run() {
                         try {
                             accountHandler = Utils.establishConnection();
                             try {
-                                accountHandler.requestGame(Utils.getCurrentUser(), selectedItem);
+                                if (accountHandler.requestGame(Utils.getCurrentUser(), selectedItem)) {
+                                    System.err.println("accept");
+                                } else {
+                                    System.err.println("refused");
+                                }
                             } catch (RemoteException ex) {
                                 Logger.getLogger(MyControoler.class.getName()).log(Level.SEVERE, null, ex);
                             }
@@ -56,11 +91,10 @@ public class MyControoler {
                         } catch (NotBoundException ex) {
                             Logger.getLogger(MyControoler.class.getName()).log(Level.SEVERE, null, ex);
                         }
-
                     }
                 };
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(500);
                 } catch (InterruptedException ex) {
                 }
 
