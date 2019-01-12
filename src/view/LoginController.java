@@ -18,6 +18,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import model.ClintImp;
 import utils.Utils;
 
 public class LoginController implements Initializable {
@@ -44,7 +45,8 @@ public class LoginController implements Initializable {
    
             UserAccountHandler accountHandler;
             accountHandler = Utils.establishConnection();
-            UserModel model = accountHandler.login("aa@a.com", "1111");
+            ClintImp  clintImp=new ClintImp();
+            UserModel model = accountHandler.login(clintImp,tfName.getText(), tfPassword.getText());
             Utils.setCurrentUser(model);
             System.out.println(model.getEmailAddress() + "model");
 
