@@ -90,8 +90,6 @@ public class SingleModeController implements Initializable {
     private void goOnlineAction(ActionEvent event) throws IOException {
         back.getScene().getWindow().hide();
 
-        Parent root = FXMLLoader.load(getClass().getResource("/multimode/MultiMode.fxml"));
-        utils.Utils.switchWindow(root);
 
     }
 

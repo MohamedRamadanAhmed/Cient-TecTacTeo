@@ -36,8 +36,7 @@ public class SelectModeController implements Initializable {
     @FXML
     private void singleModeAction(ActionEvent event) throws IOException {
         multiMode.getScene().getWindow().hide();
-        
-        Parent root = FXMLLoader.load(getClass().getResource("/singlemode/SingleMode.fxml"));
+      Parent root = FXMLLoader.load(getClass().getResource("/singlemode/SingleMode.fxml"));
             Utils.switchWindow(root);
     }
 

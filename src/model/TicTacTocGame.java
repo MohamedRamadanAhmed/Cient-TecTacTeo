@@ -316,7 +316,7 @@ public class TicTacTocGame {
         Parent root = null;
         if (x == 0) {
             try {
-                root = FXMLLoader.load(getClass().getResource("SingleMode.fxml"));
+                root = FXMLLoader.load(getClass().getResource("/singlemode/SingleMode.fxml"));
                   Utils.switchWindow(root);
             } catch (IOException ex) {
                 Logger.getLogger(TicTacTocGame.class.getName()).log(Level.SEVERE, null, ex);
@@ -327,7 +327,7 @@ public class TicTacTocGame {
            
 
             try {
-                root = FXMLLoader.load(getClass().getResource("signup.fxml"));
+                root = FXMLLoader.load(getClass().getResource("/sinup/signup.fxml"));
                 Utils.switchWindow(root);
             } catch (IOException ex) {
             }

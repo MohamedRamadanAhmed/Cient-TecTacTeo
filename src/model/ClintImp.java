@@ -33,11 +33,13 @@ public class ClintImp extends UnicastRemoteObject implements ClientInterface {
     public boolean requestGame(UserModel model1, UserModel player2) throws RemoteException {
         System.out.println("ay haga");
 
+
         int x = JOptionPane.showConfirmDialog(null, player2.getUserName());
+
         if (x == 0) {
             Utils.setPlayer(player2);
             return true;
-            
+
         } else {
             return false;
         }
