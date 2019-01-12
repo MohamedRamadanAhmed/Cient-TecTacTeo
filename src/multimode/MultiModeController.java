@@ -121,7 +121,6 @@ public class MultiModeController implements Initializable {
         Pane pane = new Pane();
         //  Image profile = new Image("images/tic-tac-toe.png");
         // ImageView img = new ImageView(profile);
-
         public Cell() {
             super();
             new MultiModeController();
@@ -130,8 +129,9 @@ public class MultiModeController implements Initializable {
             listView.setOnMouseClicked(event -> {
                 try {
                     model = listView.getSelectionModel().getSelectedItem();
+                    Utils.setPlayer(model);
 
-                    MyControoler.requestGame(model);
+                    MyControoler.requestGame(Utils.getlayer());
                 } catch (RemoteException ex) {
                     Logger.getLogger(MultiModeController.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (NotBoundException ex) {
@@ -217,62 +217,62 @@ public class MultiModeController implements Initializable {
     @FXML
     void lable1Action(MouseEvent event) {
         lable1.setText("x");
-        MyControoler.transmitMove(0,"x",model);
+        MyControoler.transmitMove(0,"x",Utils.getlayer());
 
     }
 
     @FXML
     void lable2Action(MouseEvent event) {
         lable2.setText("x");
-         MyControoler.transmitMove(1,"x",model);
+         MyControoler.transmitMove(1,"x",Utils.getlayer());
 
     }
 
     @FXML
     void lable3Action(MouseEvent event) {
         lable3.setText("x");
-         MyControoler.transmitMove(2,"x",model);
+         MyControoler.transmitMove(2,"x",Utils.getlayer());
 
     }
 
     @FXML
     void lable4Action(MouseEvent event) {
         lable4.setText("x");
-         MyControoler.transmitMove(3,"x",model);
+         MyControoler.transmitMove(3,"x",Utils.getlayer());
     }
 
     @FXML
     void lable5Action(MouseEvent event) {
         lable5.setText("x");
-         MyControoler.transmitMove(4,"x",model);
+         MyControoler.transmitMove(4,"x",Utils.getlayer());
 
     }
 
     @FXML
     void lable6Action(MouseEvent event) {
         lable6.setText("x");
-         MyControoler.transmitMove(5,"x",model);
+         MyControoler.transmitMove(5,"x",Utils.getlayer());
 
     }
 
     @FXML
     void lable7Action(MouseEvent event) {
         lable7.setText("x");
-         MyControoler.transmitMove(6,"x",model);
+         MyControoler.transmitMove(6,"x",Utils.getlayer());
 
     }
 
     @FXML
     void lable8Action(MouseEvent event) {
         lable8.setText("x");
-         MyControoler.transmitMove(7,"x",model);
+         MyControoler.transmitMove(7,"x",Utils.getlayer());
 
     }
 
     @FXML
     void lable9Action(MouseEvent event) {
         lable9.setText("x");
-         MyControoler.transmitMove(8,"x",model);
+         MyControoler.transmitMove(8,"x",Utils.getlayer());
 
     }
 

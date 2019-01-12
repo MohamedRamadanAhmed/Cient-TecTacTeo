@@ -23,6 +23,7 @@ public class MyControoler {
         }
 
     }
+
     public static void drawMove(Step s) {
 
         if (s != null) {
