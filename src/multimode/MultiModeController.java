@@ -21,50 +21,51 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
-import utils.MyControoler;
 import utils.Utils;
 
 public class MultiModeController implements Initializable {
 
     UserAccountHandler accountHandler = null;
+    boolean isMyTurnToplay = false;
 
     @FXML
-    private Label lable1;
+    public Label lable1;
 
     @FXML
-    private Label lable4;
+    public Label lable4;
 
     @FXML
-    private Label lable7;
+    public Label lable7;
 
     @FXML
-    private Label lable2;
+    public Label lable2;
 
     @FXML
-    private Label lable5;
+    public Label lable5;
 
     @FXML
-    private Label lable8;
+    public Label lable8;
 
     @FXML
-    private Label lable3;
+    public Label lable3;
 
     @FXML
-    private Label lable6;
+    public Label lable6;
 
     @FXML
-    private Label lable9;
+    public Label lable9;
 
     @FXML
     private Label user1;
     @FXML
     private Label user2;
     @FXML
-    private Button startgame;
+    public Button startgame;
     @FXML
     private Button exit;
     @FXML
@@ -74,7 +75,7 @@ public class MultiModeController implements Initializable {
     @FXML
     private Button back;
     @FXML
-    private GridPane myGridPane;
+    public GridPane myGridPane;
     @FXML
     private JFXListView<UserModel> listView;
 
@@ -84,11 +85,32 @@ public class MultiModeController implements Initializable {
     public MultiModeController() {
         try {
             accountHandler1 = Utils.establishConnection();
-        } catch (RemoteException ex) {
-            Logger.getLogger(MultiModeController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NotBoundException ex) {
+        } catch (RemoteException | NotBoundException ex) {
             Logger.getLogger(MultiModeController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public void startgame() {
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(Utils.isPlaying)
+                            
+                        myGridPane.setVisible(true);
+                        else 
+                        
+                        System.out.println("NO ACTION ");
+                    }
+                });
+
+            }
+        }).start();
+
     }
 
     class Cell extends ListCell<UserModel> {
@@ -146,6 +168,7 @@ public class MultiModeController implements Initializable {
         } catch (NotBoundException ex) {
             Logger.getLogger(MultiModeController.class.getName()).log(Level.SEVERE, null, ex);
         }
+//        myGridPane.setVisible(false);
         listView.setItems(mylistview);
         GridPane pane = new GridPane();
         Label name = new Label("gg");
@@ -153,11 +176,15 @@ public class MultiModeController implements Initializable {
         pane.add(name, 0, 0);
         pane.add(btn, 0, 1);
         listView.setCellFactory(param -> new Cell());
+        myGridPane.setVisible(false);
 
     }
 
     @FXML
-    private void startGameAction(ActionEvent event) {
+    public void startGameAction(ActionEvent event) {
+        //  myGridPane.setVisible(false);
+
+       startgame();
     }
 
     @FXML
@@ -183,6 +210,61 @@ public class MultiModeController implements Initializable {
         if (MyControoler.logOut()) {
             Utils.switchWindow(FXMLLoader.load(getClass().getResource("/choosemode/SelectMode.fxml")));
         }
+
+    }
+
+    @FXML
+    void lable1Action(MouseEvent event) {
+        lable1.setText("x");
+        
+        
+
+    }
+
+    @FXML
+    void lable2Action(MouseEvent event) {
+        lable2.setText("x");
+
+    }
+
+    @FXML
+    void lable3Action(MouseEvent event) {
+        lable3.setText("x");
+
+    }
+
+    @FXML
+    void lable4Action(MouseEvent event) {
+        lable4.setText("x");
+    }
+
+    @FXML
+    void lable5Action(MouseEvent event) {
+        lable5.setText("x");
+
+    }
+
+    @FXML
+    void lable6Action(MouseEvent event) {
+        lable6.setText("x");
+
+    }
+
+    @FXML
+    void lable7Action(MouseEvent event) {
+        lable7.setText("x");
+
+    }
+
+    @FXML
+    void lable8Action(MouseEvent event) {
+        lable8.setText("x");
+
+    }
+
+    @FXML
+    void lable9Action(MouseEvent event) {
+        lable9.setText("x");
 
     }
 

@@ -26,7 +26,8 @@ public class Utils {
 
     static UserAccountHandler userAccountHandler;
     private static UserModel model = new UserModel();
-
+    static boolean b = false;
+    public static boolean isPlaying=false;
     public static void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
@@ -45,9 +46,7 @@ public class Utils {
     }
 
     public static boolean showRequestDialouge(String playerName) {
-
         Thread thread = new Thread(new Runnable() {
-
             @Override
             public void run() {
                 Runnable updater = new Runnable() {
@@ -55,35 +54,32 @@ public class Utils {
                     @Override
                     public void run() {
 
-                        Alert alert = new Alert(AlertType.CONFIRMATION);
-                        alert.setTitle(playerName);
+                        Alert alert = new Alert(AlertType.CONFIRMATION, playerName + "request to play with you ", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+                        alert.showAndWait();
 
-                        String s = playerName + "request to play with you ";
+                        if (alert.getResult() == ButtonType.YES) {
+                            b = true;
+                            System.out.println("button yes clicked");
 
-                        alert.setContentText(s);
-
-                        Optional<ButtonType> result = alert.showAndWait();
-
-                        if ((result.isPresent()) && (result.get() == ButtonType.OK)) {
-                        } else {
+                        } else if (alert.getResult() == ButtonType.NO) {
+                            System.out.println("button no clicked");
+                            b = false;
                         }
 
+//                        String s = playerName + "request to play with you ";
+//
+//                        alert.setContentText(s);
                     }
                 };
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException ex) {
-                }
 
                 // UI update is run on the Application thread
                 Platform.runLater(updater);
-
             }
 
         });
         thread.setDaemon(true);
         thread.start();
-        return false;
+        return b;
 
     }
 
