@@ -14,16 +14,15 @@ public class ClintImp extends UnicastRemoteObject implements ClientInterface {
 
     public ClintImp() throws RemoteException, NotBoundException {
         accountHandler = Utils.establishConnection();
-
     }
 
     @Override
     public boolean requestGame(UserModel model1, UserModel player2) throws RemoteException {
+        System.out.println("ay haga");
         if (Utils.showRequestDialouge(player2.getUserName())) {
             return true;
         }
         return false;
-
     }
 
     @Override

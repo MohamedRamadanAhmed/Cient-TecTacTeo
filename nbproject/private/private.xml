@@ -3,12 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Abdelrahman/Desktop/client-tic-tac-toe/src/view/ChooseMode.java</file>
-            <file>file:/C:/Users/Abdelrahman/Desktop/client-tic-tac-toe/src/view/login.fxml</file>
-            <file>file:/C:/Users/Abdelrahman/Desktop/client-tic-tac-toe/src/view/MultiModeController.java</file>
-            <file>file:/C:/Users/Abdelrahman/Desktop/client-tic-tac-toe/src/view/signup.fxml</file>
-            <file>file:/C:/Users/Abdelrahman/Desktop/client-tic-tac-toe/src/view/SignupController.java</file>
+            <file>file:/C:/Users/Abdelrahman/Desktop/client-tic-tac-toe/src/main/TicTacToeProject.java</file>
+            <file>file:/C:/Users/Abdelrahman/Desktop/client-tic-tac-toe/src/multimode/MultiModeController.java</file>
+            <file>file:/C:/Users/Abdelrahman/Desktop/client-tic-tac-toe/src/utils/Utils.java</file>
             <file>file:/C:/Users/Abdelrahman/Desktop/client-tic-tac-toe/src/replacedclasses/Login.java</file>
+            <file>file:/C:/Users/Abdelrahman/Desktop/client-tic-tac-toe/src/choosemode/SelectModeController.java</file>
+            <file>file:/C:/Users/Abdelrahman/Desktop/client-tic-tac-toe/src/sinup/SignupController.java</file>
+            <file>file:/C:/Users/Abdelrahman/Desktop/client-tic-tac-toe/src/login/LoginController.java</file>
         </group>
     </open-files>
 </project-private>

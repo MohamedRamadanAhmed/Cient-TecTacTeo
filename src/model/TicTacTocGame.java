@@ -8,8 +8,8 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 import utils.Utils;
-import view.SingleMode;
-import view.SingleModeController;
+import replacedclasses.SingleMode;
+import singlemode.SingleModeController;
 
 public class TicTacTocGame {
 

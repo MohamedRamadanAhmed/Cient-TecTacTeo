@@ -12,6 +12,7 @@ import java.rmi.registry.Registry;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -44,20 +45,46 @@ public class Utils {
     }
 
     public static boolean showRequestDialouge(String playerName) {
-        Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setTitle(playerName);
 
-        String s = playerName + "request to play with you ";
+        Thread thread = new Thread(new Runnable() {
 
-        alert.setContentText(s);
+            @Override
+            public void run() {
+                Runnable updater = new Runnable() {
 
-        Optional<ButtonType> result = alert.showAndWait();
+                    @Override
+                    public void run() {
 
-        if ((result.isPresent()) && (result.get() == ButtonType.OK)) {
-            return true;
-        } else {
-            return false;
-        }
+                        Alert alert = new Alert(AlertType.CONFIRMATION);
+                        alert.setTitle(playerName);
+
+                        String s = playerName + "request to play with you ";
+
+                        alert.setContentText(s);
+
+                        Optional<ButtonType> result = alert.showAndWait();
+
+                        if ((result.isPresent()) && (result.get() == ButtonType.OK)) {
+                        } else {
+                        }
+
+                    }
+                };
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ex) {
+                }
+
+                // UI update is run on the Application thread
+                Platform.runLater(updater);
+
+            }
+
+        });
+        thread.setDaemon(true);
+        thread.start();
+        return false;
+
     }
 
     public static boolean validateEmail(String emailStr) {
@@ -84,6 +111,7 @@ public class Utils {
             Registry registry = LocateRegistry.getRegistry(Constants.SERVER_IP_ADDRESS, Constants.PORT);
             userAccountHandler = (UserAccountHandler) registry.lookup(Constants.ACCOUNT_SERVICE);
         }
+
         return userAccountHandler;
     }
 
