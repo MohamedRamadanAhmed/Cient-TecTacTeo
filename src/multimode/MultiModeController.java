@@ -226,47 +226,55 @@ public class MultiModeController implements Initializable {
     @FXML
     void lable2Action(MouseEvent event) {
         lable2.setText("x");
+         MyControoler.transmitMove(1,"x",model);
 
     }
 
     @FXML
     void lable3Action(MouseEvent event) {
         lable3.setText("x");
+         MyControoler.transmitMove(2,"x",model);
 
     }
 
     @FXML
     void lable4Action(MouseEvent event) {
         lable4.setText("x");
+         MyControoler.transmitMove(3,"x",model);
     }
 
     @FXML
     void lable5Action(MouseEvent event) {
         lable5.setText("x");
+         MyControoler.transmitMove(4,"x",model);
 
     }
 
     @FXML
     void lable6Action(MouseEvent event) {
         lable6.setText("x");
+         MyControoler.transmitMove(5,"x",model);
 
     }
 
     @FXML
     void lable7Action(MouseEvent event) {
         lable7.setText("x");
+         MyControoler.transmitMove(6,"x",model);
 
     }
 
     @FXML
     void lable8Action(MouseEvent event) {
         lable8.setText("x");
+         MyControoler.transmitMove(7,"x",model);
 
     }
 
     @FXML
     void lable9Action(MouseEvent event) {
         lable9.setText("x");
+         MyControoler.transmitMove(8,"x",model);
 
     }
 
