@@ -26,13 +26,21 @@ public class MyControoler {
         } catch (NotBoundException ex) {
             Logger.getLogger(MyControoler.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
+    }
+
+    public static void drawMove(Step s) {
+
+        System.out.println(s.getDraw());
+        System.out.println(s.getPlayer());
+        System.out.println(s.getPosition());
+
     }
 
     MultiModeController multiModeController = new MultiModeController();
 
-    public  void startGame() {
-       Utils.isPlaying=true;
+    public void startGame() {
+        Utils.isPlaying = true;
 
     }
 

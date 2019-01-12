@@ -1,6 +1,7 @@
 package model;
 
 import client.server.remote.interfaces.ClientInterface;
+import client.server.remote.interfaces.Step;
 import client.server.remote.interfaces.UserAccountHandler;
 import client.server.remote.interfaces.UserModel;
 import java.rmi.NotBoundException;
@@ -17,7 +18,7 @@ import utils.Utils;
 public class ClintImp extends UnicastRemoteObject implements ClientInterface {
 
     UserAccountHandler accountHandler;
-    MyControoler controoler=new MyControoler();
+    MyControoler controoler = new MyControoler();
 
     public ClintImp() throws RemoteException, NotBoundException {
         accountHandler = Utils.establishConnection();
@@ -32,13 +33,18 @@ public class ClintImp extends UnicastRemoteObject implements ClientInterface {
         } else {
             return false;
         }
-
     }
 
     @Override
     public void startGame(UserModel player1, UserModel player2) throws RemoteException {
         controoler.startGame();
-        
+    }
+
+    @Override
+    public void drawMove(Step s) throws RemoteException {
+
+        MyControoler.drawMove(s);
+
     }
 
 }

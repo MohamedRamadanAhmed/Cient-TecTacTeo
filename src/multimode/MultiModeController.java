@@ -81,6 +81,7 @@ public class MultiModeController implements Initializable {
 
     public ObservableList<UserModel> mylistview;
     UserAccountHandler accountHandler1;
+    UserModel model;
 
     public MultiModeController() {
         try {
@@ -99,12 +100,11 @@ public class MultiModeController implements Initializable {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                        if(Utils.isPlaying)
-                            
-                        myGridPane.setVisible(true);
-                        else 
-                        
-                        System.out.println("NO ACTION ");
+                        if (Utils.isPlaying) {
+                            myGridPane.setVisible(true);
+                        } else {
+                            System.out.println("NO ACTION ");
+                        }
                     }
                 });
 
@@ -129,7 +129,9 @@ public class MultiModeController implements Initializable {
             hbox.setHgrow(pane, Priority.ALWAYS);
             listView.setOnMouseClicked(event -> {
                 try {
-                    MyControoler.requestGame(listView.getSelectionModel().getSelectedItem());
+                    model = listView.getSelectionModel().getSelectedItem();
+
+                    MyControoler.requestGame(model);
                 } catch (RemoteException ex) {
                     Logger.getLogger(MultiModeController.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (NotBoundException ex) {
@@ -184,7 +186,7 @@ public class MultiModeController implements Initializable {
     public void startGameAction(ActionEvent event) {
         //  myGridPane.setVisible(false);
 
-       startgame();
+        startgame();
     }
 
     @FXML
@@ -216,8 +218,8 @@ public class MultiModeController implements Initializable {
     @FXML
     void lable1Action(MouseEvent event) {
         lable1.setText("x");
-        
-        
+
+        MyControoler.transmitMove(0,"x",model);
 
     }
 
