@@ -11,6 +11,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -103,7 +105,7 @@ TicTacTocGame game;
     private void recordAction(ActionEvent event) {
         XMLRecord recordObj=new XMLRecord();
         recordObj.unmarchal();
-        ArrayList<MoveContent> playrecord = recordObj.playRecord();
+       final ArrayList<MoveContent> playrecord = recordObj.playRecord();
         lblCell1.setText("");
         lblCell2.setText("");
         lblCell3.setText("");
@@ -116,9 +118,38 @@ TicTacTocGame game;
         
         for (int i = 0; i < playrecord.size(); i++) {
             game.playRecord(recordObj.playRecord().get(i).getPosition(),playrecord.get(i).getDraw());
+            
+                Thread thread = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                Runnable updater = new Runnable() {
+
+                    @Override
+                    public void run() {
+                      
+                    }
+                };
+
+                while (true) {
+                    try {
+                        Thread.currentThread().wait(100000);
+                    } catch (InterruptedException ex) {
+                    }
+
+                    // UI update is run on the Application thread
+                    Platform.runLater(updater);
+                }
+            }
+
+        });
+        // don't let thread prevent JVM shutdown
+
+              
+           
         }
     }
-
+    
     @FXML
     private void backAction(ActionEvent event) throws IOException {
         goOnline.getScene().getWindow().hide();
