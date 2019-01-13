@@ -32,10 +32,11 @@ public class Utils {
 
     static UserAccountHandler userAccountHandler;
     private static UserModel model = new UserModel();
-        private static UserModel player2 = new UserModel();
+    private static UserModel player2 = new UserModel();
 
     static boolean b = false;
-    public static boolean isPlaying=false;
+    public static boolean isPlaying = false;
+
     public static void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
@@ -135,18 +136,17 @@ public class Utils {
         return model;
     }
 
-    public  void missingConnection()
-    {
-        JOptionPane.showMessageDialog(null,"Connection lost");
+    public void missingConnection() {
+        JOptionPane.showMessageDialog(null, "Connection lost");
         try {
-          Parent root =FXMLLoader.load(getClass().getResource("/login/login.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/login/login.fxml"));
             Utils.switchWindow(root);
         } catch (IOException ex) {
             Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-     public static void setPlayer(UserModel currentUser) {
+
+    public static void setPlayer(UserModel currentUser) {
 
         player2 = currentUser;
     }

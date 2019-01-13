@@ -32,7 +32,8 @@ public class LoginController implements Initializable {
     @FXML
     private PasswordField tfPassword;
 
-    Utils util=new Utils();
+    Utils util = new Utils();
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
@@ -41,14 +42,13 @@ public class LoginController implements Initializable {
     @FXML
 
     private void loginAction(ActionEvent event) throws IOException {
-        
-           try {
-   
+
+        try {
             UserAccountHandler accountHandler;
             accountHandler = Utils.establishConnection();
 
             ClintImp clintImp = new ClintImp();
-            UserModel model = accountHandler.login(clintImp, "esraaSliem@gmail.com", "1234");
+            UserModel model = accountHandler.login(clintImp, "aa@a.com", "1111");
             Utils.setCurrentUser(model);
             System.out.println(model.getEmailAddress() + "model");
 
@@ -56,8 +56,6 @@ public class LoginController implements Initializable {
                 Parent root = FXMLLoader.load(getClass().getResource("/multimode/MultiMode.fxml"));
                 utils.Utils.switchWindow(root);
 
-
-  
             } else {
                 System.out.println(model.getEmailAddress() + "user model = null");
 
@@ -65,7 +63,7 @@ public class LoginController implements Initializable {
             }
 
         } catch (RemoteException ex) {
-            
+
             Utils.showAlert(Alert.AlertType.ERROR, btnLogin.getScene().getWindow(), "server is un available", "try again later");
         } catch (IOException ex) {
             ex.printStackTrace();

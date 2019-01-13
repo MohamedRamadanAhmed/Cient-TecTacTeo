@@ -1,5 +1,6 @@
 package multimode;
 
+import client.server.remote.interfaces.Step;
 import client.server.remote.interfaces.UserAccountHandler;
 import client.server.remote.interfaces.UserModel;
 import com.jfoenix.controls.JFXListView;
@@ -9,8 +10,6 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -32,9 +31,10 @@ public class MultiModeController implements Initializable {
 
     UserAccountHandler accountHandler = null;
     boolean isMyTurnToplay = false;
+    int[] game_arr = new int[9];
 
     @FXML
-    public Label lable1;
+    public static Label lable1;
 
     @FXML
     public Label lable4;
@@ -61,9 +61,9 @@ public class MultiModeController implements Initializable {
     public Label lable9;
 
     @FXML
-    private Label user1;
+    public Label user1;
     @FXML
-    private Label user2;
+    public Label user2;
     @FXML
     public Button startgame;
     @FXML
@@ -123,6 +123,7 @@ public class MultiModeController implements Initializable {
         Button btn = new Button("Delete");
         Label label = new Label("");
         Pane pane = new Pane();
+
         //  Image profile = new Image("images/tic-tac-toe.png");
         // ImageView img = new ImageView(profile);
         public Cell() {
@@ -140,11 +141,9 @@ public class MultiModeController implements Initializable {
                     util.missingConnection();
                 } catch (NotBoundException ex) {
                     util.missingConnection();
-                }
-                 catch (NullPointerException ex) {
+                } catch (NullPointerException ex) {
                     util.missingConnection();
                 }
-                
 
             }
             );
@@ -179,7 +178,6 @@ public class MultiModeController implements Initializable {
         }
 
 //        myGridPane.setVisible(false);
-
         listView.setItems(mylistview);
         GridPane pane = new GridPane();
         Label name = new Label("gg");
@@ -218,77 +216,103 @@ public class MultiModeController implements Initializable {
     @FXML
     void logOutAction(ActionEvent event) throws RemoteException, IOException, NotBoundException {
         try {
-            
+
             if (MyControoler.logOut()) {
                 Utils.switchWindow(FXMLLoader.load(getClass().getResource("/choosemode/SelectMode.fxml")));
+            } else {
+                util.missingConnection();
             }
-            else
-                 util.missingConnection();
-        }  catch (RemoteException | NotBoundException ex) {
+        } catch (RemoteException | NotBoundException ex) {
             util.missingConnection();
-        } 
+        }
     }
 
     @FXML
     void lable1Action(MouseEvent event) {
         lable1.setText("x");
-        MyControoler.transmitMove(0,"x",Utils.getlayer());
+        MyControoler.transmitMove(0, "x", Utils.getlayer());
 
     }
 
     @FXML
     void lable2Action(MouseEvent event) {
         lable2.setText("x");
-         MyControoler.transmitMove(1,"x",Utils.getlayer());
+        MyControoler.transmitMove(1, "x", Utils.getlayer());
 
     }
 
     @FXML
     void lable3Action(MouseEvent event) {
         lable3.setText("x");
-         MyControoler.transmitMove(2,"x",Utils.getlayer());
+        MyControoler.transmitMove(2, "x", Utils.getlayer());
 
     }
 
     @FXML
     void lable4Action(MouseEvent event) {
         lable4.setText("x");
-         MyControoler.transmitMove(3,"x",Utils.getlayer());
+        MyControoler.transmitMove(3, "x", Utils.getlayer());
     }
 
     @FXML
     void lable5Action(MouseEvent event) {
         lable5.setText("x");
-         MyControoler.transmitMove(4,"x",Utils.getlayer());
+        MyControoler.transmitMove(4, "x", Utils.getlayer());
 
     }
 
     @FXML
     void lable6Action(MouseEvent event) {
         lable6.setText("x");
-         MyControoler.transmitMove(5,"x",Utils.getlayer());
+        MyControoler.transmitMove(5, "x", Utils.getlayer());
 
     }
 
     @FXML
     void lable7Action(MouseEvent event) {
         lable7.setText("x");
-         MyControoler.transmitMove(6,"x",Utils.getlayer());
+        MyControoler.transmitMove(6, "x", Utils.getlayer());
 
     }
 
     @FXML
     void lable8Action(MouseEvent event) {
         lable8.setText("x");
-         MyControoler.transmitMove(7,"x",Utils.getlayer());
+        MyControoler.transmitMove(7, "x", Utils.getlayer());
 
     }
 
     @FXML
     void lable9Action(MouseEvent event) {
         lable9.setText("x");
-         MyControoler.transmitMove(8,"x",Utils.getlayer());
+        MyControoler.transmitMove(8, "x", Utils.getlayer());
 
     }
 
+    public boolean checkWining() {
+        if ((game_arr[0] == 1 && game_arr[1] == 1 && game_arr[2] == 1)|| (game_arr[3] == 1 && game_arr[4] == 1 && game_arr[5] == 1)
+                || (game_arr[6] == 1 && game_arr[7] == 1 && game_arr[8] == 1)
+                || (game_arr[0] == 1 && game_arr[4] == 1 && game_arr[8] == 1)
+                || (game_arr[2] == 1 && game_arr[4] == 1 && game_arr[6] == 1)
+                || (game_arr[0] == 1 && game_arr[3] == 1 && game_arr[6] == 1)
+                || (game_arr[1] == 1 && game_arr[4] == 1 && game_arr[7] == 1)
+                || (game_arr[2] == 1 && game_arr[5] == 1 && game_arr[8] == 1)) {
+            System.out.println("X is Winning");
+
+            return true;
+        } else {
+            if ((game_arr[0] == 2 && game_arr[1] == 2 && game_arr[2] == 2)
+                    || (game_arr[3] == 2 && game_arr[4] == 2 && game_arr[5] == 2)
+                    || (game_arr[6] == 2 && game_arr[7] == 2 && game_arr[8] == 2)
+                    || (game_arr[0] == 2 && game_arr[4] == 2 && game_arr[8] == 2)
+                    || (game_arr[2] == 2 && game_arr[4] == 2 && game_arr[6] == 2)
+                    || (game_arr[0] == 2 && game_arr[3] == 2 && game_arr[6] == 2)
+                    || (game_arr[1] == 2 && game_arr[4] == 2 && game_arr[7] == 2)
+                    || (game_arr[2] == 2 && game_arr[5] == 2 && game_arr[8] == 2)) {
+                System.out.println("O is Winning");
+                return true;
+            }
+        }
+        return false;
+    }
 }

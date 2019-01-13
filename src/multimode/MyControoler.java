@@ -8,23 +8,22 @@ import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
-import sun.applet.AppletViewer;
 import utils.Utils;
 
 public class MyControoler {
 
-    Utils util=new Utils();
+    Utils util = new Utils();
     static UserAccountHandler accountHandler = null;
 
     public static boolean logOut() throws RemoteException, NotBoundException {
-        if(accountHandler!=null)
-        {
+        if (accountHandler != null) {
 
-      return accountHandler.logOut(Utils.getCurrentUser().getEmailAddress());
-        }else
-       
-           return false;
+            return accountHandler.logOut(Utils.getCurrentUser().getEmailAddress());
+        } else {
+            return false;
+        }
     }
+
     static void transmitMove(int i, String x, UserModel model) {
         try {
             accountHandler = Utils.establishConnection();
@@ -41,17 +40,13 @@ public class MyControoler {
 
     public static void drawMove(Step s) {
 
-
         if (s != null) {
-            System.out.println(s.getDraw());
-            System.out.println(s.getPlayer());
-            System.out.println(s.getPosition());
+            MultiModeController.lable1.setText(s.getDraw());
 
         } else {
             System.out.println(s.getDraw() + "object is null");
 
         }
-
 
     }
 
@@ -63,10 +58,6 @@ public class MyControoler {
     }
 
     boolean accept = false;
-
-
-
-   
 
     public static void requestGame(UserModel selectedItem) throws RemoteException, NotBoundException {
 
