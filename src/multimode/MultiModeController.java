@@ -25,6 +25,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
+import main.XMLRecord;
 import utils.Utils;
 
 public class MultiModeController implements Initializable {
@@ -34,7 +35,10 @@ public class MultiModeController implements Initializable {
     int[] game_arr = new int[9];
 
     @FXML
-    public static Label lable1;
+    public  Label lable1;
+    
+    @FXML
+    private Button btnRefresh;
 
     @FXML
     public Label lable4;
@@ -82,6 +86,8 @@ public class MultiModeController implements Initializable {
     public ObservableList<UserModel> mylistview;
     UserAccountHandler accountHandler1;
     UserModel model;
+    List<UserModel> list ;
+   
 
     public MultiModeController() {
         try {
@@ -167,7 +173,7 @@ public class MultiModeController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         try {
             UserAccountHandler accountHandler1 = Utils.establishConnection();
-            List<UserModel> list = accountHandler1.getOnlinePlayer();
+            list = accountHandler1.getOnlinePlayer();
 
             mylistview = FXCollections.observableArrayList(list);
 
@@ -218,12 +224,16 @@ public class MultiModeController implements Initializable {
         try {
 
             if (MyControoler.logOut()) {
+                System.out.println(MyControoler.logOut()+"xxx");
+
                 Utils.switchWindow(FXMLLoader.load(getClass().getResource("/choosemode/SelectMode.fxml")));
+
             } else {
                 util.missingConnection();
             }
         } catch (RemoteException | NotBoundException ex) {
             util.missingConnection();
+
         }
     }
 
@@ -315,4 +325,33 @@ public class MultiModeController implements Initializable {
         }
         return false;
     }
+    
+    
+    @FXML
+    void btnRefreshAction(MouseEvent event) {
+        System.out.println("btn refreshh was clicked");
+        
+//         try {
+//            UserAccountHandler accountHandler1 = Utils.establishConnection();
+//            list = accountHandler1.getOnlinePlayer();
+//
+//            mylistview = FXCollections.observableArrayList(list);
+//
+//        } catch (RemoteException | NotBoundException ex) {
+//            System.err.println(ex.getMessage());
+//        } catch (Exception ex) {
+//            System.err.println(ex.getMessage());
+//        }
+//
+////        myGridPane.setVisible(false);
+//        listView.setItems(mylistview);
+//        GridPane pane = new GridPane();
+//        Label name = new Label("gg");
+//        Button btn = new Button("dd");
+//        pane.add(name, 0, 0);
+//        pane.add(btn, 0, 1);
+//        listView.setCellFactory(param -> new Cell());
+//
+    }
+    
 }

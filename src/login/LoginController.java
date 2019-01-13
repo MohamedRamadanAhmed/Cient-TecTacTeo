@@ -48,7 +48,7 @@ public class LoginController implements Initializable {
             accountHandler = Utils.establishConnection();
 
             ClintImp clintImp = new ClintImp();
-            UserModel model = accountHandler.login(clintImp, "aa@a.com", "1111");
+            UserModel model = accountHandler.login(clintImp, "abdo@a.com", "1111");
             Utils.setCurrentUser(model);
             System.out.println(model.getEmailAddress() + "model");
 

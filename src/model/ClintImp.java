@@ -7,8 +7,12 @@ import client.server.remote.interfaces.UserModel;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-
 import javax.swing.JOptionPane;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.stage.Stage;
+import javax.swing.JOptionPane;
+import multimode.MultiModeController;
 import multimode.MyControoler;
 
 import utils.Utils;

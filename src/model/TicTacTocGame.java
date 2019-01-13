@@ -2,6 +2,7 @@ package model;
 
 import client.server.remote.interfaces.UserModel;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
@@ -9,15 +10,12 @@ import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
+import main.XMLRecord;
 import utils.Utils;
-
-
 
 import singlemode.SingleModeController;
 
-
 public class TicTacTocGame {
-
 
     public String getMySymbol() {
         return MySymbol;
@@ -30,23 +28,20 @@ public class TicTacTocGame {
         this.MySymbol = MySymbol;
     }
 
-    
-   
-
 //game variable
     private String current_player;
-    private  String MySymbol;
+    private String MySymbol;
     private boolean start_game_flag;
     private int game_arr[];
     private int counter;
     private boolean winFlag;
     SingleModeController tcUI;
     private UserModel user2;
-    private static int Score=0;
+    private static int Score = 0;
     private static int ComputerScore;
-    private static int gameNum=0;
+    private static int gameNum = 0;
     private Stage primaryStage;
-    
+    XMLRecord recordObj;
 
     public TicTacTocGame(SingleModeController tc) {
         current_player = "X";
@@ -54,15 +49,12 @@ public class TicTacTocGame {
         game_arr = new int[9];
         counter = 0;
         tcUI = tc;
+        recordObj = new XMLRecord();
+        recordObj.unmarchal();
 
-        user2=null;
-        MySymbol="X";
+        user2 = null;
+        MySymbol = "X";
     }
-
-   
-    
-
-    
 
     public UserModel getUser2() {
 
@@ -114,9 +106,11 @@ public class TicTacTocGame {
         if (game_arr[move] == 0) {
             if (getCurrent_player().equals("X")) {
                 game_arr[move] = 1;
+                recordObj.addMove(move, getCurrent_player());
             }
             if (getCurrent_player().equals("O")) {
                 game_arr[move] = 2;
+                recordObj.addMove(move, getCurrent_player());
             }
 
             setCounter(getCounter() + 1);
@@ -240,7 +234,7 @@ public class TicTacTocGame {
     public void computerAction(int x) {
 
         System.out.println(x);
-
+       
         switchPlayerSymbol();
         switch (x) {
             case 0:
@@ -281,7 +275,50 @@ public class TicTacTocGame {
         }
 
     }
+public void playRecord(int x,String symbol) {
 
+        System.out.println(x);
+       
+        switchPlayerSymbol();
+        switch (x) {
+            case 0:
+                tcUI.lblCell1.setText(symbol);
+                break;
+            case 1:
+
+                tcUI.lblCell2.setText(symbol);
+                break;
+            case 2:
+
+                tcUI.lblCell3.setText(symbol);
+                break;
+            case 3:
+
+                tcUI.lblCell4.setText(symbol);
+                break;
+            case 4:
+
+                tcUI.lblCell5.setText(symbol);
+                break;
+            case 5:
+
+                tcUI.lblCell6.setText(symbol);
+                break;
+            case 6:
+
+                tcUI.lblCell7.setText(symbol);
+                break;
+            case 7:
+
+                tcUI.lblCell8.setText(symbol);
+                break;
+            case 8:
+
+                tcUI.lblCell9.setText(symbol);
+                break;
+        }
+
+    }
     public void gameStartSingleMode(Label l, int move) {
 
         if (!winFlag) {
@@ -291,7 +328,7 @@ public class TicTacTocGame {
                 }
                 if (!winFlag) {
                     if (getCounter() < 9) {
-
+                       
                         computerAction(getRandom());
 
                         checkWining();
@@ -299,6 +336,7 @@ public class TicTacTocGame {
                         if (counter == 9) {
 
                             gameNum++;
+                            recordObj.marchal();
                             newGame();
 
                         }
@@ -311,20 +349,20 @@ public class TicTacTocGame {
     }
 
     public void newGame() {
+        recordObj.marchal();
         int x = JOptionPane.showConfirmDialog(null, "play again");
         System.out.println(x + "");
+
         Parent root = null;
         if (x == 0) {
             try {
                 root = FXMLLoader.load(getClass().getResource("/singlemode/SingleMode.fxml"));
-                  Utils.switchWindow(root);
+                Utils.switchWindow(root);
             } catch (IOException ex) {
                 Logger.getLogger(TicTacTocGame.class.getName()).log(Level.SEVERE, null, ex);
             }
-              
-        } else if (x == 1) {
 
-           
+        } else if (x == 1) {
 
             try {
                 root = FXMLLoader.load(getClass().getResource("/sinup/signup.fxml"));

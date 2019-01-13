@@ -48,45 +48,56 @@ public class SignupController implements Initializable {
 
     @FXML
     private void signupAction(ActionEvent event) {
-        btnSignup.setOnAction(ev -> {
-
-            try {
-                if (!(Utils.validateName(userName.getText()))) {
-                    Utils.showAlert(Alert.AlertType.ERROR, btnSignup.getScene().getWindow(), "Sin up  Error!", "Please enter valid  name");
-                    return;
-                }
-                if (!(Utils.validateEmail(tfEmail.getText()))) {
-                    Utils.showAlert(Alert.AlertType.ERROR, btnSignup.getScene().getWindow(), "Sin up  Error!", "Please enter valid email address");
-                    return;
-                }
-                if (tfPassword.getText().trim().isEmpty() || tfPassword.getText().trim().length() <= 3) {
-                    Utils.showAlert(Alert.AlertType.ERROR, btnSignup.getScene().getWindow(), "Sin up  Error!", "password must be 3 digits at least");
-                    return;
-                }
-                if (!(tfPassword.getText().equals(tfConfrmPassword.getText()))) {
-                    Utils.showAlert(Alert.AlertType.ERROR, btnSignup.getScene().getWindow(), "Sin up  Error!", "password not confirmed");
-                    return;
-                }
-
-                UserAccountHandler accountHandler = Utils.establishConnection();
-                if(accountHandler.signUp(new UserModel(userName.getText(), tfEmail.getText(), tfPassword.getText(), Utils.getIpAddress()))){
-                   Parent root = FXMLLoader.load(getClass().getResource("MultiMode.fxml"));
+       // System.out.println("sin up was clicked ");
+        try {
+//            if (!(Utils.validateName(userName.getText()))) {
+//                Utils.showAlert(Alert.AlertType.ERROR, btnSignup.getScene().getWindow(), "Sin up  Error!", "Please enter valid  name");
+//
+//                System.out.println("sin up was clicked ");
+//                return;
+//            }
+//            if (!(Utils.validateEmail(tfEmail.getText()))) {
+//                Utils.showAlert(Alert.AlertType.ERROR, btnSignup.getScene().getWindow(), "Sin up  Error!", "Please enter valid email address");
+//                System.out.println("sin up was clicked ");
+//                return;
+//            }
+//            if (tfPassword.getText().trim().isEmpty() || tfPassword.getText().trim().length() <= 3) {
+//
+//                System.out.println("sin up was clickeddd ");
+//                System.out.println("sin up was clickeddd ");
+//
+//                Utils.showAlert(Alert.AlertType.ERROR, btnSignup.getScene().getWindow(), "Sin up  Error!", "password must be 3 digits at least");
+//                return;
+//            }
+//            if (!(tfPassword.getText().equals(tfConfrmPassword.getText()))) {
+//
+//                System.out.println("sin up was clicked ");
+//                Utils.showAlert(Alert.AlertType.ERROR, btnSignup.getScene().getWindow(), "Sin up  Error!", "password not confirmed");
+//                return;
+//            }
+            System.out.println("sin up was clickeddd ");
+            UserAccountHandler accountHandler = Utils.establishConnection();
+            if (accountHandler.signUp(new UserModel("abdo", "abdo@a.com", "1111", "1111"))) {
+                Parent root = FXMLLoader.load(getClass().getResource("/multimode/MultiMode.fxml"));
                 Utils.switchWindow(root);
-                System.out.println("sin up was clicked "); 
-                }
-                else
-                {
+                System.out.println("account handler communication ");
+            } else {
+                                System.out.println("else sin up ");
                 Utils.showAlert(Alert.AlertType.ERROR, btnSignup.getScene().getWindow(), "sin up error", "this email address already exists ");
-                }
-                
-            } catch (RemoteException | UnknownHostException ex) {
-                // Logger.getLogger(SinUp.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                //  Logger.getLogger(SignupController.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (NotBoundException ex) {
-                Logger.getLogger(SignupController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        });
+        } catch (RemoteException | UnknownHostException ex) {
+            ex.printStackTrace();
+            // Logger.getLogger(SinUp.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+                        ex.printStackTrace();
+
+            //  Logger.getLogger(SignupController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NotBoundException ex) {
+                        ex.printStackTrace();
+
+//            Logger.getLogger(SignupController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     @FXML
