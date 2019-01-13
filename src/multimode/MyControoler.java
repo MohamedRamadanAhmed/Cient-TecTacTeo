@@ -17,20 +17,18 @@ public class MyControoler {
     static UserAccountHandler accountHandler = null;
 
     public static boolean logOut() throws RemoteException, NotBoundException {
-        if(accountHandler!=null)
-        {
+      
 
       return accountHandler.logOut(Utils.getCurrentUser().getEmailAddress());
-        }else
-       
-           return false;
+            
+           
     }
     static void transmitMove(int i, String x, UserModel model) {
         try {
+            
             accountHandler = Utils.establishConnection();
-
             accountHandler.transmitMove(new Step(model.getEmailAddress(), Utils.getCurrentUser().getEmailAddress(), i, x));
-
+      
         } catch (RemoteException ex) {
             Logger.getLogger(MyControoler.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NotBoundException ex) {

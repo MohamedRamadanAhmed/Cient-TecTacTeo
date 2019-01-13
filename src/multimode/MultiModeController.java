@@ -26,6 +26,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
+import main.XMLRecord;
 import utils.Utils;
 
 public class MultiModeController implements Initializable {
@@ -82,6 +83,7 @@ public class MultiModeController implements Initializable {
     public ObservableList<UserModel> mylistview;
     UserAccountHandler accountHandler1;
     UserModel model;
+   
 
     public MultiModeController() {
         try {
@@ -123,6 +125,7 @@ public class MultiModeController implements Initializable {
         Button btn = new Button("Delete");
         Label label = new Label("");
         Pane pane = new Pane();
+
         //  Image profile = new Image("images/tic-tac-toe.png");
         // ImageView img = new ImageView(profile);
         public Cell() {
@@ -140,11 +143,9 @@ public class MultiModeController implements Initializable {
                     util.missingConnection();
                 } catch (NotBoundException ex) {
                     util.missingConnection();
-                }
-                 catch (NullPointerException ex) {
+                } catch (NullPointerException ex) {
                     util.missingConnection();
                 }
-                
 
             }
             );
@@ -179,7 +180,6 @@ public class MultiModeController implements Initializable {
         }
 
 //        myGridPane.setVisible(false);
-
         listView.setItems(mylistview);
         GridPane pane = new GridPane();
         Label name = new Label("gg");
@@ -218,76 +218,86 @@ public class MultiModeController implements Initializable {
     @FXML
     void logOutAction(ActionEvent event) throws RemoteException, IOException, NotBoundException {
         try {
-            
+            System.out.println(MyControoler.logOut()+"ccc");
+
             if (MyControoler.logOut()) {
+                System.out.println(MyControoler.logOut()+"xxx");
+
                 Utils.switchWindow(FXMLLoader.load(getClass().getResource("/choosemode/SelectMode.fxml")));
+                System.out.println("entered if  true");
             }
-            else
-                 util.missingConnection();
-        }  catch (RemoteException | NotBoundException ex) {
+
+        } catch (RemoteException | NotBoundException ex) {
+            System.out.println("entered if  exception");
+            ex.printStackTrace();
             util.missingConnection();
-        } 
+        } catch (NullPointerException ex) {
+            util.missingConnection();
+            System.out.println("entered if  exception");
+            ex.printStackTrace();
+
+        }
     }
 
     @FXML
     void lable1Action(MouseEvent event) {
         lable1.setText("x");
-        MyControoler.transmitMove(0,"x",Utils.getlayer());
+        MyControoler.transmitMove(0, "x", Utils.getlayer());
 
     }
 
     @FXML
     void lable2Action(MouseEvent event) {
         lable2.setText("x");
-         MyControoler.transmitMove(1,"x",Utils.getlayer());
+        MyControoler.transmitMove(1, "x", Utils.getlayer());
 
     }
 
     @FXML
     void lable3Action(MouseEvent event) {
         lable3.setText("x");
-         MyControoler.transmitMove(2,"x",Utils.getlayer());
+        MyControoler.transmitMove(2, "x", Utils.getlayer());
 
     }
 
     @FXML
     void lable4Action(MouseEvent event) {
         lable4.setText("x");
-         MyControoler.transmitMove(3,"x",Utils.getlayer());
+        MyControoler.transmitMove(3, "x", Utils.getlayer());
     }
 
     @FXML
     void lable5Action(MouseEvent event) {
         lable5.setText("x");
-         MyControoler.transmitMove(4,"x",Utils.getlayer());
+        MyControoler.transmitMove(4, "x", Utils.getlayer());
 
     }
 
     @FXML
     void lable6Action(MouseEvent event) {
         lable6.setText("x");
-         MyControoler.transmitMove(5,"x",Utils.getlayer());
+        MyControoler.transmitMove(5, "x", Utils.getlayer());
 
     }
 
     @FXML
     void lable7Action(MouseEvent event) {
         lable7.setText("x");
-         MyControoler.transmitMove(6,"x",Utils.getlayer());
+        MyControoler.transmitMove(6, "x", Utils.getlayer());
 
     }
 
     @FXML
     void lable8Action(MouseEvent event) {
         lable8.setText("x");
-         MyControoler.transmitMove(7,"x",Utils.getlayer());
+        MyControoler.transmitMove(7, "x", Utils.getlayer());
 
     }
 
     @FXML
     void lable9Action(MouseEvent event) {
         lable9.setText("x");
-         MyControoler.transmitMove(8,"x",Utils.getlayer());
+        MyControoler.transmitMove(8, "x", Utils.getlayer());
 
     }
 

@@ -5,9 +5,13 @@
  */
 package singlemode;
 
+import demo.MoveContent;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +20,9 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javax.swing.JOptionPane;
+import main.XMLRecord;
 import model.TicTacTocGame;
+import utils.Utils;
 
 
 public class SingleModeController implements Initializable {
@@ -63,13 +69,13 @@ public class SingleModeController implements Initializable {
 
     @FXML
     private Label userScoreLbl;
-
+TicTacTocGame game;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        TicTacTocGame game = new TicTacTocGame(this);
+         game= new TicTacTocGame(this);
         while (userName.equals("")) {
-            userName = JOptionPane.showInputDialog("please enter your name = ");
+            userName = JOptionPane.showInputDialog("please enter your name : ");
         }
         username.setText(userName);
         lblCell1.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell1, 0));
@@ -95,7 +101,22 @@ public class SingleModeController implements Initializable {
 
     @FXML
     private void recordAction(ActionEvent event) {
-
+        XMLRecord recordObj=new XMLRecord();
+        recordObj.unmarchal();
+        ArrayList<MoveContent> playrecord = recordObj.playRecord();
+        lblCell1.setText("");
+        lblCell2.setText("");
+        lblCell3.setText("");
+        lblCell4.setText("");
+        lblCell5.setText("");
+        lblCell6.setText("");
+        lblCell7.setText("");
+        lblCell8.setText("");
+        lblCell9.setText("");
+        
+        for (int i = 0; i < playrecord.size(); i++) {
+            game.playRecord(recordObj.playRecord().get(i).getPosition(),playrecord.get(i).getDraw());
+        }
     }
 
     @FXML

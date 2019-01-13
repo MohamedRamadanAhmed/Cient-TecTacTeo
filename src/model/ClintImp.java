@@ -7,9 +7,7 @@ import client.server.remote.interfaces.UserModel;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-
 import javax.swing.JOptionPane;
-
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
@@ -34,10 +32,10 @@ public class ClintImp extends UnicastRemoteObject implements ClientInterface {
         System.out.println("ay haga");
 
 
-        int x = JOptionPane.showConfirmDialog(null, player2.getUserName());
+        int x = JOptionPane.showConfirmDialog(null, model1.getUserName());
 
         if (x == 0) {
-            Utils.setPlayer(player2);
+            Utils.setPlayer(model1);
             return true;
 
         } else {
