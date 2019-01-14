@@ -105,7 +105,6 @@ public class SelectModeBase extends Application {
                 System.out.println("abdo awd multiModeAction");
 
                 try {
-//                    handler.setScene("/singlemode/SingleMode.fxml", "sinkjbsdjb", 800, 500, true);
                     System.out.println("abdo awd multiModeAction");
 
                     handler.setScene("/sinup/signup.fxml", "hg", 800, 800, true);

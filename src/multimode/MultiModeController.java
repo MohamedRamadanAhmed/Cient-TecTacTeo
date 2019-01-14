@@ -290,7 +290,6 @@ public class MultiModeController implements Initializable {
 
     @FXML
     private void recordAction(ActionEvent event) {
-
     }
 
     @FXML
@@ -302,10 +301,9 @@ public class MultiModeController implements Initializable {
     @FXML
     void logOutAction(ActionEvent event) throws RemoteException, IOException, NotBoundException {
         try {
-
             if (MyControoler.logOut()) {
                 System.out.println(MyControoler.logOut() + "xxx");
-                handler.setScene("/choosemode/SelectMode.fxml", "hg", 800, 800, true);
+                handler.setScene("/choosemode/SelectMode.fxml", "", 800, 800, true);
             } else {
                 util.missingConnection();
             }
@@ -317,7 +315,6 @@ public class MultiModeController implements Initializable {
 
     void setTextOnlable(Label lable, int position, int i, String symbol) {
         if (game_arr[position] == 0 && i == 2) {
-            System.out.println("server" + game_arr[position]);
             game_arr[position] = i;
             lable.setText(symbol);
             if (!checkWining()) {
@@ -328,9 +325,7 @@ public class MultiModeController implements Initializable {
             if (game_arr[position] == 0 && Utils.isMyTurn == true) {
                 game_arr[position] = i;
                 lable.setText(symbol);
-                System.out.println("before" + Utils.isMyTurn);
                 Utils.isMyTurn = false;
-                System.out.println("after" + Utils.isMyTurn);
                 MyControoler.transmitMove(position, Utils.getSymbol(), Utils.getlayer());
                 checkWining();
             }
@@ -420,7 +415,7 @@ public class MultiModeController implements Initializable {
 
     }
 
-    public boolean checkWining() {
+    public boolean checkWining() throws RemoteException {
         if ((game_arr[0] == 1 && game_arr[1] == 1 && game_arr[2] == 1) || (game_arr[3] == 1 && game_arr[4] == 1 && game_arr[5] == 1)
                 || (game_arr[6] == 1 && game_arr[7] == 1 && game_arr[8] == 1)
                 || (game_arr[0] == 1 && game_arr[4] == 1 && game_arr[8] == 1)
@@ -429,6 +424,7 @@ public class MultiModeController implements Initializable {
                 || (game_arr[1] == 1 && game_arr[4] == 1 && game_arr[7] == 1)
                 || (game_arr[2] == 1 && game_arr[5] == 1 && game_arr[8] == 1)) {
             newGame("you win");
+            accountHandler.increaseWinnerScore(Utils.getCurrentUser().getEmailAddress());
 
             return true;
         } else if ((game_arr[0] == 2 && game_arr[1] == 2 && game_arr[2] == 2)
@@ -439,7 +435,7 @@ public class MultiModeController implements Initializable {
                 || (game_arr[0] == 2 && game_arr[3] == 2 && game_arr[6] == 2)
                 || (game_arr[1] == 2 && game_arr[4] == 2 && game_arr[7] == 2)
                 || (game_arr[2] == 2 && game_arr[5] == 2 && game_arr[8] == 2)) {
-            System.out.println("sorry you lose ");
+            accountHandler.increaseWinnerScore(Utils.getlayer().getEmailAddress());
             newGame("you lose");
             return true;
         }
