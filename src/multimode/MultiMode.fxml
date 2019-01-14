@@ -8,7 +8,6 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -115,7 +114,7 @@
                         <Font name="Viner Hand ITC" size="69.0" />
                     </font>
                 </Label>
-                <Label fx:id="lable4" alignment="CENTER" graphicTextGap="8.0" layoutX="10.0" layoutY="10.0" prefHeight="146.0" prefWidth="247.0" textAlignment="CENTER" textFill="#3f5290" GridPane.rowIndex="1">
+                <Label fx:id="lable4" alignment="CENTER" graphicTextGap="8.0" layoutX="10.0" layoutY="10.0" onMouseClicked="#lable4Action" prefHeight="146.0" prefWidth="247.0" textAlignment="CENTER" textFill="#3f5290" GridPane.rowIndex="1">
                     <font>
                         <Font name="Viner Hand ITC" size="69.0" />
                     </font>
