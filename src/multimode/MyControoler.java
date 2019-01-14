@@ -3,15 +3,14 @@ package multimode;
 import client.server.remote.interfaces.Step;
 import client.server.remote.interfaces.UserAccountHandler;
 import client.server.remote.interfaces.UserModel;
-import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.Pane;
-import model.ClintImp;
 //import static multimode.MultiModeController.lable1;
 import utils.Utils;
 
@@ -24,7 +23,7 @@ public class MyControoler {
     FXMLLoader fxmlLoader = new FXMLLoader();
     Pane p;
     MultiModeController multiModeController;
-    
+
     public static boolean logOut() throws RemoteException, NotBoundException {
         return accountHandler.logOut(Utils.getCurrentUser().getEmailAddress());
     }
@@ -48,7 +47,7 @@ public class MyControoler {
 
     public void setStep(Step step) {
         this.step = step;
-    
+
         System.out.println(step.draw);
         System.out.println(step.position);
         System.out.println(step.player);
@@ -93,22 +92,18 @@ public class MyControoler {
 
                     @Override
                     public void run() {
+
                         try {
-                            accountHandler = Utils.establishConnection();
-                            try {
-                                if (accountHandler.requestGame(Utils.getCurrentUser(), selectedItem)) {
-                                    System.err.println("accept");
-                                } else {
-                                    System.err.println("refused");
+
+                            if ((accountHandler = Utils.establishConnection()) != null && selectedItem != null) {
+                                try {
+                                    accountHandler.requestGame(Utils.getCurrentUser(), selectedItem);
+                                } catch (NullPointerException ex) {
                                 }
-                            } catch (RemoteException ex) {
-                                Logger.getLogger(MyControoler.class.getName()).log(Level.SEVERE, null, ex);
                             }
 
-                        } catch (RemoteException ex) {
-                            Logger.getLogger(MyControoler.class.getName()).log(Level.SEVERE, null, ex);
-                        } catch (NotBoundException ex) {
-                            Logger.getLogger(MyControoler.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
                         }
                     }
                 };
@@ -122,8 +117,10 @@ public class MyControoler {
 
             }
 
-        });
-        thread.setDaemon(true);
+        }
+        );
+        thread.setDaemon(
+                true);
         thread.start();
 
     }

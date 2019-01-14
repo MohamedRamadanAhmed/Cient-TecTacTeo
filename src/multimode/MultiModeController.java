@@ -94,8 +94,6 @@ public class MultiModeController implements Initializable {
             controoler = new MyControoler();
             accountHandler = Utils.establishConnection();
             handler = SceneHandler.getInstance();
-            System.out.println("hello dear");
-
         } catch (RemoteException | NotBoundException ex) {
             util.missingConnection();
         }
@@ -148,12 +146,6 @@ public class MultiModeController implements Initializable {
                     }
                 });
 
-                /* try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(MultiModeController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }*/
             }
         });
         thread.start();
@@ -173,6 +165,23 @@ public class MultiModeController implements Initializable {
 
             // clicking on list view to request another player to play 
             listView.setOnMouseClicked(event -> {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (Utils.isPlaying) {
+                                    myGridPane.setVisible(true);
+                                } else {
+                                    System.out.println("NO ACTION ");
+                                }
+                            }
+                        });
+
+                    }
+                }).start();
                 try {
                     model = listView.getSelectionModel().getSelectedItem();
                     Utils.setPlayer(model);
