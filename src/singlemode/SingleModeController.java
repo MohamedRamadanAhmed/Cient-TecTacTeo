@@ -9,10 +9,9 @@ import demo.MoveContent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
+
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,8 +23,7 @@ import javafx.scene.control.Label;
 import javax.swing.JOptionPane;
 import main.XMLRecord;
 import model.TicTacTocGame;
-import utils.Utils;
-
+import utils.SceneHandler;
 
 public class SingleModeController implements Initializable {
 
@@ -71,11 +69,13 @@ public class SingleModeController implements Initializable {
 
     @FXML
     private Label userScoreLbl;
-TicTacTocGame game;
+    TicTacTocGame game;
+    SceneHandler handler = SceneHandler.getInstance();
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-         game= new TicTacTocGame(this);
+        game = new TicTacTocGame(this);
         while (userName.equals("")) {
             userName = JOptionPane.showInputDialog("please enter your name : ");
         }
@@ -90,22 +90,21 @@ TicTacTocGame game;
         lblCell7.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell7, 6));
         lblCell8.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell8, 7));
         lblCell9.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell9, 8));
-        numMatch.setText(game.getGameNum() +"");
-        userScoreLbl.setText(game.getScore() +"");
+        numMatch.setText(game.getGameNum() + "");
+        userScoreLbl.setText(game.getScore() + "");
     }
 
     @FXML
     private void goOnlineAction(ActionEvent event) throws IOException {
         back.getScene().getWindow().hide();
 
-
     }
 
     @FXML
     private void recordAction(ActionEvent event) {
-        XMLRecord recordObj=new XMLRecord();
+        XMLRecord recordObj = new XMLRecord();
         recordObj.unmarchal();
-       final ArrayList<MoveContent> playrecord = recordObj.playRecord();
+        final ArrayList<MoveContent> playrecord = recordObj.playRecord();
         lblCell1.setText("");
         lblCell2.setText("");
         lblCell3.setText("");
@@ -115,47 +114,47 @@ TicTacTocGame game;
         lblCell7.setText("");
         lblCell8.setText("");
         lblCell9.setText("");
-        
+
         for (int i = 0; i < playrecord.size(); i++) {
             System.out.println("abdo awd");
-            game.playRecord(recordObj.playRecord().get(i).getPosition(),playrecord.get(i).getDraw());
-            
-                Thread thread = new Thread(new Runnable() {
+            game.playRecord(recordObj.playRecord().get(i).getPosition(), playrecord.get(i).getDraw());
 
-            @Override
-            public void run() {
-                Runnable updater = new Runnable() {
+            Thread thread = new Thread(new Runnable() {
 
-                    @Override
-                    public void run() {
-                      
+                @Override
+                public void run() {
+                    Runnable updater = new Runnable() {
+
+                        @Override
+                        public void run() {
+
+                        }
+                    };
+
+                    while (true) {
+                        try {
+                            Thread.currentThread().wait(100000);
+                        } catch (InterruptedException ex) {
+                        }
+
+                        // UI update is run on the Application thread
+                        Platform.runLater(updater);
                     }
-                };
-
-                while (true) {
-                    try {
-                        Thread.currentThread().wait(100000);
-                    } catch (InterruptedException ex) {
-                    }
-
-                    // UI update is run on the Application thread
-                    Platform.runLater(updater);
                 }
-            }
 
-        });
-        // don't let thread prevent JVM shutdown
+            });
+            // don't let thread prevent JVM shutdown
 
-              
-           
         }
     }
-    
+
     @FXML
     private void backAction(ActionEvent event) throws IOException {
         goOnline.getScene().getWindow().hide();
         Parent root = FXMLLoader.load(getClass().getResource("/choosemode/SelectMode.fxml"));
         utils.Utils.switchWindow(root);
+handler.setScene("/choosemode/SelectMode.fxml", "dfkjh", 500, 500, true);
+
     }
 
 }

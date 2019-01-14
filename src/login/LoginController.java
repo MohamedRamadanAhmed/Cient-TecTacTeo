@@ -11,14 +11,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import model.ClintImp;
+import utils.SceneHandler;
 import utils.Utils;
 
 public class LoginController implements Initializable {
@@ -31,7 +30,7 @@ public class LoginController implements Initializable {
     private TextField tfName;
     @FXML
     private PasswordField tfPassword;
-
+    private SceneHandler handler = SceneHandler.getInstance();
     Utils util = new Utils();
 
     @Override
@@ -53,9 +52,10 @@ public class LoginController implements Initializable {
             System.out.println(model.getEmailAddress() + "model");
 
             if (model != null) {
-                Parent root = FXMLLoader.load(getClass().getResource("/multimode/MultiMode.fxml"));
-                utils.Utils.switchWindow(root);
-
+                //Parent root = FXMLLoader.load(getClass().getResource("/multimode/MultiMode.fxml"));
+                //utils.Utils.switchWindow(root);
+                //handler.setScene(root);
+                handler.setScene("/multimode/MultiMode.fxml", "hg", 800, 800, true);
             } else {
                 System.out.println(model.getEmailAddress() + "user model = null");
 
@@ -78,8 +78,10 @@ public class LoginController implements Initializable {
 
     @FXML
     private void signupAction(ActionEvent event) throws IOException {
-        btnLogin.getScene().getWindow().hide();
-        utils.Utils.switchWindow(FXMLLoader.load(getClass().getResource("/sinup/signup.fxml")));
+//        btnLogin.getScene().getWindow().hide();
+        handler.setScene("/sinup/signup.fxml", "hg", 800, 800, true);
+
+        //utils.Utils.switchWindow(FXMLLoader.load(getClass().getResource("/sinup/signup.fxml")));
 
     }
 

@@ -4,13 +4,14 @@ import client.server.remote.interfaces.ClientInterface;
 import client.server.remote.interfaces.Step;
 import client.server.remote.interfaces.UserAccountHandler;
 import client.server.remote.interfaces.UserModel;
+import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import javax.swing.JOptionPane;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.stage.Stage;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.layout.Pane;
 import javax.swing.JOptionPane;
 import multimode.MultiModeController;
 import multimode.MyControoler;
@@ -21,21 +22,19 @@ public class ClintImp extends UnicastRemoteObject implements ClientInterface {
 
     UserAccountHandler accountHandler;
     MyControoler controoler = new MyControoler();
+    public static boolean isReceving;
 
     public ClintImp() throws RemoteException, NotBoundException {
-        
+
         accountHandler = Utils.establishConnection();
     }
-
     @Override
     public boolean requestGame(UserModel model1, UserModel player2) throws RemoteException {
-        System.out.println("ay haga");
-
-
         int x = JOptionPane.showConfirmDialog(null, model1.getUserName());
 
         if (x == 0) {
             Utils.setPlayer(model1);
+            Utils.setSymbol("o");
             return true;
 
         } else {
@@ -45,12 +44,16 @@ public class ClintImp extends UnicastRemoteObject implements ClientInterface {
 
     @Override
     public void startGame(UserModel player1, UserModel player2) throws RemoteException {
-        controoler.startGame();        
+        controoler.startGame();
     }
 
     @Override
-    public void drawMove(Step s) throws RemoteException {
-        MyControoler.drawMove(s);
+    public void drawMove(Step step) throws RemoteException {
+        //  controoler.drawMove(step);
+//        controoler.dra(step);
+        System.out.println("I am client Interface");
+        controoler.setStep(step);
+        isReceving = true;
+        MultiModeController.getInstance().receive(step);
     }
-
 }

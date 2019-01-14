@@ -13,8 +13,6 @@ import java.net.UnknownHostException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,9 +22,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import utils.SceneHandler;
 import utils.Utils;
 
+
 public class SignupController implements Initializable {
+    SceneHandler handler = SceneHandler.getInstance();
 
     @FXML
     private Button btnSignup;
@@ -78,8 +79,10 @@ public class SignupController implements Initializable {
             System.out.println("sin up was clickeddd ");
             UserAccountHandler accountHandler = Utils.establishConnection();
             if (accountHandler.signUp(new UserModel("abdo", "abdo@a.com", "1111", "1111"))) {
-                Parent root = FXMLLoader.load(getClass().getResource("/multimode/MultiMode.fxml"));
-                Utils.switchWindow(root);
+//                Parent root = FXMLLoader.load(getClass().getResource("/multimode/MultiMode.fxml"));
+//                Utils.switchWindow(root);
+handler.setScene("/choosemode/SelectMode.fxml", "dfkjh", 500, 500, true);
+
                 System.out.println("account handler communication ");
             } else {
                                 System.out.println("else sin up ");
@@ -102,10 +105,11 @@ public class SignupController implements Initializable {
 
     @FXML
     private void loginAction(ActionEvent event) throws IOException {
-        btnSignup.getScene().getWindow().hide();
-
-        Parent root = FXMLLoader.load(getClass().getResource("/login/login.fxml"));
-        Utils.switchWindow(root);
+//        btnSignup.getScene().getWindow().hide();
+//
+//        Parent root = FXMLLoader.load(getClass().getResource("/login/login.fxml"));
+//        Utils.switchWindow(root);
+        handler.setScene("/login/login.fxml", "dfkjh", 500, 500, true);
 
     }
 

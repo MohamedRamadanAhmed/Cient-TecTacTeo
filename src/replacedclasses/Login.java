@@ -118,6 +118,7 @@ public class Login extends AnchorPane {
         signUpBtn.setText("Sign Up");
         signUpBtn.setOnAction((event) -> {
             try {
+
                 utils.Utils.switchWindow(FXMLLoader.load(getClass().getResource("/sinup/signup.fxml")));
             } catch (IOException ex) {
                 Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);

@@ -37,6 +37,7 @@ public class SinUp extends AnchorPane {
     protected final TextField tfEmail;
     public final TextField tfName;
     public Stage primaryStage;
+    
 
     public SinUp(Stage PrimaryStage) {
         this.primaryStage = PrimaryStage;
@@ -88,6 +89,7 @@ public class SinUp extends AnchorPane {
             try {
                 root = FXMLLoader.load(getClass().getResource("login.fxml"));
                 Utils.switchWindow(root);
+                
             } catch (IOException ex) {
                 Logger.getLogger(SinUp.class.getName()).log(Level.SEVERE, null, ex);
             }

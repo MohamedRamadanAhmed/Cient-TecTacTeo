@@ -10,7 +10,6 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
-import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,12 +29,23 @@ import javax.swing.JOptionPane;
 
 public class Utils {
 
+    private static String symbol = "x";
+
+    public static void setSymbol(String symbol) {
+        Utils.symbol = symbol;
+    }
+
+    public static String getSymbol() {
+        return symbol;
+    }
+
     static UserAccountHandler userAccountHandler;
     private static UserModel model = new UserModel();
     private static UserModel player2 = new UserModel();
 
     static boolean b = false;
     public static boolean isPlaying = false;
+    SceneHandler handler = SceneHandler.getInstance();
 
     public static void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
         Alert alert = new Alert(alertType);
@@ -74,10 +84,6 @@ public class Utils {
                             System.out.println("button no clicked");
                             b = false;
                         }
-
-//                        String s = playerName + "request to play with you ";
-//
-//                        alert.setContentText(s);
                     }
                 };
 
@@ -141,6 +147,8 @@ public class Utils {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/login/login.fxml"));
             Utils.switchWindow(root);
+            handler.setScene("/login/login.fxml", "dfkjh", 500, 500, true);
+
         } catch (IOException ex) {
             Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
         }

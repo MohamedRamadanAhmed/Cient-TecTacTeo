@@ -14,8 +14,11 @@ import main.XMLRecord;
 import utils.Utils;
 
 import singlemode.SingleModeController;
+import utils.SceneHandler;
 
 public class TicTacTocGame {
+
+    private SceneHandler handler = SceneHandler.getInstance();
 
     public String getMySymbol() {
         return MySymbol;
@@ -234,7 +237,7 @@ public class TicTacTocGame {
     public void computerAction(int x) {
 
         System.out.println(x);
-       
+
         switchPlayerSymbol();
         switch (x) {
             case 0:
@@ -275,10 +278,11 @@ public class TicTacTocGame {
         }
 
     }
-public void playRecord(int x,String symbol) {
+
+    public void playRecord(int x, String symbol) {
 
         System.out.println(x);
-       
+
         switchPlayerSymbol();
         switch (x) {
             case 0:
@@ -319,6 +323,7 @@ public void playRecord(int x,String symbol) {
         }
 
     }
+
     public void gameStartSingleMode(Label l, int move) {
 
         if (!winFlag) {
@@ -328,7 +333,7 @@ public void playRecord(int x,String symbol) {
                 }
                 if (!winFlag) {
                     if (getCounter() < 9) {
-                       
+
                         computerAction(getRandom());
 
                         checkWining();
@@ -356,17 +361,22 @@ public void playRecord(int x,String symbol) {
         Parent root = null;
         if (x == 0) {
             try {
-                root = FXMLLoader.load(getClass().getResource("/singlemode/SingleMode.fxml"));
-                Utils.switchWindow(root);
+//                root = FXMLLoader.load(getClass().getResource("/singlemode/SingleMode.fxml"));
+//                Utils.switchWindow(root);
+
+                handler.setScene("/singlemode/SingleMode.fxml", "hg", 800, 800, true);
             } catch (IOException ex) {
-                Logger.getLogger(TicTacTocGame.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(TicTacTocGame.class
+                        .getName()).log(Level.SEVERE, null, ex);
             }
 
         } else if (x == 1) {
 
             try {
-                root = FXMLLoader.load(getClass().getResource("/sinup/signup.fxml"));
-                Utils.switchWindow(root);
+                handler.setScene("/sinup/signup.fxml", "hg", 800, 800, true);
+
+//                root = FXMLLoader.load(getClass().getResource("/sinup/signup.fxml"));
+//                Utils.switchWindow(root);
             } catch (IOException ex) {
             }
         }

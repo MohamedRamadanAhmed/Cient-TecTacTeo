@@ -3,11 +3,16 @@ package multimode;
 import client.server.remote.interfaces.Step;
 import client.server.remote.interfaces.UserAccountHandler;
 import client.server.remote.interfaces.UserModel;
+import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.layout.Pane;
+import model.ClintImp;
+//import static multimode.MultiModeController.lable1;
 import utils.Utils;
 
 public class MyControoler {
@@ -15,8 +20,17 @@ public class MyControoler {
     Utils util = new Utils();
     static UserAccountHandler accountHandler = null;
 
+    private Step step;
+    FXMLLoader fxmlLoader = new FXMLLoader();
+    Pane p;
+    MultiModeController multiModeController;
+    
     public static boolean logOut() throws RemoteException, NotBoundException {
         return accountHandler.logOut(Utils.getCurrentUser().getEmailAddress());
+    }
+
+    public MyControoler() {
+
     }
 
     static void transmitMove(int i, String x, UserModel model) {
@@ -32,21 +46,34 @@ public class MyControoler {
 
     }
 
-    public static void drawMove(Step s) {
-
-        if (s != null) {
-//            MultiModeController.lable1.setText(s.getDraw());
-            System.out.println(s.getDraw() + "object is null");
-
-        } else {
-            System.out.println(s.getDraw() + "object is null");
-
-        }
-
+    public void setStep(Step step) {
+        this.step = step;
+    
+        System.out.println(step.draw);
+        System.out.println(step.position);
+        System.out.println(step.player);
     }
 
-    MultiModeController multiModeController = new MultiModeController();
+    public Step getStep() {
+        return step;
+    }
 
+//    public void drawMove(Step s) {
+//
+//        if (s != null) {
+//            try {
+//                p = fxmlLoader.load(getClass().getResource("/multimode/MultiMode.fxml").openStream());
+//                multiModeController = (MultiModeController) fxmlLoader.getController();
+//                multiModeController.drawMove(s);
+//            } catch (IOException ex) {
+//                Logger.getLogger(MyControoler.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//
+//        } else {
+//
+//            System.out.println(s.getDraw() + "object is null");
+//        }
+//    }
     public void startGame() {
         Utils.isPlaying = true;
 
