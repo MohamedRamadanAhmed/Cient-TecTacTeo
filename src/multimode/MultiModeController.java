@@ -10,12 +10,15 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -25,7 +28,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
+import javax.swing.JOptionPane;
 import model.ClintImp;
+import model.TicTacTocGame;
 import utils.SceneHandler;
 import utils.Utils;
 
@@ -71,6 +76,7 @@ public class MultiModeController implements Initializable {
     public GridPane myGridPane;
     @FXML
     private JFXListView<UserModel> listView;
+    String s;
 
     boolean isMyTurnToplay = false;
     int[] game_arr = new int[9];
@@ -131,11 +137,10 @@ public class MultiModeController implements Initializable {
                     @Override
                     public void run() {
                         if (controoler != null) {
-                            // lable1.setText("x");
-                            //ClintImp.isReceving = false;
                             if (step != null) {
-                                // step = controoler.getStep();
+
                                 drawStep(step.getPosition(), step.getDraw());
+                                s = step.getDraw();
                                 ClintImp.isReceving = false;
                             } else {
                                 System.out.println("step is null");
@@ -149,6 +154,23 @@ public class MultiModeController implements Initializable {
             }
         });
         thread.start();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (Utils.isPlaying) {
+                            myGridPane.setVisible(true);
+                        } else {
+                            System.out.println("NO ACTION ");
+                        }
+                    }
+                });
+
+            }
+        }).start();
     }
 
     class Cell extends ListCell<UserModel> {
@@ -159,30 +181,31 @@ public class MultiModeController implements Initializable {
         Pane pane = new Pane();
 
         public Cell() {
-//            new MultiModeController();
             hbox.getChildren().addAll(label, pane, btn);
             hbox.setHgrow(pane, Priority.ALWAYS);
 
             // clicking on list view to request another player to play 
             listView.setOnMouseClicked(event -> {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
 
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (Utils.isPlaying) {
-                                    myGridPane.setVisible(true);
-                                } else {
-                                    System.out.println("NO ACTION ");
-                                }
-                            }
-                        });
-
-                    }
-                }).start();
                 try {
+                    Utils.isMyTurn = true;
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (Utils.isPlaying) {
+                                        myGridPane.setVisible(true);
+                                    } else {
+                                        System.out.println("NO ACTION ");
+                                    }
+                                }
+                            });
+
+                        }
+                    }).start();
                     model = listView.getSelectionModel().getSelectedItem();
                     Utils.setPlayer(model);
                     Utils.setSymbol("x");
@@ -199,6 +222,23 @@ public class MultiModeController implements Initializable {
 
             }
             );
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (Utils.isPlaying) {
+                                myGridPane.setVisible(true);
+                            } else {
+                                System.out.println("NO ACTION ");
+                            }
+                        }
+                    });
+
+                }
+            }).start();
 
         }
 
@@ -227,7 +267,6 @@ public class MultiModeController implements Initializable {
             System.err.println(ex.getMessage());
         }
 
-//        myGridPane.setVisible(false);
         listView.setItems(mylistview);
         GridPane pane = new GridPane();
         Label name = new Label("gg");
@@ -276,64 +315,108 @@ public class MultiModeController implements Initializable {
         }
     }
 
+    void setTextOnlable(Label lable, int position, int i, String symbol) {
+        if (game_arr[position] == 0 && i == 2) {
+            System.out.println("server" + game_arr[position]);
+            game_arr[position] = i;
+            lable.setText(symbol);
+            if (!checkWining()) {
+                Utils.isMyTurn = true;
+            }
+
+        } else if (i == 1) {
+            if (game_arr[position] == 0 && Utils.isMyTurn == true) {
+                game_arr[position] = i;
+                lable.setText(symbol);
+                System.out.println("before" + Utils.isMyTurn);
+                Utils.isMyTurn = false;
+                System.out.println("after" + Utils.isMyTurn);
+                MyControoler.transmitMove(position, Utils.getSymbol(), Utils.getlayer());
+                checkWining();
+            }
+        }
+
+    }
+
+    public void newGame(String msg) {
+
+        int x = JOptionPane.showConfirmDialog(null, msg + "! play again ?");
+        System.out.println(x + "");
+
+        Parent root = null;
+        if (x == 0) {
+            try {
+//                root = FXMLLoader.load(getClass().getResource("/singlemode/SingleMode.fxml"));
+//                Utils.switchWindow(root);
+
+                handler.setScene("/multimode/MultiMode.fxml", "hg", 800, 800, true);
+            } catch (IOException ex) {
+                Logger.getLogger(TicTacTocGame.class
+                        .getName()).log(Level.SEVERE, null, ex);
+            }
+
+        } else if (x == 1) {
+
+            try {
+                handler.setScene("/multimode/MultiMode.fxml", "hg", 800, 800, true);
+
+//                root = FXMLLoader.load(getClass().getResource("/sinup/signup.fxml"));
+//                Utils.switchWindow(root);
+            } catch (IOException ex) {
+            }
+        }
+    }
+
     @FXML
     void lable1Action(MouseEvent event) {
-        lable1.setText(Utils.getSymbol());
-        MyControoler.transmitMove(0, Utils.getSymbol(), Utils.getlayer());
+        setTextOnlable(lable1, 0, 1, Utils.getSymbol());
     }
 
     @FXML
     void lable2Action(MouseEvent event) {
-        lable2.setText(Utils.getSymbol());
-        MyControoler.transmitMove(1, Utils.getSymbol(), Utils.getlayer());
+        setTextOnlable(lable2, 1, 1, Utils.getSymbol());
 
     }
 
     @FXML
     void lable3Action(MouseEvent event) {
-        lable3.setText(Utils.getSymbol());
-        MyControoler.transmitMove(2, Utils.getSymbol(), Utils.getlayer());
+
+        setTextOnlable(lable3, 2, 1, Utils.getSymbol());
 
     }
 
     @FXML
     void lable4Action(MouseEvent event) {
-        lable4.setText(Utils.getSymbol());
-        MyControoler.transmitMove(3, Utils.getSymbol(), Utils.getlayer());
+        setTextOnlable(lable4, 3, 1, Utils.getSymbol());
     }
 
     @FXML
     void lable5Action(MouseEvent event) {
-        lable5.setText(Utils.getSymbol());
-        MyControoler.transmitMove(4, Utils.getSymbol(), Utils.getlayer());
+        setTextOnlable(lable5, 4, 1, Utils.getSymbol());
 
     }
 
     @FXML
     void lable6Action(MouseEvent event) {
-        lable6.setText(Utils.getSymbol());
-        MyControoler.transmitMove(5, Utils.getSymbol(), Utils.getlayer());
+        setTextOnlable(lable6, 5, 1, Utils.getSymbol());
 
     }
 
     @FXML
     void lable7Action(MouseEvent event) {
-        lable7.setText(Utils.getSymbol());
-        MyControoler.transmitMove(6, Utils.getSymbol(), Utils.getlayer());
+        setTextOnlable(lable7, 6, 1, Utils.getSymbol());
 
     }
 
     @FXML
     void lable8Action(MouseEvent event) {
-        lable8.setText(Utils.getSymbol());
-        MyControoler.transmitMove(7, Utils.getSymbol(), Utils.getlayer());
+        setTextOnlable(lable8, 7, 1, Utils.getSymbol());
 
     }
 
     @FXML
     void lable9Action(MouseEvent event) {
-        lable9.setText(Utils.getSymbol());
-        MyControoler.transmitMove(8, Utils.getSymbol(), Utils.getlayer());
+        setTextOnlable(lable9, 8, 1, Utils.getSymbol());
 
     }
 
@@ -345,7 +428,7 @@ public class MultiModeController implements Initializable {
                 || (game_arr[0] == 1 && game_arr[3] == 1 && game_arr[6] == 1)
                 || (game_arr[1] == 1 && game_arr[4] == 1 && game_arr[7] == 1)
                 || (game_arr[2] == 1 && game_arr[5] == 1 && game_arr[8] == 1)) {
-            System.out.println("X is Winning");
+            newGame("you win");
 
             return true;
         } else if ((game_arr[0] == 2 && game_arr[1] == 2 && game_arr[2] == 2)
@@ -356,7 +439,8 @@ public class MultiModeController implements Initializable {
                 || (game_arr[0] == 2 && game_arr[3] == 2 && game_arr[6] == 2)
                 || (game_arr[1] == 2 && game_arr[4] == 2 && game_arr[7] == 2)
                 || (game_arr[2] == 2 && game_arr[5] == 2 && game_arr[8] == 2)) {
-            System.out.println("O is Winning");
+            System.out.println("sorry you lose ");
+            newGame("you lose");
             return true;
         }
         return false;
@@ -392,31 +476,34 @@ public class MultiModeController implements Initializable {
     private void drawStep(int position, String symbol) {
         switch (position) {
             case 0:
-                lable1.setText(symbol);
+                setTextOnlable(lable1, position, 2, symbol);
                 break;
             case 1:
-                lable2.setText(symbol);
+                setTextOnlable(lable2, position, 2, symbol);
+
                 break;
             case 2:
-                lable3.setText(symbol);
+                setTextOnlable(lable3, position, 2, symbol);
+
                 break;
             case 3:
-                lable4.setText(symbol);
+                setTextOnlable(lable4, position, 2, symbol);
+
                 break;
             case 4:
-                lable5.setText(symbol);
+                setTextOnlable(lable5, position, 2, symbol);
                 break;
             case 5:
-                lable6.setText(symbol);
+                setTextOnlable(lable6, position, 2, symbol);
                 break;
             case 6:
-                lable7.setText(symbol);
+                setTextOnlable(lable7, position, 2, symbol);
                 break;
             case 7:
-                lable8.setText(symbol);
+                setTextOnlable(lable8, position, 2, symbol);
                 break;
             case 8:
-                lable9.setText(symbol);
+                setTextOnlable(lable9, position, 2, symbol);
                 break;
         }
     }

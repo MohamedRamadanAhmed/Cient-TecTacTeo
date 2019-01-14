@@ -4,14 +4,9 @@ import client.server.remote.interfaces.ClientInterface;
 import client.server.remote.interfaces.Step;
 import client.server.remote.interfaces.UserAccountHandler;
 import client.server.remote.interfaces.UserModel;
-import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.Pane;
 import javax.swing.JOptionPane;
 import multimode.MultiModeController;
 import multimode.MyControoler;
@@ -28,6 +23,7 @@ public class ClintImp extends UnicastRemoteObject implements ClientInterface {
 
         accountHandler = Utils.establishConnection();
     }
+
     @Override
     public boolean requestGame(UserModel model1, UserModel player2) throws RemoteException {
         int x = JOptionPane.showConfirmDialog(null, model1.getUserName());
@@ -35,6 +31,7 @@ public class ClintImp extends UnicastRemoteObject implements ClientInterface {
         if (x == 0) {
             Utils.setPlayer(model1);
             Utils.setSymbol("o");
+            
             return true;
 
         } else {

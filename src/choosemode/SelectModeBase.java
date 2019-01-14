@@ -29,7 +29,7 @@ public class SelectModeBase extends Application {
     }
 
     public static void main(String[] args) {
-        System.out.println("abdo awd multiModeAction");
+        //System.out.println("abdo awd multiModeAction");
         SelectModeBase base = new SelectModeBase();
         base.launch(args);
     }

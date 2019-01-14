@@ -30,6 +30,7 @@ import javax.swing.JOptionPane;
 public class Utils {
 
     private static String symbol = "x";
+    public static boolean isMyTurn;
 
     public static void setSymbol(String symbol) {
         Utils.symbol = symbol;

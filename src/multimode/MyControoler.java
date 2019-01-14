@@ -57,22 +57,6 @@ public class MyControoler {
         return step;
     }
 
-//    public void drawMove(Step s) {
-//
-//        if (s != null) {
-//            try {
-//                p = fxmlLoader.load(getClass().getResource("/multimode/MultiMode.fxml").openStream());
-//                multiModeController = (MultiModeController) fxmlLoader.getController();
-//                multiModeController.drawMove(s);
-//            } catch (IOException ex) {
-//                Logger.getLogger(MyControoler.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//
-//        } else {
-//
-//            System.out.println(s.getDraw() + "object is null");
-//        }
-//    }
     public void startGame() {
         Utils.isPlaying = true;
 
