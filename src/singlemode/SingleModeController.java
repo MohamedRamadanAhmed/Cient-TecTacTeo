@@ -153,7 +153,7 @@ public class SingleModeController implements Initializable {
         goOnline.getScene().getWindow().hide();
         Parent root = FXMLLoader.load(getClass().getResource("/choosemode/SelectMode.fxml"));
         utils.Utils.switchWindow(root);
-handler.setScene("/choosemode/SelectMode.fxml", "dfkjh", 500, 500, true);
+        handler.setScene("/choosemode/SelectMode.fxml", " SelectMode ", 500, 500, true);
 
     }
 

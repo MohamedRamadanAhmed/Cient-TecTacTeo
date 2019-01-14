@@ -364,7 +364,7 @@ public class TicTacTocGame {
 //                root = FXMLLoader.load(getClass().getResource("/singlemode/SingleMode.fxml"));
 //                Utils.switchWindow(root);
 
-                handler.setScene("/singlemode/SingleMode.fxml", "hg", 800, 800, true);
+                handler.setScene("/singlemode/SingleMode.fxml", " Single Mode", 800, 800, true);
             } catch (IOException ex) {
                 Logger.getLogger(TicTacTocGame.class
                         .getName()).log(Level.SEVERE, null, ex);
@@ -373,7 +373,7 @@ public class TicTacTocGame {
         } else if (x == 1) {
 
             try {
-                handler.setScene("/sinup/signup.fxml", "hg", 800, 800, true);
+                handler.setScene("/sinup/signup.fxml", " SignU p", 800, 800, true);
 
 //                root = FXMLLoader.load(getClass().getResource("/sinup/signup.fxml"));
 //                Utils.switchWindow(root);

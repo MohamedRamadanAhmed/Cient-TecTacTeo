@@ -92,7 +92,7 @@ public class SelectModeBase extends Application {
             public void handle(ActionEvent event) {
                 try {
                     System.out.println("abdo awd single mode");
-                    handler.setScene("/singlemode/SingleMode.fxml", "sinkjbsdjb", 800, 500, true);
+                    handler.setScene("/singlemode/SingleMode.fxml", "single mode ", 800, 500, true);
                 } catch (IOException ex) {
                     Logger.getLogger(SelectModeBase.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -107,7 +107,7 @@ public class SelectModeBase extends Application {
                 try {
                     System.out.println("abdo awd multiModeAction");
 
-                    handler.setScene("/sinup/signup.fxml", "hg", 800, 800, true);
+                    handler.setScene("/sinup/signup.fxml", " Sign Up ", 800, 800, true);
                 } catch (IOException ex) {
                     Logger.getLogger(SelectModeBase.class.getName()).log(Level.SEVERE, null, ex);
                 }

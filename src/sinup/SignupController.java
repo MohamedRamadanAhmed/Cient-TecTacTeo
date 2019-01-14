@@ -15,9 +15,7 @@ import java.rmi.RemoteException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -25,8 +23,8 @@ import javafx.scene.control.TextField;
 import utils.SceneHandler;
 import utils.Utils;
 
-
 public class SignupController implements Initializable {
+
     SceneHandler handler = SceneHandler.getInstance();
 
     @FXML
@@ -49,54 +47,54 @@ public class SignupController implements Initializable {
 
     @FXML
     private void signupAction(ActionEvent event) {
-       // System.out.println("sin up was clicked ");
+        // System.out.println("sin up was clicked ");
         try {
-//            if (!(Utils.validateName(userName.getText()))) {
-//                Utils.showAlert(Alert.AlertType.ERROR, btnSignup.getScene().getWindow(), "Sin up  Error!", "Please enter valid  name");
-//
-//                System.out.println("sin up was clicked ");
-//                return;
-//            }
-//            if (!(Utils.validateEmail(tfEmail.getText()))) {
-//                Utils.showAlert(Alert.AlertType.ERROR, btnSignup.getScene().getWindow(), "Sin up  Error!", "Please enter valid email address");
-//                System.out.println("sin up was clicked ");
-//                return;
-//            }
-//            if (tfPassword.getText().trim().isEmpty() || tfPassword.getText().trim().length() <= 3) {
-//
-//                System.out.println("sin up was clickeddd ");
-//                System.out.println("sin up was clickeddd ");
-//
-//                Utils.showAlert(Alert.AlertType.ERROR, btnSignup.getScene().getWindow(), "Sin up  Error!", "password must be 3 digits at least");
-//                return;
-//            }
-//            if (!(tfPassword.getText().equals(tfConfrmPassword.getText()))) {
-//
-//                System.out.println("sin up was clicked ");
-//                Utils.showAlert(Alert.AlertType.ERROR, btnSignup.getScene().getWindow(), "Sin up  Error!", "password not confirmed");
-//                return;
-//            }
+            if (!(Utils.validateName(userName.getText()))) {
+                Utils.showAlert(Alert.AlertType.ERROR, btnSignup.getScene().getWindow(), "Sin up  Error!", "Please enter valid  name");
+
+                System.out.println("sin up was clicked ");
+                return;
+            }
+            if (!(Utils.validateEmail(tfEmail.getText()))) {
+                Utils.showAlert(Alert.AlertType.ERROR, btnSignup.getScene().getWindow(), "Sin up  Error!", "Please enter valid email address");
+                System.out.println("sin up was clicked ");
+                return;
+            }
+            if (tfPassword.getText().trim().isEmpty() || tfPassword.getText().trim().length() <= 3) {
+
+                System.out.println("sin up was clickeddd ");
+                System.out.println("sin up was clickeddd ");
+
+                Utils.showAlert(Alert.AlertType.ERROR, btnSignup.getScene().getWindow(), "Sin up  Error!", "password must be 3 digits at least");
+                return;
+            }
+            if (!(tfPassword.getText().equals(tfConfrmPassword.getText()))) {
+
+                System.out.println("sin up was clicked ");
+                Utils.showAlert(Alert.AlertType.ERROR, btnSignup.getScene().getWindow(), "Sin up  Error!", "password not confirmed");
+                return;
+            }
             System.out.println("sin up was clickeddd ");
             UserAccountHandler accountHandler = Utils.establishConnection();
-            if (accountHandler.signUp(new UserModel("abdo", "abdo@a.com", "1111", "1111"))) {
-//                Parent root = FXMLLoader.load(getClass().getResource("/multimode/MultiMode.fxml"));
-//                Utils.switchWindow(root);
-handler.setScene("/choosemode/SelectMode.fxml", "dfkjh", 500, 500, true);
+            if (accountHandler.signUp(new UserModel(userName.getText(), tfEmail.getText(), tfPassword.getText(), "1111"))) {
+                handler.setScene("/login/login.fxml", "login", 500, 500, true);
 
                 System.out.println("account handler communication ");
+                System.out.println("testing sin up  ");
+
             } else {
-                                System.out.println("else sin up ");
+                System.out.println("else sin up ");
                 Utils.showAlert(Alert.AlertType.ERROR, btnSignup.getScene().getWindow(), "sin up error", "this email address already exists ");
             }
         } catch (RemoteException | UnknownHostException ex) {
             ex.printStackTrace();
             // Logger.getLogger(SinUp.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-                        ex.printStackTrace();
+            ex.printStackTrace();
 
             //  Logger.getLogger(SignupController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NotBoundException ex) {
-                        ex.printStackTrace();
+            ex.printStackTrace();
 
 //            Logger.getLogger(SignupController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -109,7 +107,7 @@ handler.setScene("/choosemode/SelectMode.fxml", "dfkjh", 500, 500, true);
 //
 //        Parent root = FXMLLoader.load(getClass().getResource("/login/login.fxml"));
 //        Utils.switchWindow(root);
-        handler.setScene("/login/login.fxml", "dfkjh", 500, 500, true);
+        handler.setScene("/login/login.fxml", "login", 500, 500, true);
 
     }
 

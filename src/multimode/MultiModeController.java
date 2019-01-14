@@ -87,10 +87,7 @@ public class MultiModeController implements Initializable {
     List<UserModel> onlineUsersList;
     MyControoler controoler;
 
-    private Step step;
     private UserAccountHandler accountHandler;
-    private String symbol = "x";
-    private int position = 3;
     private SceneHandler handler;
     static MultiModeController m;
 
@@ -295,19 +292,21 @@ public class MultiModeController implements Initializable {
     @FXML
     private void backAction(ActionEvent event) throws IOException {
         exit.getScene().getWindow().hide();
-        handler.setScene("choosemode/SelectMode", "hg", 800, 800, true);
+        handler.setScene("choosemode/SelectMode", "SelectMode", 800, 800, true);
     }
 
     @FXML
     void logOutAction(ActionEvent event) throws RemoteException, IOException, NotBoundException {
         try {
             if (MyControoler.logOut()) {
-                System.out.println(MyControoler.logOut() + "xxx");
-                handler.setScene("/choosemode/SelectMode.fxml", "", 800, 800, true);
+                //  System.out.println(MyControoler.logOut() + "xxx");
+                handler.setScene("/sinup/signup.fxml", " Sin up  ", 800, 800, true);
+
+                //handler.setScene("/choosemode/SelectMode.fxml", "choose mode", 800, 800, true);
             } else {
                 util.missingConnection();
             }
-        } catch (RemoteException | NotBoundException ex) {
+        } catch (RemoteException ex) {
             util.missingConnection();
 
         }
@@ -338,13 +337,9 @@ public class MultiModeController implements Initializable {
         int x = JOptionPane.showConfirmDialog(null, msg + "! play again ?");
         System.out.println(x + "");
 
-        Parent root = null;
         if (x == 0) {
             try {
-//                root = FXMLLoader.load(getClass().getResource("/singlemode/SingleMode.fxml"));
-//                Utils.switchWindow(root);
-
-                handler.setScene("/multimode/MultiMode.fxml", "hg", 800, 800, true);
+                handler.setScene("/multimode/MultiMode.fxml", "MultiMode", 800, 800, true);
             } catch (IOException ex) {
                 Logger.getLogger(TicTacTocGame.class
                         .getName()).log(Level.SEVERE, null, ex);
@@ -353,7 +348,7 @@ public class MultiModeController implements Initializable {
         } else if (x == 1) {
 
             try {
-                handler.setScene("/multimode/MultiMode.fxml", "hg", 800, 800, true);
+                handler.setScene("/multimode/MultiMode.fxml", "MultiMode", 800, 800, true);
 
 //                root = FXMLLoader.load(getClass().getResource("/sinup/signup.fxml"));
 //                Utils.switchWindow(root);
@@ -370,14 +365,12 @@ public class MultiModeController implements Initializable {
     @FXML
     void lable2Action(MouseEvent event) {
         setTextOnlable(lable2, 1, 1, Utils.getSymbol());
-
     }
 
     @FXML
     void lable3Action(MouseEvent event) {
 
         setTextOnlable(lable3, 2, 1, Utils.getSymbol());
-
     }
 
     @FXML
@@ -388,19 +381,16 @@ public class MultiModeController implements Initializable {
     @FXML
     void lable5Action(MouseEvent event) {
         setTextOnlable(lable5, 4, 1, Utils.getSymbol());
-
     }
 
     @FXML
     void lable6Action(MouseEvent event) {
         setTextOnlable(lable6, 5, 1, Utils.getSymbol());
-
     }
 
     @FXML
     void lable7Action(MouseEvent event) {
         setTextOnlable(lable7, 6, 1, Utils.getSymbol());
-
     }
 
     @FXML
@@ -415,7 +405,8 @@ public class MultiModeController implements Initializable {
 
     }
 
-    public boolean checkWining() throws RemoteException {
+    public boolean checkWining() {
+        int score;
         if ((game_arr[0] == 1 && game_arr[1] == 1 && game_arr[2] == 1) || (game_arr[3] == 1 && game_arr[4] == 1 && game_arr[5] == 1)
                 || (game_arr[6] == 1 && game_arr[7] == 1 && game_arr[8] == 1)
                 || (game_arr[0] == 1 && game_arr[4] == 1 && game_arr[8] == 1)
@@ -424,7 +415,12 @@ public class MultiModeController implements Initializable {
                 || (game_arr[1] == 1 && game_arr[4] == 1 && game_arr[7] == 1)
                 || (game_arr[2] == 1 && game_arr[5] == 1 && game_arr[8] == 1)) {
             newGame("you win");
-            accountHandler.increaseWinnerScore(Utils.getCurrentUser().getEmailAddress());
+            try {
+                score = accountHandler.increaseWinnerScore(Utils.getCurrentUser().getEmailAddress());
+                System.out.println("score" + score);
+            } catch (RemoteException ex) {
+                Logger.getLogger(MultiModeController.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
             return true;
         } else if ((game_arr[0] == 2 && game_arr[1] == 2 && game_arr[2] == 2)
@@ -435,7 +431,12 @@ public class MultiModeController implements Initializable {
                 || (game_arr[0] == 2 && game_arr[3] == 2 && game_arr[6] == 2)
                 || (game_arr[1] == 2 && game_arr[4] == 2 && game_arr[7] == 2)
                 || (game_arr[2] == 2 && game_arr[5] == 2 && game_arr[8] == 2)) {
-            accountHandler.increaseWinnerScore(Utils.getlayer().getEmailAddress());
+            try {
+                score = accountHandler.increaseWinnerScore(Utils.getlayer().getEmailAddress());
+                System.out.println("score" + score);
+            } catch (RemoteException ex) {
+                Logger.getLogger(MultiModeController.class.getName()).log(Level.SEVERE, null, ex);
+            }
             newGame("you lose");
             return true;
         }
@@ -449,7 +450,6 @@ public class MultiModeController implements Initializable {
         try {
             UserAccountHandler accountHandler1 = Utils.establishConnection();
             onlineUsersList = accountHandler1.getOnlinePlayer();
-
             mylistview = FXCollections.observableArrayList(onlineUsersList);
 
         } catch (RemoteException | NotBoundException ex) {
@@ -458,7 +458,6 @@ public class MultiModeController implements Initializable {
             System.err.println(ex.getMessage());
         }
 
-//        myGridPane.setVisible(false);
         listView.setItems(mylistview);
         GridPane pane = new GridPane();
         Label name = new Label("gg");
@@ -466,7 +465,6 @@ public class MultiModeController implements Initializable {
         pane.add(name, 0, 0);
         pane.add(btn, 0, 1);
         listView.setCellFactory(param -> new Cell());
-
     }
 
     private void drawStep(int position, String symbol) {

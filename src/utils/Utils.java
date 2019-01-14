@@ -148,7 +148,7 @@ public class Utils {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/login/login.fxml"));
             Utils.switchWindow(root);
-            handler.setScene("/login/login.fxml", "dfkjh", 500, 500, true);
+            handler.setScene("/login/login.fxml", "login", 500, 500, true);
 
         } catch (IOException ex) {
             Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);

@@ -9,23 +9,30 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Alert;
 import javafx.scene.layout.Pane;
-//import static multimode.MultiModeController.lable1;
 import utils.Utils;
 
 public class MyControoler {
 
     Utils util = new Utils();
     static UserAccountHandler accountHandler = null;
-
     private Step step;
     FXMLLoader fxmlLoader = new FXMLLoader();
     Pane p;
     MultiModeController multiModeController;
 
-    public static boolean logOut() throws RemoteException, NotBoundException {
-        return accountHandler.logOut(Utils.getCurrentUser().getEmailAddress());
+    public static boolean logOut() {
+        try {
+            accountHandler = Utils.establishConnection();
+            return accountHandler.logOut(Utils.getCurrentUser().getEmailAddress());
+        } catch (RemoteException ex) {
+            Logger.getLogger(MyControoler.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NullPointerException ex) {
+            Logger.getLogger(MyControoler.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NotBoundException ex) {
+            Logger.getLogger(MyControoler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 
     public MyControoler() {

@@ -20,7 +20,7 @@ public class TicTacToeProject extends Application {
 
 //        root = FXMLLoader.load(getClass().getResource("/choosemode/SelectMode.fxml"));
 //        Utils.switchWindow(root);
-        handler.setScene("/choosemode/SelectMode.fxml", "hg", 800, 800, true);
+        handler.setScene("/choosemode/SelectMode.fxml", " Select Mode", 800, 800, true);
 
     }
 }
