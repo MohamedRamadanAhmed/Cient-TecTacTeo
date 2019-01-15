@@ -11,7 +11,6 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
 import utils.Utils;
-
 public class MyControoler {
 
     Utils util = new Utils();

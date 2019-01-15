@@ -18,10 +18,11 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -76,6 +77,18 @@ public class MultiModeController implements Initializable {
     public GridPane myGridPane;
     @FXML
     private JFXListView<UserModel> listView;
+
+    @FXML
+    private TextArea txtAreaChat;
+    @FXML
+    private TextField txtFieldChat;
+
+    @FXML
+    private Button btnSendMessage;
+
+    @FXML
+    private Label lableReciever;
+
     String s;
 
     boolean isMyTurnToplay = false;
@@ -170,6 +183,24 @@ public class MultiModeController implements Initializable {
         }).start();
     }
 
+    public void print(UserModel player1, String message) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        txtAreaChat.appendText(player1.getUserName() + " : " + message + Utils.getCurrentDate() + "\n");
+
+                    }
+                });
+
+            }
+        }).start();
+
+    }
+
     class Cell extends ListCell<UserModel> {
 
         HBox hbox = new HBox();
@@ -208,7 +239,7 @@ public class MultiModeController implements Initializable {
                     Utils.setSymbol("x");
                     listView.setOnMouseClicked(null);
 
-                    MyControoler.requestGame(Utils.getlayer());
+                    MyControoler.requestGame(Utils.getlPayer());
                 } catch (RemoteException ex) {
                     util.missingConnection();
                 } catch (NotBoundException ex) {
@@ -265,6 +296,7 @@ public class MultiModeController implements Initializable {
         }
 
         listView.setItems(mylistview);
+        listView.getItems().remove(Utils.getCurrentUser());
         GridPane pane = new GridPane();
         Label name = new Label("gg");
         Button btn = new Button("dd");
@@ -272,6 +304,10 @@ public class MultiModeController implements Initializable {
         pane.add(btn, 0, 1);
         listView.setCellFactory(param -> new Cell());
         myGridPane.setVisible(false);
+
+        SceneHandler.getInstance().getStage().setOnCloseRequest((event) -> {
+            controoler.logOut();
+        });
     }
 
     @FXML
@@ -325,7 +361,7 @@ public class MultiModeController implements Initializable {
                 game_arr[position] = i;
                 lable.setText(symbol);
                 Utils.isMyTurn = false;
-                MyControoler.transmitMove(position, Utils.getSymbol(), Utils.getlayer());
+                MyControoler.transmitMove(position, Utils.getSymbol(), Utils.getlPayer());
                 checkWining();
             }
         }
@@ -432,7 +468,7 @@ public class MultiModeController implements Initializable {
                 || (game_arr[1] == 2 && game_arr[4] == 2 && game_arr[7] == 2)
                 || (game_arr[2] == 2 && game_arr[5] == 2 && game_arr[8] == 2)) {
             try {
-                score = accountHandler.increaseWinnerScore(Utils.getlayer().getEmailAddress());
+                score = accountHandler.increaseWinnerScore(Utils.getlPayer().getEmailAddress());
                 System.out.println("score" + score);
             } catch (RemoteException ex) {
                 Logger.getLogger(MultiModeController.class.getName()).log(Level.SEVERE, null, ex);
@@ -504,5 +540,21 @@ public class MultiModeController implements Initializable {
 
     public static MultiModeController getInstance() {
         return m;
+    }
+
+    @FXML
+    void btnSendMessageClicked(ActionEvent event) {
+        String message;
+
+        try {
+            accountHandler = Utils.establishConnection();
+            message = txtFieldChat.getText();
+            accountHandler.sendMessage(Utils.getCurrentUser(), Utils.getlPayer(), message);
+        } catch (RemoteException ex) {
+            Logger.getLogger(MultiModeController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NotBoundException ex) {
+            Logger.getLogger(MultiModeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 }

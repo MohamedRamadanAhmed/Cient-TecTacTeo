@@ -44,7 +44,7 @@
                                         <Button fx:id="exit" layoutX="158.0" layoutY="242.0" mnemonicParsing="false" onAction="#exitAction" prefHeight="25.0" prefWidth="111.0" style="-fx-background-radius: 20;" text="Exit Game" />
                                         <Button fx:id="record" layoutX="14.0" layoutY="351.0" mnemonicParsing="false" onAction="#recordAction" prefHeight="25.0" prefWidth="114.0" style="-fx-background-radius: 20;" text="Record" />
                                         <Button fx:id="back" layoutX="157.0" layoutY="351.0" mnemonicParsing="false" onAction="#backAction" prefHeight="25.0" prefWidth="114.0" style="-fx-background-radius: 20;" text="Back" />
-                              <Button fx:id="btnLogout" layoutX="218.0" layoutY="10.0" mnemonicParsing="false" onAction="#logOutAction" prefHeight="25.0" prefWidth="109.0" style="-fx-background-radius: 20;" text="Logot" />
+                                        <Button fx:id="btnLogout" layoutX="218.0" layoutY="10.0" mnemonicParsing="false" onAction="#logOutAction" prefHeight="25.0" prefWidth="109.0" style="-fx-background-radius: 20;" text="Logot" />
                                     </children>
                                 </AnchorPane>
                             </content>
@@ -75,10 +75,10 @@
                                         </Label>
                                         <AnchorPane layoutX="10.0" layoutY="234.0" prefHeight="183.0" prefWidth="274.0">
                                             <children>
-                                                <TextArea layoutX="-1.0" layoutY="30.0" prefHeight="120.0" prefWidth="265.0" />
-                                                <TextField layoutX="-1.0" layoutY="157.0" prefHeight="25.0" prefWidth="207.0" promptText="Enter Message" />
-                                                <Button layoutX="212.0" layoutY="157.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="54.0" text="Send" />
-                                                <Label layoutX="103.0" layoutY="-1.0" text="user 1" textFill="#f8f7f7">
+                                                <TextArea fx:id="txtAreaChat" layoutX="-1.0" layoutY="30.0" prefHeight="120.0" prefWidth="265.0" />
+                                                <TextField fx:id="txtFieldChat" layoutX="-1.0" layoutY="157.0" prefHeight="25.0" prefWidth="207.0" promptText="Enter Message" />
+                                                <Button fx:id="btnSendMessage" layoutX="212.0" layoutY="157.0" mnemonicParsing="false" onAction="#btnSendMessageClicked" prefHeight="25.0" prefWidth="54.0" text="Send" />
+                                                <Label fx:id="lableReciever" layoutX="103.0" layoutY="-1.0"  text="user 1" textFill="#f8f7f7">
                                                     <font>
                                                         <Font size="21.0" />
                                                     </font>
@@ -86,7 +86,7 @@
                                                 <JFXListView fx:id="listView" layoutX="3.0" layoutY="-186.0" prefHeight="166.0" prefWidth="284.0" />
                                             </children>
                                         </AnchorPane>
-                              <Button fx:id="btnRefresh" layoutX="261.0" layoutY="9.0" mnemonicParsing="false" onMouseClicked="#btnRefreshAction" text="refresh" />
+                                        <Button fx:id="btnRefresh" layoutX="261.0" layoutY="9.0" mnemonicParsing="false" onMouseClicked="#btnRefreshAction" text="refresh" />
                                     </children>
                                 </AnchorPane>
                             </content>

@@ -9,6 +9,9 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -160,10 +163,18 @@ public class Utils {
         player2 = currentUser;
     }
 
-    public static UserModel getlayer() {
+    public static UserModel getlPayer() {
 
         return player2;
 
+    }
+
+    public static String getCurrentDate() {
+        Date date = new Date();
+        String strDateFormat = "hh:mm:ss a";
+        DateFormat dateFormat = new SimpleDateFormat(strDateFormat);
+        String currentdate = dateFormat.format(date);
+        return currentdate;
     }
 
 }

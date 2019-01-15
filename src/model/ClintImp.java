@@ -53,4 +53,13 @@ public class ClintImp extends UnicastRemoteObject implements ClientInterface {
         isReceving = true;
         MultiModeController.getInstance().receive(step);
     }
+
+    @Override
+    public void receiverMessage(UserModel player1, String message) throws RemoteException {
+        MultiModeController.getInstance().print(player1,message);
+        
+        
+        
+        
+    }
 }

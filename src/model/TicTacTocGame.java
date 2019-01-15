@@ -2,17 +2,13 @@ package model;
 
 import client.server.remote.interfaces.UserModel;
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 import main.XMLRecord;
-import utils.Utils;
-
 import singlemode.SingleModeController;
 import utils.SceneHandler;
 
