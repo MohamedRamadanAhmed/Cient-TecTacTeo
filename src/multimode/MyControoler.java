@@ -89,6 +89,7 @@ public class MyControoler {
                                 try {
                                     accountHandler.requestGame(Utils.getCurrentUser(), selectedItem);
                                 } catch (NullPointerException ex) {
+                                    System.out.println("ex");
                                 }
                             }
 
