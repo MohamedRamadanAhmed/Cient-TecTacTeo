@@ -4,14 +4,17 @@ import client.server.remote.interfaces.Step;
 import client.server.remote.interfaces.UserAccountHandler;
 import client.server.remote.interfaces.UserModel;
 import com.jfoenix.controls.JFXListView;
+import demo.MoveContent;
 import java.io.IOException;
 import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,6 +33,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javax.swing.JOptionPane;
+import main.XMLRecord;
 import model.ClintImp;
 import model.TicTacTocGame;
 import utils.SceneHandler;
@@ -90,6 +94,7 @@ public class MultiModeController implements Initializable {
     private Label lableReciever;
 
     String s;
+    XMLRecord recordObj = new XMLRecord();
 
     boolean isMyTurnToplay = false;
     int[] game_arr = new int[9];
@@ -103,6 +108,7 @@ public class MultiModeController implements Initializable {
     private UserAccountHandler accountHandler;
     private SceneHandler handler;
     static MultiModeController m;
+    int counter = 0;
 
     public MultiModeController() {
         try {
@@ -323,6 +329,35 @@ public class MultiModeController implements Initializable {
 
     @FXML
     private void recordAction(ActionEvent event) {
+        recordObj.unmarchal();
+             final ArrayList<MoveContent> playrecord = recordObj.playRecord();
+        lable1.setText("");
+        lable2.setText("");
+        lable3.setText("");
+        lable4.setText("");
+        lable5.setText("");
+        lable6.setText("");
+        lable7.setText("");
+        lable8.setText("");
+        lable9.setText("");
+
+          new AnimationTimer() {
+            int i = 0;
+            long lastUpdate = 0;
+
+            @Override
+            public void handle(long now) {
+                if (now - lastUpdate >= 700_000_000) {
+
+                     playRecord(recordObj.playRecord().get(i).getPosition(), playrecord.get(i).getDraw());
+                    i++;
+                    if (i >= playrecord.size()) {
+                        stop();
+                    }
+                    lastUpdate = now;
+                }
+            }
+        }.start();
     }
 
     @FXML
@@ -349,20 +384,33 @@ public class MultiModeController implements Initializable {
     }
 
     void setTextOnlable(Label lable, int position, int i, String symbol) {
+        if (counter == 0) {
+            recordObj.unmarchal();
+        }
         if (game_arr[position] == 0 && i == 2) {
+            System.out.println("server" + game_arr[position]);
             game_arr[position] = i;
             lable.setText(symbol);
+
+                recordObj.addMove(position, symbol);
             if (!checkWining()) {
                 Utils.isMyTurn = true;
             }
+
+            counter++;
 
         } else if (i == 1) {
             if (game_arr[position] == 0 && Utils.isMyTurn == true) {
                 game_arr[position] = i;
                 lable.setText(symbol);
+                System.out.println("before" + Utils.isMyTurn);
                 Utils.isMyTurn = false;
+                System.out.println("after" + Utils.isMyTurn);
                 MyControoler.transmitMove(position, Utils.getSymbol(), Utils.getlPayer());
+                   recordObj.addMove(position, symbol);
                 checkWining();
+
+                counter++;
             }
         }
 
@@ -442,39 +490,36 @@ public class MultiModeController implements Initializable {
     }
 
     public boolean checkWining() {
-        int score;
-        if ((game_arr[0] == 1 && game_arr[1] == 1 && game_arr[2] == 1) || (game_arr[3] == 1 && game_arr[4] == 1 && game_arr[5] == 1)
-                || (game_arr[6] == 1 && game_arr[7] == 1 && game_arr[8] == 1)
-                || (game_arr[0] == 1 && game_arr[4] == 1 && game_arr[8] == 1)
-                || (game_arr[2] == 1 && game_arr[4] == 1 && game_arr[6] == 1)
-                || (game_arr[0] == 1 && game_arr[3] == 1 && game_arr[6] == 1)
-                || (game_arr[1] == 1 && game_arr[4] == 1 && game_arr[7] == 1)
-                || (game_arr[2] == 1 && game_arr[5] == 1 && game_arr[8] == 1)) {
-            newGame("you win");
-            try {
-                score = accountHandler.increaseWinnerScore(Utils.getCurrentUser().getEmailAddress());
-                System.out.println("score" + score);
-            } catch (RemoteException ex) {
-                Logger.getLogger(MultiModeController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        if (counter >= 8) {
+              recordObj.marchal();
+            newGame("no one win");
 
             return true;
-        } else if ((game_arr[0] == 2 && game_arr[1] == 2 && game_arr[2] == 2)
-                || (game_arr[3] == 2 && game_arr[4] == 2 && game_arr[5] == 2)
-                || (game_arr[6] == 2 && game_arr[7] == 2 && game_arr[8] == 2)
-                || (game_arr[0] == 2 && game_arr[4] == 2 && game_arr[8] == 2)
-                || (game_arr[2] == 2 && game_arr[4] == 2 && game_arr[6] == 2)
-                || (game_arr[0] == 2 && game_arr[3] == 2 && game_arr[6] == 2)
-                || (game_arr[1] == 2 && game_arr[4] == 2 && game_arr[7] == 2)
-                || (game_arr[2] == 2 && game_arr[5] == 2 && game_arr[8] == 2)) {
-            try {
-                score = accountHandler.increaseWinnerScore(Utils.getlPayer().getEmailAddress());
-                System.out.println("score" + score);
-            } catch (RemoteException ex) {
-                Logger.getLogger(MultiModeController.class.getName()).log(Level.SEVERE, null, ex);
+        } else {
+            if ((game_arr[0] == 1 && game_arr[1] == 1 && game_arr[2] == 1) || (game_arr[3] == 1 && game_arr[4] == 1 && game_arr[5] == 1)
+                    || (game_arr[6] == 1 && game_arr[7] == 1 && game_arr[8] == 1)
+                    || (game_arr[0] == 1 && game_arr[4] == 1 && game_arr[8] == 1)
+                    || (game_arr[2] == 1 && game_arr[4] == 1 && game_arr[6] == 1)
+                    || (game_arr[0] == 1 && game_arr[3] == 1 && game_arr[6] == 1)
+                    || (game_arr[1] == 1 && game_arr[4] == 1 && game_arr[7] == 1)
+                    || (game_arr[2] == 1 && game_arr[5] == 1 && game_arr[8] == 1)) {
+                recordObj.marchal();
+                newGame("you win");
+                return true;
+
+            } else if ((game_arr[0] == 2 && game_arr[1] == 2 && game_arr[2] == 2)
+                    || (game_arr[3] == 2 && game_arr[4] == 2 && game_arr[5] == 2)
+                    || (game_arr[6] == 2 && game_arr[7] == 2 && game_arr[8] == 2)
+                    || (game_arr[0] == 2 && game_arr[4] == 2 && game_arr[8] == 2)
+                    || (game_arr[2] == 2 && game_arr[4] == 2 && game_arr[6] == 2)
+                    || (game_arr[0] == 2 && game_arr[3] == 2 && game_arr[6] == 2)
+                    || (game_arr[1] == 2 && game_arr[4] == 2 && game_arr[7] == 2)
+                    || (game_arr[2] == 2 && game_arr[5] == 2 && game_arr[8] == 2)) {
+                System.out.println("sorry you lose ");
+                   recordObj.marchal();
+                newGame("you lose");
+                return true;
             }
-            newGame("you lose");
-            return true;
         }
         return false;
     }
@@ -557,4 +602,49 @@ public class MultiModeController implements Initializable {
         }
 
     }
+
+    public void playRecord(int x, String symbol) {
+
+        System.out.println(x);
+
+        switch (x) {
+            case 0:
+                lable1.setText(symbol);
+                break;
+            case 1:
+
+                lable2.setText(symbol);
+                break;
+            case 2:
+
+                lable3.setText(symbol);
+                break;
+            case 3:
+
+                lable4.setText(symbol);
+                break;
+            case 4:
+
+                lable5.setText(symbol);
+                break;
+            case 5:
+
+                lable6.setText(symbol);
+                break;
+            case 6:
+
+                lable7.setText(symbol);
+                break;
+            case 7:
+
+                lable8.setText(symbol);
+                break;
+            case 8:
+
+                lable9.setText(symbol);
+                break;
+        }
+
+    }
+
 }

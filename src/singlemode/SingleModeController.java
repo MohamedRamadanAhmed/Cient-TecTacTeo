@@ -11,6 +11,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import java.util.ResourceBundle;
+import javafx.animation.AnimationTimer;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -114,38 +115,24 @@ public class SingleModeController implements Initializable {
         lblCell7.setText("");
         lblCell8.setText("");
         lblCell9.setText("");
+ new AnimationTimer() {
+            int i = 0;
+            long lastUpdate = 0;
 
-        for (int i = 0; i < playrecord.size(); i++) {
-            System.out.println("abdo awd");
-            game.playRecord(recordObj.playRecord().get(i).getPosition(), playrecord.get(i).getDraw());
+            @Override
+            public void handle(long now) {
+                if (now - lastUpdate >= 700_000_000) {
 
-            Thread thread = new Thread(new Runnable() {
-
-                @Override
-                public void run() {
-                    Runnable updater = new Runnable() {
-
-                        @Override
-                        public void run() {
-
-                        }
-                    };
-
-                    while (true) {
-                        try {
-                            Thread.currentThread().wait(100000);
-                        } catch (InterruptedException ex) {
-                        }
-
-                        // UI update is run on the Application thread
-                        Platform.runLater(updater);
+                    game.playRecord(recordObj.playRecord().get(i).getPosition(), playrecord.get(i).getDraw());
+                    i++;
+                    if (i >= playrecord.size()) {
+                        stop();
                     }
+                    lastUpdate = now;
                 }
-
-            });
-            // don't let thread prevent JVM shutdown
-
-        }
+            }
+        }.start();
+ 
     }
 
     @FXML
