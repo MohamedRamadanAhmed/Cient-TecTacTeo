@@ -86,7 +86,7 @@ public class LoginController implements Initializable {
         // handler.setScene("/sinup/signup.fxml", "Sign Up", 800, 800, true);
     }
 
-    @FXML
+   @FXML
     private void handlePlayNowAction(ActionEvent event) throws IOException {
         handler.setScene("/singlemode/SingleMode.fxml", "Single Mode", 800, 500, true);
     }
