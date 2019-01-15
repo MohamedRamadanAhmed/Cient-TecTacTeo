@@ -21,17 +21,20 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javax.swing.JOptionPane;
 import main.XMLRecord;
 import model.ClintImp;
@@ -61,7 +64,6 @@ public class MultiModeController implements Initializable {
     public Label lable8;
     @FXML
     public Label lable9;
-
     @FXML
     public Label user1;
     @FXML
@@ -75,21 +77,17 @@ public class MultiModeController implements Initializable {
     @FXML
     private Button record;
     @FXML
-
     private Button back;
     @FXML
     public GridPane myGridPane;
     @FXML
     private JFXListView<UserModel> listView;
-
     @FXML
     private TextArea txtAreaChat;
     @FXML
     private TextField txtFieldChat;
-
     @FXML
     private Button btnSendMessage;
-
     @FXML
     private Label lableReciever;
 
@@ -133,6 +131,7 @@ public class MultiModeController implements Initializable {
                         if (Utils.isPlaying) {
                             myGridPane.setVisible(true);
                         } else {
+                             myGridPane.setVisible(false);
                             System.out.println("NO ACTION ");
                         }
                     }
@@ -207,16 +206,84 @@ public class MultiModeController implements Initializable {
 
     }
 
-    class Cell extends ListCell<UserModel> {
+    private class UserListItem extends ListCell<UserModel> {
 
-        HBox hbox = new HBox();
-        Button btn = new Button("Delete");
-        Label label = new Label("");
-        Pane pane = new Pane();
+        private Pane pane;
+        private HBox hBox;
+        private VBox vBox;
+        private Label userNameLabel;
+        private HBox hBox0;
+        private Label userScoreLabel;
+        private Label userScoreValueLabel;
+        private VBox vBox0;
+        // private Image online = new Image("images/online.png", 16, 16, false, false);
+        // private Image offline = new Image("images/offline.png", 16, 16, false, false);
+        private ImageView imageView;
 
-        public Cell() {
-            hbox.getChildren().addAll(label, pane, btn);
-            hbox.setHgrow(pane, Priority.ALWAYS);
+        public UserListItem() {
+            pane = new Pane();
+            pane.setPrefHeight(75.0);
+            pane.setPrefWidth(300.0);
+            pane.setStyle("-fx-background-color: #ffffff;");
+
+            hBox = new HBox();
+            hBox.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+            hBox.setPrefHeight(75.0);
+            hBox.setPrefWidth(300.0);
+            hBox.setPadding(new Insets(10.0));
+
+            vBox = new VBox();
+            vBox.setPrefHeight(55.0);
+            vBox.setPrefWidth(200.0);
+
+            userNameLabel = new Label();
+            userNameLabel.setMaxWidth(200.0);
+            userNameLabel.setText("Amer Shaker");
+            userNameLabel.setPadding(new Insets(5.0));
+            userNameLabel.setFont(new Font("System Bold", 12.0));
+
+            hBox0 = new HBox();
+            hBox0.setPrefHeight(100.0);
+            hBox0.setPrefWidth(200.0);
+
+            userScoreLabel = new Label();
+            userScoreLabel.setMaxWidth(50.0);
+            userScoreLabel.setMinWidth(50.0);
+            userScoreLabel.setText("Score");
+            userScoreLabel.setTextFill(javafx.scene.paint.Color.valueOf("#03a9f4"));
+            userScoreLabel.setPadding(new Insets(5.0));
+            userScoreLabel.setFont(new Font("System Bold", 12.0));
+
+            userScoreValueLabel = new Label();
+            userScoreValueLabel.setMaxWidth(140.0);
+            userScoreValueLabel.setMinWidth(140.0);
+            userScoreValueLabel.setText("20.0");
+            userScoreValueLabel.setPadding(new Insets(5.0));
+
+            HBox.setMargin(userScoreValueLabel, new Insets(0.0, 0.0, 0.0, 10.0));
+            HBox.setMargin(vBox, new Insets(0.0));
+
+            vBox0 = new VBox();
+            vBox0.setAlignment(javafx.geometry.Pos.CENTER);
+            vBox0.setPrefHeight(55.0);
+            vBox0.setPrefWidth(70.0);
+
+            imageView = new ImageView();
+            imageView.setFitHeight(16.0);
+            imageView.setFitWidth(16.0);
+            imageView.setPickOnBounds(true);
+            imageView.setPreserveRatio(true);
+
+            HBox.setMargin(vBox0, new Insets(0.0, 0.0, 0.0, 10.0));
+
+            vBox.getChildren().add(userNameLabel);
+            hBox0.getChildren().add(userScoreLabel);
+            hBox0.getChildren().add(userScoreValueLabel);
+            vBox.getChildren().add(hBox0);
+            hBox.getChildren().add(vBox);
+            vBox0.getChildren().add(imageView);
+            hBox.getChildren().add(vBox0);
+            pane.getChildren().add(hBox);
 
             // clicking on list view to request another player to play 
             listView.setOnMouseClicked(event -> {
@@ -246,11 +313,7 @@ public class MultiModeController implements Initializable {
                     listView.setOnMouseClicked(null);
 
                     MyControoler.requestGame(Utils.getlPayer());
-                } catch (RemoteException ex) {
-                    util.missingConnection();
-                } catch (NotBoundException ex) {
-                    util.missingConnection();
-                } catch (NullPointerException ex) {
+                } catch (RemoteException | NotBoundException | NullPointerException ex) {
                     util.missingConnection();
                 }
 
@@ -273,20 +336,23 @@ public class MultiModeController implements Initializable {
 
                 }
             }).start();
-
         }
 
         @Override
-        protected void updateItem(UserModel item, boolean empty) {
-            super.updateItem(item, empty);
-            setText(null);
-            setGraphic(null);
-            if (item != null && !empty) {
-                label.setText(item.getUserName());
-                setGraphic(hbox);
+        protected void updateItem(UserModel user, boolean empty) {
+            super.updateItem(user, empty);
+            if (user != null && !empty) {
+                userNameLabel.setText(user.getUserName());
+                userScoreValueLabel.setText(user.getScore() + "");
+
+                /*  if (user.isOnline()) {
+                    imageView.setImage(online);
+                } else {
+                    imageView.setImage(offline);
+                }*/
+                setGraphic(pane);
             }
         }
-
     }
 
     @Override
@@ -308,7 +374,7 @@ public class MultiModeController implements Initializable {
         Button btn = new Button("dd");
         pane.add(name, 0, 0);
         pane.add(btn, 0, 1);
-        listView.setCellFactory(param -> new Cell());
+        listView.setCellFactory(param -> new UserListItem());
         myGridPane.setVisible(false);
 
         SceneHandler.getInstance().getStage().setOnCloseRequest((event) -> {
@@ -320,11 +386,6 @@ public class MultiModeController implements Initializable {
 
     public void startGameAction(ActionEvent event) {
         startgame();
-    }
-
-    @FXML
-    private void exitAction(ActionEvent event) {
-        Platform.exit();
     }
 
     @FXML
@@ -423,6 +484,8 @@ public class MultiModeController implements Initializable {
 
         if (x == 0) {
             try {
+                record.setVisible(false);
+               Utils.isPlaying=false;
                 handler.setScene("/multimode/MultiMode.fxml", "MultiMode", 800, 800, true);
             } catch (IOException ex) {
                 Logger.getLogger(TicTacTocGame.class
@@ -545,7 +608,7 @@ public class MultiModeController implements Initializable {
         Button btn = new Button("dd");
         pane.add(name, 0, 0);
         pane.add(btn, 0, 1);
-        listView.setCellFactory(param -> new Cell());
+        listView.setCellFactory(param -> new UserListItem());
     }
 
     private void drawStep(int position, String symbol) {

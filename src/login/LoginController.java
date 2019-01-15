@@ -33,6 +33,9 @@ public class LoginController implements Initializable {
     private PasswordField txtPassword;
     @FXML
     private Label errorMessageLabel;
+    @FXML
+    private Button btnPlayNow;
+
     private SceneHandler handler = SceneHandler.getInstance();
     Utils util = new Utils();
 

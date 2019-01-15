@@ -36,7 +36,7 @@ public class SceneHandler {
         stage.setResizable(isResizable);
         stage.setScene(scene);
     }
-
+    
     public void setScene(Parent parent) throws IOException {
         Scene scene = new Scene(parent);
         stage.setTitle("Tic Tac Toe");

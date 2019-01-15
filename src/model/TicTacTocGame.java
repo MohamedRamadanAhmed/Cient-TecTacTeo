@@ -498,7 +498,7 @@ public class TicTacTocGame {
                     if (getCounter() < 9) {
 
                         //computerAction(getRandom());
-                        computerAction(positionsOfTwoPlayers());
+                        computerAction(getRandom());
                         checkWining();
                     } else {
                         if (counter == 9) {
