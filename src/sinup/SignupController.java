@@ -32,7 +32,7 @@ public class SignupController implements Initializable {
     @FXML
     private Button btnLogin;
     @FXML
-    private TextField userName;
+    private TextField txtUserName;
     @FXML
     private TextField tfEmail;
     @FXML
@@ -49,7 +49,7 @@ public class SignupController implements Initializable {
     private void signupAction(ActionEvent event) {
         // System.out.println("sin up was clicked ");
         try {
-            if (!(Utils.validateName(userName.getText()))) {
+            if (!(Utils.validateName(txtUserName.getText()))) {
                 Utils.showAlert(Alert.AlertType.ERROR, btnSignup.getScene().getWindow(), "Sin up  Error!", "Please enter valid  name");
 
                 System.out.println("sin up was clicked ");
@@ -76,7 +76,7 @@ public class SignupController implements Initializable {
             }
             System.out.println("sin up was clickeddd ");
             UserAccountHandler accountHandler = Utils.establishConnection();
-            if (accountHandler.signUp(new UserModel(userName.getText(), tfEmail.getText(), tfPassword.getText(), "1111"))) {
+            if (accountHandler.signUp(new UserModel(txtUserName.getText(), tfEmail.getText(), tfPassword.getText(), "1111"))) {
                 handler.setScene("/login/login.fxml", "login", 500, 500, true);
 
                 System.out.println("account handler communication ");
@@ -102,13 +102,12 @@ public class SignupController implements Initializable {
     }
 
     @FXML
-    private void loginAction(ActionEvent event) throws IOException {
+    private void handleLoginAction(ActionEvent event) throws IOException {
 //        btnSignup.getScene().getWindow().hide();
 //
 //        Parent root = FXMLLoader.load(getClass().getResource("/login/login.fxml"));
 //        Utils.switchWindow(root);
-        handler.setScene("/login/login.fxml", "login", 500, 500, true);
-
+        handler.setScene("/login/login.fxml", "Sign in", 500, 500, true);
     }
 
 }

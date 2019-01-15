@@ -1,34 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #010226;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="login.LoginController">
-   <children>
-      <AnchorPane layoutX="200.0" layoutY="100.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #a90226;" AnchorPane.bottomAnchor="90.0" AnchorPane.leftAnchor="90.0" AnchorPane.rightAnchor="90.0" AnchorPane.topAnchor="90.0">
-         <children>
-            <Button fx:id="btnLogin" layoutX="71.0" layoutY="163.0" mnemonicParsing="false" onAction="#loginAction" prefHeight="25.0" prefWidth="97.0" style="-fx-background-color: #010226; -fx-background-radius: 20;" text="LOGIN" textFill="#f8f6f6">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Button>
-            <Button fx:id="btnSignup" layoutX="226.0" layoutY="163.0" mnemonicParsing="false" onAction="#signupAction" prefHeight="25.0" prefWidth="97.0" style="-fx-background-color: #010226; -fx-background-radius: 20;" text="SIGN UP" textFill="#f5f4f4">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Button>
-            <Label layoutX="157.0" layoutY="6.0" text="LOGIN" textFill="#fcf9f9">
-               <font>
-                  <Font size="30.0" />
-               </font>
-            </Label>
-            <TextField fx:id="tfName" layoutX="62.0" layoutY="58.0" prefHeight="25.0" prefWidth="278.0" promptText="User Name" />
-            <PasswordField fx:id="tfPassword" layoutX="62.0" layoutY="110.0" prefHeight="25.0" prefWidth="278.0" promptText="Password" />
-         </children>
-      </AnchorPane>
-   </children>
+<AnchorPane id="AnchorPane" maxHeight="550.0" maxWidth="850.0" minHeight="550.0" minWidth="850.0" prefHeight="550.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="login.LoginController">
+    <children>
+        <AnchorPane layoutX="500.0" layoutY="50.0" maxHeight="450.0" maxWidth="300.0" minHeight="450.0" minWidth="300.0" prefHeight="450.0" prefWidth="300.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #e5e5e5;">
+            <children>
+                <JFXTextField fx:id="txtUserName" focusColor="#0078d7" layoutX="50.0" layoutY="189.0" maxWidth="200.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0" promptText="E-mail" unFocusColor="#e5e5e5" />
+                <JFXPasswordField fx:id="txtPassword" focusColor="#0078d7" layoutX="50.0" layoutY="239.0" maxWidth="200.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0" promptText="Password" unFocusColor="#e5e5e5" />
+                <JFXButton fx:id="btnLogin" buttonType="RAISED" layoutX="100.0" layoutY="289.0" minWidth="100.0" onAction="#handleLoginAction" style="-fx-background-color: #03A9F4;" text="Sign in" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </JFXButton>
+                <Label alignment="CENTER" layoutX="70.0" layoutY="134.0" prefHeight="25.0" prefWidth="161.0" text="Tic Tac Toe" textAlignment="CENTER">
+                    <font>
+                        <Font name="System Bold" size="24.0" />
+                    </font>
+                </Label>
+                <ImageView fitHeight="64.0" fitWidth="64.0" layoutX="119.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@/images/tic-tac-toe.png" />
+                    </image>
+                </ImageView>
+                <JFXButton fx:id="btnSignUp" layoutX="15.0" layoutY="415.0" minWidth="100.0" onAction="#handleSignUpAction" text="Sign up" textFill="#03a9f4" />
+                <Label fx:id="errorMessageLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="70.0" layoutY="339.0" textAlignment="CENTER" textFill="RED" />
+                <JFXButton fx:id="btnSkip" layoutX="190.0" layoutY="415.0" minWidth="100.0" onAction="#handleSkipAction" text="Skip" textFill="#03a9f4" />
+            </children>
+        </AnchorPane>
+        <Label alignment="CENTER" layoutX="60.0" layoutY="160.0" prefHeight="60.0" prefWidth="200.0" text="Tic Tac Toe" textAlignment="CENTER">
+            <font>
+                <Font name="System Bold" size="32.0" />
+            </font>
+        </Label>
+        <Label alignment="CENTER" layoutX="75.0" layoutY="230.0" prefHeight="80.0" prefWidth="390.0" text="Tic-Tac-Toe, noughts and crosses or Xs and Os, is a game for two players,&#10;X and O, who take turns marking the spaces in a 3×3 grid. The player&#10;who succeeds in placing three of their marks in a horizontal, vertical,&#10;or diagonal row wins the game." />
+        <JFXButton fx:id="btnPlayNow" buttonType="RAISED" layoutX="75.0" layoutY="340.0" minWidth="100.0" onAction="#handlePlayNowAction" style="-fx-background-color: #03A9F4;" text="Play Now" textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="12.0" />
+            </font>
+        </JFXButton>
+    </children>
 </AnchorPane>

@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import model.ClintImp;
@@ -27,9 +28,11 @@ public class LoginController implements Initializable {
     @FXML
     private Button btnSignup;
     @FXML
-    private TextField tfName;
+    private TextField txtUserName;
     @FXML
-    private PasswordField tfPassword;
+    private PasswordField txtPassword;
+    @FXML
+    private Label errorMessageLabel;
     private SceneHandler handler = SceneHandler.getInstance();
     Utils util = new Utils();
 
@@ -40,45 +43,47 @@ public class LoginController implements Initializable {
 
     @FXML
 
-    private void loginAction(ActionEvent event) throws IOException {
+    private void handleLoginAction(ActionEvent event) throws IOException {
 
         try {
             UserAccountHandler accountHandler;
             accountHandler = Utils.establishConnection();
 
             ClintImp clintImp = new ClintImp();
-            UserModel model = accountHandler.login(clintImp, tfName.getText(), tfPassword.getText());
+            UserModel model = accountHandler.login(clintImp, txtUserName.getText(), txtPassword.getText());
             Utils.setCurrentUser(model);
 //            System.out.println(model.getEmailAddress() + "model");
 
             if (model != null) {
-
                 handler.setScene("/multimode/MultiMode.fxml", " Multi Mode ", 800, 800, true);
             } else {
-             
-                Utils.showAlert(Alert.AlertType.ERROR, btnLogin.getScene().getWindow(), "error", "wrong user name or password ");
+                errorMessageLabel.setText("Wrong e-mail or password");
+                //Utils.showAlert(Alert.AlertType.ERROR, btnLogin.getScene().getWindow(), "error", "wrong user name or password ");
             }
 
         } catch (RemoteException ex) {
-
             Utils.showAlert(Alert.AlertType.ERROR, btnLogin.getScene().getWindow(), "server is un available", "try again later");
         } catch (IOException ex) {
-            ex.printStackTrace();
-            System.err.println("IOException");
-
+            System.err.println(ex.getMessage());
             Utils.showAlert(Alert.AlertType.ERROR, btnLogin.getScene().getWindow(), "server is un available", "try again later");
-
         } catch (NotBoundException ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @FXML
-    private void signupAction(ActionEvent event) throws IOException {
+    private void handleSignUpAction(ActionEvent event) throws IOException {
 //        btnLogin.getScene().getWindow().hide();
         handler.setScene("/sinup/signup.fxml", "Sign Up", 800, 800, true);
-
         //utils.Utils.switchWindow(FXMLLoader.load(getClass().getResource("/sinup/signup.fxml")));
     }
 
+    @FXML
+    private void handleSkipAction(ActionEvent event) throws IOException {
+        // handler.setScene("/sinup/signup.fxml", "Sign Up", 800, 800, true);
+    }
+
+    @FXML
+    private void handlePlayNowAction(ActionEvent event) throws IOException {
+    }
 }
