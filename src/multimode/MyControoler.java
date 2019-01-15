@@ -103,6 +103,7 @@ public class MyControoler {
                                     System.out.println("connection exception");
 
                                     JOptionPane.showConfirmDialog(null, "ConnectException");
+
                                 }
 
                             }

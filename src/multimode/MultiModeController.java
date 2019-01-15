@@ -134,6 +134,7 @@ public class MultiModeController implements Initializable {
                         if (Utils.isPlaying) {
                             myGridPane.setVisible(true);
                         } else {
+                             myGridPane.setVisible(false);
                             System.out.println("NO ACTION ");
                         }
                     }
@@ -510,6 +511,8 @@ public class MultiModeController implements Initializable {
 
         if (x == 0) {
             try {
+                record.setVisible(false);
+               Utils.isPlaying=false;
                 handler.setScene("/multimode/MultiMode.fxml", "MultiMode", 800, 800, true);
             } catch (IOException ex) {
                 Logger.getLogger(TicTacTocGame.class
