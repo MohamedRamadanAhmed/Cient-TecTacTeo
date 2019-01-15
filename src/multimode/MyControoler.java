@@ -3,6 +3,8 @@ package multimode;
 import client.server.remote.interfaces.Step;
 import client.server.remote.interfaces.UserAccountHandler;
 import client.server.remote.interfaces.UserModel;
+import java.rmi.ConnectException;
+
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.logging.Level;
@@ -10,7 +12,9 @@ import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
+import javax.swing.JOptionPane;
 import utils.Utils;
+
 public class MyControoler {
 
     Utils util = new Utils();
@@ -89,12 +93,24 @@ public class MyControoler {
                                 try {
                                     accountHandler.requestGame(Utils.getCurrentUser(), selectedItem);
                                 } catch (NullPointerException ex) {
+                                    System.out.println("NullPointerException");
+                                    JOptionPane.showConfirmDialog(null, "server un availale");
+                                } catch (ConnectException ex) {
+                                    System.out.println("connection exception");
+
+                                    JOptionPane.showConfirmDialog(null, "ConnectException");
+                                } catch (RemoteException ex) {
+                                    System.out.println("connection exception");
+
+                                    JOptionPane.showConfirmDialog(null, "ConnectException");
                                 }
+
                             }
 
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
+
                     }
                 };
                 try {

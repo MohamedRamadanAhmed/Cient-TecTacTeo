@@ -42,7 +42,6 @@ public class LoginController implements Initializable {
     }
 
     @FXML
-
     private void handleLoginAction(ActionEvent event) throws IOException {
 
         try {
@@ -52,8 +51,6 @@ public class LoginController implements Initializable {
             ClintImp clintImp = new ClintImp();
             UserModel model = accountHandler.login(clintImp, txtUserName.getText(), txtPassword.getText());
             Utils.setCurrentUser(model);
-//            System.out.println(model.getEmailAddress() + "model");
-
             if (model != null) {
                 handler.setScene("/multimode/MultiMode.fxml", " Multi Mode ", 800, 800, true);
             } else {
@@ -83,7 +80,7 @@ public class LoginController implements Initializable {
         // handler.setScene("/sinup/signup.fxml", "Sign Up", 800, 800, true);
     }
 
-   @FXML
+    @FXML
     private void handlePlayNowAction(ActionEvent event) throws IOException {
         handler.setScene("/singlemode/SingleMode.fxml", "Single Mode", 800, 500, true);
     }
