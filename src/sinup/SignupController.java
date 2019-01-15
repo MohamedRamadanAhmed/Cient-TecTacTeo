@@ -7,6 +7,8 @@ package sinup;
 
 import client.server.remote.interfaces.UserAccountHandler;
 import client.server.remote.interfaces.UserModel;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
 import java.net.UnknownHostException;
@@ -28,17 +30,17 @@ public class SignupController implements Initializable {
     SceneHandler handler = SceneHandler.getInstance();
 
     @FXML
-    private Button btnSignup;
+    private Button btnSignUp;
     @FXML
     private Button btnLogin;
     @FXML
-    private TextField txtUserName;
+    private JFXTextField txtUserName;
     @FXML
-    private TextField tfEmail;
+    private JFXTextField txtEmailAddress;
     @FXML
-    private PasswordField tfPassword;
+    private PasswordField txtPassword;
     @FXML
-    private PasswordField tfConfrmPassword;
+    private PasswordField txtConfirmPassword;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -46,37 +48,34 @@ public class SignupController implements Initializable {
     }
 
     @FXML
-    private void signupAction(ActionEvent event) {
-        // System.out.println("sin up was clicked ");
+    void signupAction(ActionEvent event) {
+        System.out.println("sin up was clicked ");
         try {
             if (!(Utils.validateName(txtUserName.getText()))) {
-                Utils.showAlert(Alert.AlertType.ERROR, btnSignup.getScene().getWindow(), "Sin up  Error!", "Please enter valid  name");
+                Utils.showAlert(Alert.AlertType.ERROR, btnSignUp.getScene().getWindow(), "Sin up  Error!", "Please enter valid  name");
 
                 System.out.println("sin up was clicked ");
                 return;
             }
-            if (!(Utils.validateEmail(tfEmail.getText()))) {
-                Utils.showAlert(Alert.AlertType.ERROR, btnSignup.getScene().getWindow(), "Sin up  Error!", "Please enter valid email address");
+            if (!(Utils.validateEmail(txtEmailAddress.getText()))) {
+                Utils.showAlert(Alert.AlertType.ERROR, btnSignUp.getScene().getWindow(), "Sin up  Error!", "Please enter valid email address");
                 System.out.println("sin up was clicked ");
                 return;
             }
-            if (tfPassword.getText().trim().isEmpty() || tfPassword.getText().trim().length() <= 3) {
+            if (txtPassword.getText().trim().isEmpty() || txtPassword.getText().trim().length() <= 3) {
 
-                System.out.println("sin up was clickeddd ");
-                System.out.println("sin up was clickeddd ");
-
-                Utils.showAlert(Alert.AlertType.ERROR, btnSignup.getScene().getWindow(), "Sin up  Error!", "password must be 3 digits at least");
+                Utils.showAlert(Alert.AlertType.ERROR, btnSignUp.getScene().getWindow(), "Sin up  Error!", "password must be 3 digits at least");
                 return;
             }
-            if (!(tfPassword.getText().equals(tfConfrmPassword.getText()))) {
+            if (!(txtConfirmPassword.getText().equals(txtConfirmPassword.getText()))) {
 
                 System.out.println("sin up was clicked ");
-                Utils.showAlert(Alert.AlertType.ERROR, btnSignup.getScene().getWindow(), "Sin up  Error!", "password not confirmed");
+                Utils.showAlert(Alert.AlertType.ERROR, btnSignUp.getScene().getWindow(), "Sin up  Error!", "password not confirmed");
                 return;
             }
             System.out.println("sin up was clickeddd ");
             UserAccountHandler accountHandler = Utils.establishConnection();
-            if (accountHandler.signUp(new UserModel(txtUserName.getText(), tfEmail.getText(), tfPassword.getText(), "1111"))) {
+            if (accountHandler.signUp(new UserModel(txtUserName.getText(), txtEmailAddress.getText(), txtPassword.getText(), "1111"))) {
                 handler.setScene("/login/login.fxml", "login", 500, 500, true);
 
                 System.out.println("account handler communication ");
@@ -84,7 +83,7 @@ public class SignupController implements Initializable {
 
             } else {
                 System.out.println("else sin up ");
-                Utils.showAlert(Alert.AlertType.ERROR, btnSignup.getScene().getWindow(), "sin up error", "this email address already exists ");
+                Utils.showAlert(Alert.AlertType.ERROR, btnSignUp.getScene().getWindow(), "sin up error", "this email address already exists ");
             }
         } catch (RemoteException | UnknownHostException ex) {
             ex.printStackTrace();

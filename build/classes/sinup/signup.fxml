@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
@@ -14,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="550.0" prefWidth="850.0" maxHeight="550.0" maxWidth="850.0" minHeight="550.0" minWidth="850.0" style="-fx-background-color: #FFFFFF;" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sinup.SignupController">
+<AnchorPane id="AnchorPane" maxHeight="550.0" maxWidth="850.0" minHeight="550.0" minWidth="850.0" prefHeight="550.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sinup.SignupController">
     <children>
         <AnchorPane layoutX="500.0" layoutY="50.0" maxHeight="450.0" maxWidth="300.0" minHeight="450.0" minWidth="300.0" prefHeight="450.0" prefWidth="300.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #e5e5e5;">
             <children>
@@ -22,7 +17,7 @@
                 <JFXTextField fx:id="txtEmailAddress" focusColor="#0078d7" layoutX="50.0" layoutY="229.0" maxHeight="30.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0" promptText="E-mail" unFocusColor="#e5e5e5" />
                 <JFXPasswordField fx:id="txtPassword" focusColor="#0078d7" layoutX="50.0" layoutY="269.0" maxWidth="200.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0" promptText="Password" unFocusColor="#e5e5e5" />
                 <JFXPasswordField fx:id="txtConfirmPassword" focusColor="#0078d7" layoutX="50.0" layoutY="309.0" maxWidth="200.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0" promptText="Confirm Password" unFocusColor="#e5e5e5" />
-                <JFXButton fx:id="btnSignUp" buttonType="RAISED" layoutX="101.0" layoutY="349.0" minWidth="100.0" style="-fx-background-color: #03A9F4;" text="Sign up" textFill="WHITE">
+                <JFXButton fx:id="btnSignUp" buttonType="RAISED" layoutX="101.0" layoutY="349.0" minWidth="100.0" onAction="#signupAction" onMouseClicked="#signupAction" style="-fx-background-color: #03A9F4;" text="Sign up" textFill="WHITE">
                     <font>
                         <Font name="System Bold" size="12.0" />
                     </font>

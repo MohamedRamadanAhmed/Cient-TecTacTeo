@@ -31,7 +31,6 @@ public class ClintImp extends UnicastRemoteObject implements ClientInterface {
         if (x == 0) {
             Utils.setPlayer(model1);
             Utils.setSymbol("o");
-            
             return true;
 
         } else {
@@ -56,10 +55,6 @@ public class ClintImp extends UnicastRemoteObject implements ClientInterface {
 
     @Override
     public void receiverMessage(UserModel player1, String message) throws RemoteException {
-        MultiModeController.getInstance().print(player1,message);
-        
-        
-        
-        
+        MultiModeController.getInstance().print(player1,message);        
     }
 }
