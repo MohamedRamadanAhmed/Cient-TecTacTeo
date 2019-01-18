@@ -87,26 +87,25 @@ public class SignupController implements Initializable {
             }
         } catch (RemoteException | UnknownHostException ex) {
             ex.printStackTrace();
-            // Logger.getLogger(SinUp.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             ex.printStackTrace();
 
-            //  Logger.getLogger(SignupController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NotBoundException ex) {
             ex.printStackTrace();
 
-//            Logger.getLogger(SignupController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
 
     @FXML
     private void handleLoginAction(ActionEvent event) throws IOException {
-//        btnSignup.getScene().getWindow().hide();
-//
-//        Parent root = FXMLLoader.load(getClass().getResource("/login/login.fxml"));
-//        Utils.switchWindow(root);
+
         handler.setScene("/login/login.fxml", "Sign in", 500, 500, true);
+    }
+
+    @FXML
+    private void handlePlayNowAction(ActionEvent event) throws IOException {
+        handler.setScene("/singlemode/SingleMode.fxml", "Single Mode", 800, 500, true);
     }
 
 }

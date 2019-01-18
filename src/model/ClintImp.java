@@ -31,6 +31,7 @@ public class ClintImp extends UnicastRemoteObject implements ClientInterface {
         if (x == 0) {
             Utils.setPlayer(model1);
             Utils.setSymbol("o");
+            Utils.isMyTurn = false;
             return true;
 
         } else {
@@ -41,13 +42,14 @@ public class ClintImp extends UnicastRemoteObject implements ClientInterface {
     @Override
     public void startGame(UserModel player1, UserModel player2) throws RemoteException {
         controoler.startGame();
+
+        MultiModeController.getInstance().startgame();
     }
 
     @Override
     public void drawMove(Step step) throws RemoteException {
         //  controoler.drawMove(step);
 //        controoler.dra(step);
-        System.out.println("I am client Interface");
         controoler.setStep(step);
         isReceving = true;
         MultiModeController.getInstance().receive(step);
@@ -55,6 +57,6 @@ public class ClintImp extends UnicastRemoteObject implements ClientInterface {
 
     @Override
     public void receiverMessage(UserModel player1, String message) throws RemoteException {
-        MultiModeController.getInstance().print(player1,message);        
+        MultiModeController.getInstance().print(player1, message);
     }
 }

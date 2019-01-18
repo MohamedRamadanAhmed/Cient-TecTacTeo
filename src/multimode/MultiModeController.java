@@ -19,6 +19,7 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -29,6 +30,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -101,7 +103,7 @@ public class MultiModeController implements Initializable {
     int[] game_arr = new int[9];
     private Image offline;
     Utils util = new Utils();
-    public ObservableList<UserModel> mylistview;
+    public ObservableList<UserModel> list;
     UserModel model;
     List<UserModel> onlineUsersList;
     MyControoler controoler;
@@ -123,25 +125,24 @@ public class MultiModeController implements Initializable {
     }
 
     public void startgame() {
-
-        new Thread(new Runnable() {
+        Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
 
+                // while (true) {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                        if (Utils.isPlaying) {
-                            myGridPane.setVisible(true);
-                        } else {
-                             myGridPane.setVisible(false);
-                            System.out.println("NO ACTION ");
-                        }
+
+                        myGridPane.setVisible(true);
                     }
                 });
 
             }
-        }).start();
+        });
+        thread.start();
+        clearGrid();
+        txtFieldChat.setText("");
 
     }
 
@@ -156,7 +157,7 @@ public class MultiModeController implements Initializable {
                     public void run() {
                         if (controoler != null) {
                             if (step != null) {
-
+                                myGridPane.setVisible(true);
                                 drawStep(step.getPosition(), step.getDraw());
                                 s = step.getDraw();
                                 ClintImp.isReceving = false;
@@ -180,9 +181,7 @@ public class MultiModeController implements Initializable {
                     @Override
                     public void run() {
                         if (Utils.isPlaying) {
-                            myGridPane.setVisible(true);
                         } else {
-                            System.out.println("NO ACTION ");
                         }
                     }
                 });
@@ -199,7 +198,7 @@ public class MultiModeController implements Initializable {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                        txtAreaChat.appendText(player1.getUserName() + " : " + message + Utils.getCurrentDate() + "\n");
+                        txtAreaChat.appendText(player1.getUserName() + " : " + message + " " + Utils.getCurrentDate() + "\n");
 
                     }
                 });
@@ -207,6 +206,60 @@ public class MultiModeController implements Initializable {
             }
         }).start();
 
+    }
+
+    void showrefusedMessahe() {
+        JOptionPane.showMessageDialog(null, "sorry player" + Utils.getlPayer().getUserName() + "refused to play with you ");
+
+        listView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+                    if (mouseEvent.getClickCount() == 2) {
+                        try {
+
+                            Utils.isMyTurn = true;
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+
+                                    Platform.runLater(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            if (Utils.isPlaying) {
+                                                myGridPane.setVisible(true);
+                                            } else {
+                                            }
+                                        }
+                                    });
+
+                                }
+                            }).start();
+                            model = listView.getSelectionModel().getSelectedItem();
+                            Utils.setPlayer(model);
+                            Utils.setSymbol("x");
+                            listView.setOnMouseClicked(null);
+                            MyControoler.requestGame(Utils.getlPayer());
+                        } catch (RemoteException | NotBoundException | NullPointerException ex) {
+                            util.missingConnection();
+                        }
+                    }
+                }
+            }
+        });
+
+    }
+
+    private void clearGrid() {
+        lable1.setText("");
+        lable2.setText("");
+        lable3.setText("");
+        lable4.setText("");
+        lable5.setText("");
+        lable6.setText("");
+        lable7.setText("");
+        lable8.setText("");
+        lable9.setText("");
     }
 
     private class UserListItem extends ListCell<UserModel> {
@@ -289,39 +342,43 @@ public class MultiModeController implements Initializable {
             pane.getChildren().add(hBox);
 
             // clicking on list view to request another player to play 
-            listView.setOnMouseClicked(event -> {
+            listView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+                        if (mouseEvent.getClickCount() == 2) {
+                            try {
 
-                try {
-                    Utils.isMyTurn = true;
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
+                                Utils.isMyTurn = true;
+                                new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
 
-                            Platform.runLater(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (Utils.isPlaying) {
-                                        myGridPane.setVisible(true);
-                                    } else {
-                                        System.out.println("NO ACTION ");
+                                        Platform.runLater(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                if (Utils.isPlaying) {
+                                                    myGridPane.setVisible(true);
+                                                } else {
+                                                }
+                                            }
+                                        });
+
                                     }
-                                }
-                            });
-
+                                }).start();
+                                model = listView.getSelectionModel().getSelectedItem();
+                                Utils.setPlayer(model);
+                                Utils.setSymbol("x");
+                                listView.setOnMouseClicked(null);
+                                MyControoler.requestGame(Utils.getlPayer());
+                            } catch (RemoteException | NotBoundException | NullPointerException ex) {
+                                util.missingConnection();
+                            }
                         }
-                    }).start();
-                    model = listView.getSelectionModel().getSelectedItem();
-                    Utils.setPlayer(model);
-                    Utils.setSymbol("x");
-                    listView.setOnMouseClicked(null);
-
-                    MyControoler.requestGame(Utils.getlPayer());
-                } catch (RemoteException | NotBoundException | NullPointerException ex) {
-                    util.missingConnection();
+                    }
                 }
+            });
 
-            }
-            );
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -332,7 +389,6 @@ public class MultiModeController implements Initializable {
                             if (Utils.isPlaying) {
                                 myGridPane.setVisible(true);
                             } else {
-                                System.out.println("NO ACTION ");
                             }
                         }
                     });
@@ -362,7 +418,16 @@ public class MultiModeController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         try {
             onlineUsersList = accountHandler.getOnlinePlayer();
-            mylistview = FXCollections.observableArrayList(onlineUsersList);
+            list = FXCollections.observableArrayList(onlineUsersList);
+            txtAreaChat.setEditable(false);
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getEmailAddress().equals(Utils.getCurrentUser().getEmailAddress())) {
+                    System.out.println(list.get(i).getEmailAddress());
+
+                    list.remove(i);
+                }
+                System.out.println("i = " + i);
+            }
 
         } catch (RemoteException ex) {
             System.err.println(ex.getMessage());
@@ -370,7 +435,7 @@ public class MultiModeController implements Initializable {
             System.err.println(ex.getMessage());
         }
 
-        listView.setItems(mylistview);
+        listView.setItems(list);
         listView.getItems().remove(Utils.getCurrentUser());
         GridPane pane = new GridPane();
         Label name = new Label("gg");
@@ -386,18 +451,25 @@ public class MultiModeController implements Initializable {
     }
 
     void btnRefreshAction(MouseEvent event) {
-        System.out.println("btn refreshh was clicked");
 
         try {
             onlineUsersList = accountHandler.getOnlinePlayer();
-            mylistview = FXCollections.observableArrayList(onlineUsersList);
+            list = FXCollections.observableArrayList(onlineUsersList);
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getEmailAddress().equals(Utils.getCurrentUser().getEmailAddress())) {
+                    System.out.println(list.get(i).getEmailAddress());
+
+                    list.remove(i);
+                }
+                System.out.println("i = " + i);
+            }
 
         } catch (RemoteException ex) {
             System.err.println(ex.getMessage());
         } catch (Exception ex) {
             System.err.println(ex.getMessage());
         }
-        listView.setItems(mylistview);
+        listView.setItems(list);
         listView.getItems().remove(Utils.getCurrentUser());
         GridPane pane = new GridPane();
         Label name = new Label("gg");
@@ -419,15 +491,7 @@ public class MultiModeController implements Initializable {
     private void recordAction(ActionEvent event) {
         recordObj.unmarchal();
         final ArrayList<MoveContent> playrecord = recordObj.playRecord();
-        lable1.setText("");
-        lable2.setText("");
-        lable3.setText("");
-        lable4.setText("");
-        lable5.setText("");
-        lable6.setText("");
-        lable7.setText("");
-        lable8.setText("");
-        lable9.setText("");
+        clearGrid();
 
         new AnimationTimer() {
             int i = 0;
@@ -450,7 +514,6 @@ public class MultiModeController implements Initializable {
 
     @FXML
     private void backAction(ActionEvent event) throws IOException {
-        exit.getScene().getWindow().hide();
         handler.setScene("choosemode/SelectMode", "SelectMode", 800, 800, true);
     }
 
@@ -512,7 +575,7 @@ public class MultiModeController implements Initializable {
         if (x == 0) {
             try {
                 record.setVisible(false);
-               Utils.isPlaying=false;
+                Utils.isPlaying = false;
                 handler.setScene("/multimode/MultiMode.fxml", "MultiMode", 800, 800, true);
             } catch (IOException ex) {
                 Logger.getLogger(TicTacTocGame.class
@@ -580,6 +643,7 @@ public class MultiModeController implements Initializable {
     }
 
     public boolean checkWining() {
+        int score;
         if (counter >= 8) {
             recordObj.marchal();
             newGame("no one win");
@@ -595,6 +659,12 @@ public class MultiModeController implements Initializable {
                     || (game_arr[2] == 1 && game_arr[5] == 1 && game_arr[8] == 1)) {
                 recordObj.marchal();
                 newGame("you win");
+                try {
+                    score = accountHandler.increaseWinnerScore(Utils.getCurrentUser().getEmailAddress());
+                } catch (RemoteException ex) {
+                    Logger.getLogger(MultiModeController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
                 return true;
 
             } else if ((game_arr[0] == 2 && game_arr[1] == 2 && game_arr[2] == 2)
@@ -608,6 +678,11 @@ public class MultiModeController implements Initializable {
                 System.out.println("sorry you lose ");
                 recordObj.marchal();
                 newGame("you lose");
+                try {
+                    score = accountHandler.increaseWinnerScore(Utils.getlPayer().getEmailAddress());
+                } catch (RemoteException ex) {
+                    Logger.getLogger(MultiModeController.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 return true;
             }
         }
@@ -621,7 +696,7 @@ public class MultiModeController implements Initializable {
         try {
             UserAccountHandler accountHandler1 = Utils.establishConnection();
             onlineUsersList = accountHandler1.getOnlinePlayer();
-            mylistview = FXCollections.observableArrayList(onlineUsersList);
+            list = FXCollections.observableArrayList(onlineUsersList);
 
         } catch (RemoteException | NotBoundException ex) {
             System.err.println(ex.getMessage());
@@ -629,7 +704,7 @@ public class MultiModeController implements Initializable {
             System.err.println(ex.getMessage());
         }
 
-        listView.setItems(mylistview);
+        listView.setItems(list);
         GridPane pane = new GridPane();
         Label name = new Label("gg");
         Button btn = new Button("dd");
@@ -685,6 +760,7 @@ public class MultiModeController implements Initializable {
             accountHandler = Utils.establishConnection();
             message = txtFieldChat.getText();
             accountHandler.sendMessage(Utils.getCurrentUser(), Utils.getlPayer(), message);
+            txtFieldChat.setText("");
         } catch (RemoteException ex) {
             Logger.getLogger(MultiModeController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NotBoundException ex) {
@@ -736,5 +812,4 @@ public class MultiModeController implements Initializable {
         }
 
     }
-
 }

@@ -27,7 +27,7 @@ public class XMLRecord {
     JAXBContext context;
     ObjectFactory factory;
     ArrayList<MoveContent> movesContent;
-    boolean record=false;
+    boolean record = false;
 
 //    public static void main(String[] args) {
 //        XMLRecord x = new XMLRecord();
@@ -38,13 +38,12 @@ public class XMLRecord {
 //        x.marchal();
 //        x.unmarchal();
 //    }
-
     public XMLRecord() {
         factory = new ObjectFactory();
 //        movesContent = new ArrayList<>();
-        
+
     }
-    
+
     File f = new File("output.xml");
 
     //      get();
@@ -55,54 +54,10 @@ public class XMLRecord {
             Unmarshaller unmarsh = context.createUnmarshaller();
 
             JAXBElement JAXBPerson = (JAXBElement) unmarsh.unmarshal(f);
-            //
             mov = (Moves) JAXBPerson.getValue();
 
-            //
-            
             movesContent = (ArrayList<MoveContent>) mov.getMove();
-            for (int i = 0; i < movesContent.size(); i++) {
-                System.out.println("move " + i);
-               
-                System.out.println("position : " + movesContent.get(i).getPosition());
-                System.out.println("sign : " + movesContent.get(i).getDraw());
-                System.out.println("************************");
 
-            }
-            //
-            /*start
-            
-            ObjectFactory factory = new ObjectFactory();
-            Moves m = factory.createMoves();
-            List list = m.getMove();
-            list.clear();
-            MoveContent content = factory.createMoveContent();
-            MoveContent content1 = factory.createMoveContent();
-            MoveContent content2 = factory.createMoveContent();
-
-            content.setPosition(0);
-            content.setDraw("yaser");
-            content.setPlayerName("ahmed");
-
-            content1.setPosition(1);
-            content1.setDraw("o");
-            content1.setPlayerName("ahmed");
-
-            content2.setPosition(2);
-            content2.setDraw("x");
-            content2.setPlayerName("ahmed");
-
-            list.add(content);
-            list.add(content1);
-            list.add(content2);
-
-            // m.setMove(list);
-            JAXBElement game = factory.createGame(m);
-            Marshaller marsh = context.createMarshaller();
-            marsh.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-            marsh.marshal(game, new FileOutputStream(f));
-            //System.err.println(jaxbElement.getName());
-           end */
         } catch (JAXBException ex) {
             Logger.getLogger(XMLRecord.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
@@ -110,55 +65,44 @@ public class XMLRecord {
         }
     }
 
-    public void marchal()  {
+    public void marchal() {
         try {
-             
-            
+
             JAXBElement perso = factory.createGame(mov);
             Marshaller marsheller = context.createMarshaller();
             marsheller.setProperty(marsheller.JAXB_FORMATTED_OUTPUT, true);
             marsheller.marshal(perso, new FileOutputStream(f));
-        }catch(JAXBException e){
-            System.err.println("Error in JAXB");   
-        }catch(FileNotFoundException e){
+        } catch (JAXBException e) {
+            System.err.println("Error in JAXB");
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
             System.err.println("File Not Found");
         }
-        
 
     }
-    public ArrayList<MoveContent> playRecord()
-    {
+
+    public ArrayList<MoveContent> playRecord() {
         return movesContent;
     }
-     public void addMove(int position,String draw)  {
-          if(record==false){
-             movesContent.clear();
-             record=true;
-             }
-         MoveContent move = factory.createMoveContent();
-         move.setDraw(draw);
-        
-         move.setPosition(position);
-         movesContent.add(move);
+
+    public void addMove(int position, String draw) {
+        if (record == false) {
+            movesContent.clear();
+            record = true;
+        }
+        MoveContent move = factory.createMoveContent();
+        move.setDraw(draw);
+
+        move.setPosition(position);
+        movesContent.add(move);
     }
-     
-     public void removeLastMove()  {
-        
-         movesContent.remove(movesContent.size()-1);
+
+    public void removeLastMove() {
+
+        movesContent.remove(movesContent.size() - 1);
     }
 
     private void get() throws JAXBException {
 
-        /* JAXBContext context = JAXBContext.newInstance("demo");
-        Unmarshaller unmarsh = context.createUnmarshaller();
-
-        JAXBElement jaxbElement = (JAXBElement) unmarsh.unmarshal(f);
-        ObjectFactory factory = new ObjectFactory();
-        Move m = (Move) jaxbElement.getValue();
-        System.out.println(m.getMove().get(0).getPlayerName());
-        System.out.println(m.getMove().get(0).getPosition());
-        System.out.println(m.getMove().get(0).getDraw());
-         */
     }
 }

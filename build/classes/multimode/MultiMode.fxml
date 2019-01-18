@@ -4,8 +4,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -14,69 +12,53 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="650.0" maxWidth="1050.0" minHeight="650.0" minWidth="1050.0" prefHeight="650.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="multimode.MultiModeController">
+<BorderPane maxHeight="650.0" maxWidth="1050.0" minHeight="650.0" minWidth="1050.0" prefHeight="650.0" prefWidth="1050.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="multimode.MultiModeController">
     <right>
-        <AnchorPane prefHeight="463.0" prefWidth="270.0" style="-fx-background-color: #010226;" BorderPane.alignment="CENTER">
+        <AnchorPane maxHeight="650.0" maxWidth="450.0" minHeight="650.0" minWidth="450.0" prefHeight="650.0" prefWidth="450.0" style="-fx-background-color: #03A9F4;" BorderPane.alignment="CENTER">
             <children>
-                <TabPane layoutX="-1.0" prefHeight="463.0" prefWidth="336.0" tabClosingPolicy="UNAVAILABLE">
-                    <tabs>
-                        <Tab text="Profile">
-                            <content>
-                                <AnchorPane maxHeight="500.0" minHeight="500.0" minWidth="0.0" prefHeight="500.0" prefWidth="336.0" style="-fx-background-color: #010226;">
-                                    <children>
-                                        <Label fx:id="user1" alignment="CENTER" layoutX="-9.0" layoutY="124.0" prefHeight="36.0" prefWidth="132.0" text="You" textFill="#f8f6f6">
-                                            <font>
-                                                <Font size="25.0" />
-                                            </font>
-                                        </Label>
-                                        <Label fx:id="user2" layoutX="184.0" layoutY="124.0" prefHeight="17.0" prefWidth="108.0" text="user 1" textFill="#f5f3f3">
-                                            <font>
-                                                <Font size="25.0" />
-                                            </font>
-                                        </Label>
-                                        <Label alignment="CENTER" layoutX="120.0" layoutY="112.0" prefHeight="60.0" prefWidth="52.0" text="Vs" textFill="#fcfafa">
-                                            <font>
-                                                <Font size="35.0" />
-                                            </font>
-                                        </Label>
-                                        <Button fx:id="startgame" layoutX="14.0" layoutY="242.0" mnemonicParsing="false" onAction="#startGameAction" prefHeight="25.0" prefWidth="109.0" style="-fx-background-radius: 20;" text="Start Game" />
-                                        <Button fx:id="record" layoutX="14.0" layoutY="351.0" mnemonicParsing="false" onAction="#recordAction" prefHeight="25.0" prefWidth="114.0" style="-fx-background-radius: 20;" text="Record" />
-                                        <Button fx:id="back" layoutX="157.0" layoutY="351.0" mnemonicParsing="false" onAction="#backAction" prefHeight="25.0" prefWidth="114.0" style="-fx-background-radius: 20;" text="Back" />
-                                        <Button fx:id="btnLogout" layoutX="218.0" layoutY="10.0" mnemonicParsing="false" onAction="#logOutAction" prefHeight="25.0" prefWidth="109.0" style="-fx-background-radius: 20;" text="Logot" />
-                                    </children>
-                                </AnchorPane>
-                            </content>
-                        </Tab>
-                        <Tab text="Online Users">
-                            <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="488.0" prefWidth="336.0" style="-fx-background-color: #010226;">
-                                    <children>
-                                        <AnchorPane layoutX="10.0" layoutY="234.0" prefHeight="183.0" prefWidth="274.0">
-                                            <children>
-                                                <TextArea fx:id="txtAreaChat" layoutX="-1.0" layoutY="30.0" prefHeight="120.0" prefWidth="265.0" />
-                                                <TextField fx:id="txtFieldChat" layoutX="-1.0" layoutY="157.0" prefHeight="25.0" prefWidth="207.0" promptText="Enter Message" />
-                                                <Button fx:id="btnSendMessage" layoutX="212.0" layoutY="157.0" mnemonicParsing="false" onAction="#btnSendMessageClicked" prefHeight="25.0" prefWidth="54.0" text="Send" />
-                                                <Label fx:id="lableReciever" layoutX="103.0" layoutY="-1.0" text="user 1" textFill="#f8f7f7">
-                                                    <font>
-                                                        <Font size="21.0" />
-                                                    </font>
-                                                </Label>
-                                                <JFXListView fx:id="listView" layoutX="3.0" layoutY="-186.0" prefHeight="166.0" prefWidth="284.0" />
-                                            </children>
-                                        </AnchorPane>
-                                            <ImageView fx:id="imgViewrefresh" fitHeight="42.0" fitWidth="39.0" layoutX="286.0" layoutY="8.0" onMouseClicked="#imgViewAction" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../images/refresh.png" />
-                                 </image></ImageView>
-                                    </children>
-                                </AnchorPane>
-                            </content>
-                        </Tab>
-                    </tabs>
-                </TabPane>
+                <JFXListView fx:id="listView" layoutX="20.0" layoutY="70.0" maxHeight="250.0" minHeight="250.0" prefHeight="250.0" prefWidth="400.0" AnchorPane.bottomAnchor="325.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="75.0" />
+                <AnchorPane layoutX="25.0" layoutY="345.0" maxHeight="250.0" maxWidth="400.0" minHeight="250.0" minWidth="400.0" prefHeight="250.0" prefWidth="400.0" AnchorPane.bottomAnchor="25.0">
+                    <children>
+                        <TextArea fx:id="txtAreaChat" maxHeight="220.0" maxWidth="400.0" minHeight="220.0" minWidth="400.0" prefHeight="220.0" prefWidth="400.0" />
+                        <HBox layoutY="220.0" maxHeight="30.0" maxWidth="400.0" minHeight="30.0" minWidth="400.0" prefHeight="30.0" prefWidth="400.0">
+                            <children>
+                                <TextField fx:id="txtFieldChat" maxHeight="30.0" maxWidth="325.0" minHeight="30.0" minWidth="325.0" prefHeight="30.0" prefWidth="325.0" promptText="Enter Message">
+                                    <HBox.margin>
+                                        <Insets top="5.0" />
+                                    </HBox.margin>
+                                </TextField>
+                                <Button fx:id="btnSendMessage" maxHeight="30.0" maxWidth="70.0" minHeight="30.0" minWidth="70.0" mnemonicParsing="false" onAction="#btnSendMessageClicked" prefHeight="30.0" prefWidth="70.0" text="Send">
+                                    <HBox.margin>
+                                        <Insets left="5.0" top="5.0" />
+                                    </HBox.margin>
+                                </Button>
+                            </children>
+                        </HBox>
+                    </children>
+                </AnchorPane>
+                <AnchorPane maxHeight="50.0" maxWidth="450.0" minHeight="50.0" minWidth="450.0" prefHeight="50.0" prefWidth="450.0" style="-fx-background-color: #039BE5;">
+                    <children>
+                        <Label maxHeight="50.0" maxWidth="450.0" minHeight="50.0" minWidth="450.0" prefHeight="50.0" prefWidth="450.0" text="Player Name" textFill="WHITE">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                            <padding>
+                                <Insets left="10.0" right="25.0" />
+                            </padding>
+                        </Label>
+                    </children>
+                </AnchorPane>
+                <Button fx:id="record" layoutX="34.0" layoutY="340.0" mnemonicParsing="false" onAction="#recordAction" prefHeight="25.0" prefWidth="114.0" style="-fx-background-radius: 20;" text="Record" />
+                <Button fx:id="btnLogout" layoutX="171.0" layoutY="335.0" mnemonicParsing="false" onAction="#logOutAction" prefHeight="25.0" prefWidth="109.0" style="-fx-background-radius: 20;" text="Logot" />
+                <ImageView fx:id="imgViewrefresh" fitHeight="68.0" fitWidth="40.0" layoutX="406.0" layoutY="49.0" onMouseClicked="#imgViewAction" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/refresh.png" />
+                    </image>
+                </ImageView>
             </children>
         </AnchorPane>
     </right>
