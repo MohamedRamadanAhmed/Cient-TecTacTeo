@@ -58,8 +58,8 @@ public class LoginController implements Initializable {
                 Utils.setCurrentUser(model);
                 handler.setScene("/multimode/MultiMode.fxml", " Multi Mode ", 800, 800, true);
             } else {
-                errorMessageLabel.setText("Wrong e-mail or password");
-                //Utils.showAlert(Alert.AlertType.ERROR, btnLogin.getScene().getWindow(), "error", "wrong user name or password ");
+                // errorMessageLabel.setText("Wrong e-mail or password");
+                Utils.showAlert(Alert.AlertType.ERROR, btnLogin.getScene().getWindow(), "error", " wrong e-mail or password ");
             }
 
         } catch (RemoteException ex) {
@@ -69,6 +69,8 @@ public class LoginController implements Initializable {
             Utils.showAlert(Alert.AlertType.ERROR, btnLogin.getScene().getWindow(), "server is un available", "try again later");
         } catch (NotBoundException ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            Utils.showAlert(Alert.AlertType.ERROR, btnLogin.getScene().getWindow(), "server is un available", "try again later");
+
         }
     }
 

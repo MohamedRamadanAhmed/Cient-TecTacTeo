@@ -7,7 +7,6 @@ package sinup;
 
 import client.server.remote.interfaces.UserAccountHandler;
 import client.server.remote.interfaces.UserModel;
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
@@ -21,7 +20,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import utils.SceneHandler;
 import utils.Utils;
 
@@ -78,14 +76,11 @@ public class SignupController implements Initializable {
             if (accountHandler.signUp(new UserModel(txtUserName.getText(), txtEmailAddress.getText(), txtPassword.getText(), "1111"))) {
                 handler.setScene("/login/login.fxml", "login", 500, 500, true);
 
-                System.out.println("account handler communication ");
-                System.out.println("testing sin up  ");
-
             } else {
                 System.out.println("else sin up ");
                 Utils.showAlert(Alert.AlertType.ERROR, btnSignUp.getScene().getWindow(), "sin up error", "this email address already exists ");
             }
-        } catch (RemoteException | UnknownHostException ex) {
+        } catch (RemoteException ex) {
             ex.printStackTrace();
         } catch (IOException ex) {
             ex.printStackTrace();

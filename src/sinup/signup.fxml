@@ -17,7 +17,7 @@
                 <JFXTextField fx:id="txtEmailAddress" focusColor="#0078d7" layoutX="50.0" layoutY="229.0" maxHeight="30.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0" promptText="E-mail" unFocusColor="#e5e5e5" />
                 <JFXPasswordField fx:id="txtPassword" focusColor="#0078d7" layoutX="50.0" layoutY="269.0" maxWidth="200.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0" promptText="Password" unFocusColor="#e5e5e5" />
                 <JFXPasswordField fx:id="txtConfirmPassword" focusColor="#0078d7" layoutX="50.0" layoutY="309.0" maxWidth="200.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0" promptText="Confirm Password" unFocusColor="#e5e5e5" />
-                <JFXButton fx:id="btnSignUp" buttonType="RAISED" layoutX="101.0" layoutY="349.0" minWidth="100.0" onAction="#signupAction" onMouseClicked="#signupAction" style="-fx-background-color: #03A9F4;" text="Sign up" textFill="WHITE">
+                <JFXButton fx:id="btnSignUp" buttonType="RAISED" layoutX="54.0" layoutY="349.0" maxWidth="200.0" minWidth="200.0" onAction="#signupAction" onMouseClicked="#signupAction" prefHeight="30.0" prefWidth="200.0" style="-fx-background-color: #03A9F4;" text="Sign up" textFill="WHITE">
                     <font>
                         <Font name="System Bold" size="12.0" />
                     </font>
@@ -32,9 +32,8 @@
                         <Image url="@/images/tic-tac-toe.png" />
                     </image>
                 </ImageView>
-                <JFXButton fx:id="btnLogin" layoutX="15.0" layoutY="415.0" minWidth="100.0" onAction="#handleLoginAction" text="Sign in" textFill="#03a9f4" />
+                <JFXButton fx:id="btnLogin" layoutX="56.0" layoutY="387.0" minHeight="30.0" minWidth="200.0" onAction="#handleLoginAction" style="-fx-text-fill: #03a9f4;" text="Sign in" textFill="#03a9f4" />
                 <Label fx:id="errorMessageLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="70.0" layoutY="389.0" textAlignment="CENTER" textFill="RED" />
-                <JFXButton fx:id="btnSkip" layoutX="190.0" layoutY="415.0" minWidth="100.0" text="Skip" textFill="#03a9f4" />
             </children>
         </AnchorPane>
         <Label alignment="CENTER" layoutX="60.0" layoutY="160.0" prefHeight="60.0" prefWidth="200.0" text="Tic Tac Toe" textAlignment="CENTER">
@@ -43,7 +42,7 @@
             </font>
         </Label>
         <Label alignment="CENTER" layoutX="75.0" layoutY="230.0" prefHeight="80.0" prefWidth="390.0" text="Tic-Tac-Toe, noughts and crosses or Xs and Os, is a game for two players,&#10;X and O, who take turns marking the spaces in a 3×3 grid. The player&#10;who succeeds in placing three of their marks in a horizontal, vertical,&#10;or diagonal row wins the game." />
-        <JFXButton fx:id="btnPlayNow" buttonType="RAISED" layoutX="75.0" layoutY="340.0" minWidth="100.0" onAction="#handlePlayNowAction" style="-fx-background-color: #03A9F4;" text="Play Now" textFill="WHITE">
+        <JFXButton fx:id="btnPlayNow" buttonType="RAISED" layoutX="75.0" layoutY="340.0" minHeight="30.0" onAction="#handlePlayNowAction" style="-fx-background-color: #03A9F4;" text="Play Now" textFill="WHITE">
             <font>
                 <Font name="System Bold" size="12.0" />
             </font>
