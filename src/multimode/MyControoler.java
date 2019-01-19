@@ -91,7 +91,12 @@ public class MyControoler {
 
                             if ((accountHandler = Utils.establishConnection()) != null && selectedItem != null) {
                                 try {
-                                    accountHandler.requestGame(Utils.getCurrentUser(), selectedItem);
+                                   if( accountHandler.requestGame(Utils.getCurrentUser(), selectedItem)){
+                                       
+                                   }
+                                   else{
+                                       MultiModeController.getInstance().showrefusedMessahe();
+                                   }
                                 } catch (NullPointerException ex) {
                                     System.out.println("NullPointerException");
                                     JOptionPane.showConfirmDialog(null, "server un availale");

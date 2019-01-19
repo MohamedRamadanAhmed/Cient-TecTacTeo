@@ -53,8 +53,9 @@ public class LoginController implements Initializable {
 
             ClintImp clintImp = new ClintImp();
             UserModel model = accountHandler.login(clintImp, txtUserName.getText(), txtPassword.getText());
-            Utils.setCurrentUser(model);
+
             if (model != null) {
+                Utils.setCurrentUser(model);
                 handler.setScene("/multimode/MultiMode.fxml", " Multi Mode ", 800, 800, true);
             } else {
                 errorMessageLabel.setText("Wrong e-mail or password");

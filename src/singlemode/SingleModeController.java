@@ -9,18 +9,13 @@ import demo.MoveContent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.AnimationTimer;
-
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javax.swing.JOptionPane;
@@ -76,6 +71,7 @@ public class SingleModeController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
         game = new TicTacTocGame(this);
         while (userName.equals("")) {
             userName = JOptionPane.showInputDialog("please enter your name : ");
@@ -96,6 +92,7 @@ public class SingleModeController implements Initializable {
         play.setVisible(false);
         
        
+
     }
 
     @FXML
@@ -112,6 +109,7 @@ public class SingleModeController implements Initializable {
     }
 
 
+
       @FXML
     void playAction(ActionEvent event) {
         try {
@@ -121,8 +119,5 @@ public class SingleModeController implements Initializable {
         }
  
     }
-
- 
-    
 
 }
