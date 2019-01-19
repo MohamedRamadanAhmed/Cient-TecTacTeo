@@ -6,7 +6,8 @@ import java.util.logging.Logger;
 
 public class Connection {
 
-    public static boolean isConeted() {
+     // check internet connection
+    public static boolean isConneted() {
         Process process = null;
         try {
             process = java.lang.Runtime.getRuntime().exec("ping www.geeksforgeeks.org");

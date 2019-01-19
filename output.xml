@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <game>
     <move>
-        <position>2</position>
+        <position>5</position>
         <draw>X</draw>
     </move>
     <move>
@@ -9,7 +9,15 @@
         <draw>O</draw>
     </move>
     <move>
-        <position>5</position>
+        <position>1</position>
+        <draw>X</draw>
+    </move>
+    <move>
+        <position>4</position>
+        <draw>O</draw>
+    </move>
+    <move>
+        <position>3</position>
         <draw>X</draw>
     </move>
     <move>
@@ -18,6 +26,14 @@
     </move>
     <move>
         <position>8</position>
+        <draw>X</draw>
+    </move>
+    <move>
+        <position>6</position>
+        <draw>O</draw>
+    </move>
+    <move>
+        <position>2</position>
         <draw>X</draw>
     </move>
 </game>

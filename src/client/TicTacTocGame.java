@@ -1,4 +1,4 @@
-package model;
+package client;
 
 import client.server.remote.interfaces.UserModel;
 import demo.MoveContent;
