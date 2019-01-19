@@ -1,9 +1,13 @@
 package model;
 
 import client.server.remote.interfaces.UserModel;
+import demo.MoveContent;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
@@ -11,6 +15,7 @@ import javax.swing.JOptionPane;
 import main.XMLRecord;
 import singlemode.SingleModeController;
 import utils.SceneHandler;
+import utils.Utils;
 
 public class TicTacTocGame {
 
@@ -161,6 +166,8 @@ public class TicTacTocGame {
 
             winFlag = true;
             gameNum++;
+            tcUI.userScoreLbl.setText(Score + "");
+            tcUI.numMatch.setText(gameNum + "");
             newGame();
             return true;
         } else {
@@ -176,7 +183,8 @@ public class TicTacTocGame {
                 winFlag = true;
                 ComputerScore += 10;
                 gameNum++;
-
+                tcUI.userScoreLbl.setText(Score + "");
+                tcUI.numMatch.setText(gameNum + "");
                 newGame();
                 return true;
             }
@@ -184,173 +192,172 @@ public class TicTacTocGame {
         return false;
     }
 
-    public int checkWiningCell() {
-        if (game_arr[0] == 2 && game_arr[1] == 2) {
-            return 2;
-        } else if (game_arr[3] == 2 && game_arr[4] == 2) {
-            return 5;
-        } else if (game_arr[6] == 2 && game_arr[7] == 2) {
-            return 8;
-        } else if (game_arr[8] == 2 && game_arr[7] == 2) {
-            return 6;
-        } else if (game_arr[5] == 2 && game_arr[4] == 2) {
-            return 3;
-        } else if (game_arr[2] == 2 && game_arr[1] == 2) {
-            return 0;
-        } else if (game_arr[7] == 2 && game_arr[4] == 2) {
-            return 1;
-        } else if (game_arr[1] == 2 && game_arr[4] == 2) {
-            return 7;
-        } else if (game_arr[2] == 2 && game_arr[4] == 2) {
-            return 6;
-        } else if (game_arr[8] == 2 && game_arr[4] == 2) {
-            return 0;
-        } else if (game_arr[0] == 2 && game_arr[4] == 2) {
-            return 8;
-        } else if (game_arr[6] == 2 && game_arr[4] == 2) {
-            return 2;
-        } else if (game_arr[2] == 2 && game_arr[8] == 2) {
-            return 5;
-        } else if (game_arr[0] == 2 && game_arr[6] == 2) {
-            return 3;
-        } else if (game_arr[0] == 2 && game_arr[2] == 2) {
-            return 1;
-        } else if (game_arr[6] == 2 && game_arr[8] == 2) {
-            return 7;
-        } else if (game_arr[3] == 2 && game_arr[5] == 2) {
-            return 4;
-        } else if (game_arr[1] == 2 && game_arr[7] == 2) {
-            return 4;
-        } else {
-            return -1;
-        }
-    }
-
-    public int checkLostedCell() {
-        if (game_arr[0] == 1 && game_arr[1] == 1) {
-            return 3;
-        } else if (game_arr[3] == 1 && game_arr[4] == 1) {
-            return 5;
-        } else if (game_arr[6] == 1 && game_arr[7] == 1) {
-            return 8;
-        } else if (game_arr[8] == 1 && game_arr[7] == 1) {
-            return 6;
-        } else if (game_arr[5] == 1 && game_arr[4] == 1) {
-            return 3;
-        } else if (game_arr[2] == 1 && game_arr[1] == 1) {
-            return 0;
-        } else if (game_arr[7] == 1 && game_arr[4] == 1) {
-            return 1;
-        } else if (game_arr[1] == 1 && game_arr[4] == 1) {
-            return 7;
-        } else if (game_arr[2] == 1 && game_arr[4] == 1) {
-            return 6;
-        } else if (game_arr[8] == 1 && game_arr[4] == 1) {
-            return 0;
-        } else if (game_arr[0] == 1 && game_arr[4] == 1) {
-            return 8;
-        } else if (game_arr[6] == 1 && game_arr[4] == 1) {
-            return 2;
-        } else if (game_arr[2] == 1 && game_arr[8] == 1) {
-            return 5;
-        } else if (game_arr[0] == 1 && game_arr[6] == 1) {
-            return 3;
-        } else if (game_arr[0] == 1 && game_arr[2] == 1) {
-            return 1;
-        } else if (game_arr[6] == 1 && game_arr[8] == 1) {
-            return 7;
-        } else if (game_arr[3] == 1 && game_arr[5] == 1) {
-            return 4;
-        } else if (game_arr[1] == 1 && game_arr[7] == 1) {
-            return 4;
-        } else {
-            return -1;
-        }
-    }
-
-    public int positionsOfTwoPlayers() {
-//        try {
-//            Thread.sleep(5000);
-//        } catch (InterruptedException ex) {
-//            Logger.getLogger(TicTacTocGame.class.getName()).log(Level.SEVERE, null, ex);
+//    public int checkWiningCell() {
+//        if (game_arr[0] == 2 && game_arr[1] == 2) {
+//            return 2;
+//        } else if (game_arr[3] == 2 && game_arr[4] == 2) {
+//            return 5;
+//        } else if (game_arr[6] == 2 && game_arr[7] == 2) {
+//            return 8;
+//        } else if (game_arr[8] == 2 && game_arr[7] == 2) {
+//            return 6;
+//        } else if (game_arr[5] == 2 && game_arr[4] == 2) {
+//            return 3;
+//        } else if (game_arr[2] == 2 && game_arr[1] == 2) {
+//            return 0;
+//        } else if (game_arr[7] == 2 && game_arr[4] == 2) {
+//            return 1;
+//        } else if (game_arr[1] == 2 && game_arr[4] == 2) {
+//            return 7;
+//        } else if (game_arr[2] == 2 && game_arr[4] == 2) {
+//            return 6;
+//        } else if (game_arr[8] == 2 && game_arr[4] == 2) {
+//            return 0;
+//        } else if (game_arr[0] == 2 && game_arr[4] == 2) {
+//            return 8;
+//        } else if (game_arr[6] == 2 && game_arr[4] == 2) {
+//            return 2;
+//        } else if (game_arr[2] == 2 && game_arr[8] == 2) {
+//            return 5;
+//        } else if (game_arr[0] == 2 && game_arr[6] == 2) {
+//            return 3;
+//        } else if (game_arr[0] == 2 && game_arr[2] == 2) {
+//            return 1;
+//        } else if (game_arr[6] == 2 && game_arr[8] == 2) {
+//            return 7;
+//        } else if (game_arr[3] == 2 && game_arr[5] == 2) {
+//            return 4;
+//        } else if (game_arr[1] == 2 && game_arr[7] == 2) {
+//            return 4;
+//        } else {
+//            return -1;
 //        }
-
-        if (checkLostedCell() != -1) {
-            if (setGame_arr(checkLostedCell())) {
-               // setGame_arr(checkLostedCell());
-                return checkLostedCell();
-            } else if (checkWiningCell() != -1) {
-               setGame_arr(checkWiningCell());
-                return checkWiningCell();
-            } else if (game_arr[4] == 0) {
-
-                setGame_arr(4);
-                return 4;
-
-            } else if (game_arr[0] == 0) {
-
-                setGame_arr(0);
-                return 0;
-
-            } else if (game_arr[2] == 0) {
-
-                setGame_arr(2);
-                return 2;
-
-            } else if (game_arr[6] == 0) {
-
-                setGame_arr(6);
-                return 6;
-
-            } else if (game_arr[8] == 0) {
-
-                setGame_arr(8);
-                return 8;
-
-            } else {
-                // setGame_arr(getRandom());
-                return getRandom();
-            }
-
-        } else if (checkWiningCell() != -1) {
-            setGame_arr(checkWiningCell());
-            return checkWiningCell();
-        } else if (game_arr[4] == 0) {
-
-            setGame_arr(4);
-            return 4;
-
-        } else if (game_arr[0] == 0) {
-
-            setGame_arr(0);
-            return 0;
-
-        } else if (game_arr[2] == 0) {
-
-            setGame_arr(2);
-            return 2;
-
-        } else if (game_arr[6] == 0) {
-
-            setGame_arr(6);
-            return 6;
-
-        } else if (game_arr[8] == 0) {
-
-            setGame_arr(8);
-            return 8;
-
-        } else {
-            //setGame_arr(getRandom());
-            if (checkWiningCell() != -1) {
-                setGame_arr(checkWiningCell());
-                return checkWiningCell();
-            }
-            //  setGame_arr(getRandom());
-            return getRandom();
-        }
-    }
-
+//    }
+//
+//    public int checkLostedCell() {
+//        if (game_arr[0] == 1 && game_arr[1] == 1) {
+//            return 3;
+//        } else if (game_arr[3] == 1 && game_arr[4] == 1) {
+//            return 5;
+//        } else if (game_arr[6] == 1 && game_arr[7] == 1) {
+//            return 8;
+//        } else if (game_arr[8] == 1 && game_arr[7] == 1) {
+//            return 6;
+//        } else if (game_arr[5] == 1 && game_arr[4] == 1) {
+//            return 3;
+//        } else if (game_arr[2] == 1 && game_arr[1] == 1) {
+//            return 0;
+//        } else if (game_arr[7] == 1 && game_arr[4] == 1) {
+//            return 1;
+//        } else if (game_arr[1] == 1 && game_arr[4] == 1) {
+//            return 7;
+//        } else if (game_arr[2] == 1 && game_arr[4] == 1) {
+//            return 6;
+//        } else if (game_arr[8] == 1 && game_arr[4] == 1) {
+//            return 0;
+//        } else if (game_arr[0] == 1 && game_arr[4] == 1) {
+//            return 8;
+//        } else if (game_arr[6] == 1 && game_arr[4] == 1) {
+//            return 2;
+//        } else if (game_arr[2] == 1 && game_arr[8] == 1) {
+//            return 5;
+//        } else if (game_arr[0] == 1 && game_arr[6] == 1) {
+//            return 3;
+//        } else if (game_arr[0] == 1 && game_arr[2] == 1) {
+//            return 1;
+//        } else if (game_arr[6] == 1 && game_arr[8] == 1) {
+//            return 7;
+//        } else if (game_arr[3] == 1 && game_arr[5] == 1) {
+//            return 4;
+//        } else if (game_arr[1] == 1 && game_arr[7] == 1) {
+//            return 4;
+//        } else {
+//            return -1;
+//        }
+//    }
+//    public int positionsOfTwoPlayers() {
+////        try {
+////            Thread.sleep(5000);
+////        } catch (InterruptedException ex) {
+////            Logger.getLogger(TicTacTocGame.class.getName()).log(Level.SEVERE, null, ex);
+////        }
+//
+//        if (checkLostedCell() != -1) {
+//            if (setGame_arr(checkLostedCell())) {
+//               // setGame_arr(checkLostedCell());
+//                return checkLostedCell();
+//            } else if (checkWiningCell() != -1) {
+//               setGame_arr(checkWiningCell());
+//                return checkWiningCell();
+//            } else if (game_arr[4] == 0) {
+//
+//                setGame_arr(4);
+//                return 4;
+//
+//            } else if (game_arr[0] == 0) {
+//
+//                setGame_arr(0);
+//                return 0;
+//
+//            } else if (game_arr[2] == 0) {
+//
+//                setGame_arr(2);
+//                return 2;
+//
+//            } else if (game_arr[6] == 0) {
+//
+//                setGame_arr(6);
+//                return 6;
+//
+//            } else if (game_arr[8] == 0) {
+//
+//                setGame_arr(8);
+//                return 8;
+//
+//            } else {
+//                // setGame_arr(getRandom());
+//                return getRandom();
+//            }
+//
+//        } else if (checkWiningCell() != -1) {
+//            setGame_arr(checkWiningCell());
+//            return checkWiningCell();
+//        } else if (game_arr[4] == 0) {
+//
+//            setGame_arr(4);
+//            return 4;
+//
+//        } else if (game_arr[0] == 0) {
+//
+//            setGame_arr(0);
+//            return 0;
+//
+//        } else if (game_arr[2] == 0) {
+//
+//            setGame_arr(2);
+//            return 2;
+//
+//        } else if (game_arr[6] == 0) {
+//
+//            setGame_arr(6);
+//            return 6;
+//
+//        } else if (game_arr[8] == 0) {
+//
+//            setGame_arr(8);
+//            return 8;
+//
+//        } else {
+//            //setGame_arr(getRandom());
+//            if (checkWiningCell() != -1) {
+//                setGame_arr(checkWiningCell());
+//                return checkWiningCell();
+//            }
+//            //  setGame_arr(getRandom());
+//            return getRandom();
+//        }
+//    }
+//
     //calculate movement of computer
     public int getRandom() {
         int move;
@@ -384,14 +391,15 @@ public class TicTacTocGame {
     //start game
     public boolean play(int move, Label l) {
 
-        if (getCurrent_player().equals(MySymbol)) {
+        if (getCurrent_player().equals("X")) {
             if (setGame_arr(move)) {
                 l.setText(current_player);
                 switchPlayerSymbol();
+                return true;
+            } else {
+                return false;
             }
-            return true;
-
-        };
+        }
 
         return false;
 
@@ -493,56 +501,89 @@ public class TicTacTocGame {
             if (MySymbol.equals(getCurrent_player())) {
                 if (play(move, l)) {
                     checkWining();
-                }
-                if (!winFlag) {
-                    if (getCounter() < 9) {
 
-                        //computerAction(getRandom());
-                        computerAction(getRandom());
-                        checkWining();
-                    } else {
-                        if (counter == 9) {
+                    if (!winFlag) {
+                        if (getCounter() < 9) {
+                            //computerAction(getRandom());
+                            computerAction(getRandom());
+                            checkWining();
+                        } else {
+                            if (counter == 9) {
+                                gameNum++;
+                                recordObj.marchal();
+                                newGame();
 
-                            gameNum++;
-                            recordObj.marchal();
-                            newGame();
-
+                            }
                         }
+
                     }
-
                 }
-
             }
         }
     }
 
     public void newGame() {
-        recordObj.marchal();
-        int x = JOptionPane.showConfirmDialog(null, "play again");
-        System.out.println(x + "");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(TicTacTocGame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        recordObj.marchal();
+                        int recordResult = JOptionPane.showConfirmDialog(null, "replay the last game ?");
+                        if (recordResult == 0) {
 
-        Parent root = null;
-        if (x == 0) {
-            try {
-//                root = FXMLLoader.load(getClass().getResource("/singlemode/SingleMode.fxml"));
-//                Utils.switchWindow(root);
+                            displayRecord();
+                            tcUI.play.setVisible(true);
 
-                handler.setScene("/singlemode/SingleMode.fxml", " Single Mode", 800, 800, true);
-            } catch (IOException ex) {
-                Logger.getLogger(TicTacTocGame.class
-                        .getName()).log(Level.SEVERE, null, ex);
+                        } else {
+                            tcUI.play.setVisible(true);
+
+                        }
+
+                    }
+                });
+
             }
+        }).start();
 
-        } else if (x == 1) {
+    }
 
-            try {
-                handler.setScene("/sinup/signup.fxml", " SignU p", 800, 800, true);
+    public void displayRecord() {
+        recordObj.unmarchal();
+        final ArrayList<MoveContent> playrecord = recordObj.playRecord();
+        tcUI.lblCell1.setText("");
+        tcUI.lblCell2.setText("");
+        tcUI.lblCell3.setText("");
+        tcUI.lblCell4.setText("");
+        tcUI.lblCell5.setText("");
+        tcUI.lblCell6.setText("");
+        tcUI.lblCell7.setText("");
+        tcUI.lblCell8.setText("");
+        tcUI.lblCell9.setText("");
+        new AnimationTimer() {
+            int i = 0;
+            long lastUpdate = 0;
 
-//                root = FXMLLoader.load(getClass().getResource("/sinup/signup.fxml"));
-//                Utils.switchWindow(root);
-            } catch (IOException ex) {
+            @Override
+            public void handle(long now) {
+                if (now - lastUpdate >= 700_000_000) {
+
+                    playRecord(recordObj.playRecord().get(i).getPosition(), playrecord.get(i).getDraw());
+                    i++;
+                    if (i >= playrecord.size()) {
+                        stop();
+                    }
+                    lastUpdate = now;
+                }
             }
-        }
+        }.start();
+
     }
 
 }
