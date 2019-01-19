@@ -73,9 +73,7 @@ public class SingleModeController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         game = new TicTacTocGame(this);
-        while (userName.equals("")) {
-            userName = JOptionPane.showInputDialog("please enter your name : ");
-        }
+       
         username.setText(userName);
         lblCell1.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell1, 0));
         lblCell2.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell2, 1));

@@ -17,7 +17,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javax.swing.JOptionPane;
 import model.ClintImp;
+import static singlemode.SingleModeController.userName;
 import utils.SceneHandler;
 import utils.Utils;
 
@@ -88,6 +90,13 @@ public class LoginController implements Initializable {
 
     @FXML
     private void handlePlayNowAction(ActionEvent event) throws IOException {
-        handler.setScene("/singlemode/SingleMode.fxml", "Single Mode", 800, 500, true);
+         try {
+            while (userName.equals("")) {
+                userName = JOptionPane.showInputDialog("please enter your name : ");
+            }
+              handler.setScene("/singlemode/SingleMode.fxml", "Single Mode", 800, 500, true);
+        } catch (NullPointerException e) {
+            handler.setScene("/login/login.fxml", "Single Mode", 800, 500, true);
+        }
     }
 }
