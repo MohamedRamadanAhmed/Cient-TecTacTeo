@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.AnimationTimer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,6 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javax.swing.JOptionPane;
 import main.XMLRecord;
+import model.ClintImp;
 import model.TicTacTocGame;
 import utils.SceneHandler;
 
@@ -26,10 +29,8 @@ public class SingleModeController implements Initializable {
     @FXML
     private Button goOnline;
     @FXML
-    private Button record;
-    @FXML
-    private Button back;
-
+    public Button play;
+  
     @FXML
     public Label lblCell1;
 
@@ -61,84 +62,62 @@ public class SingleModeController implements Initializable {
     private Label username;
     public static String userName = "";
     @FXML
-    private Label numMatch;
+    public Label numMatch;
 
     @FXML
-    private Label userScoreLbl;
+    public Label userScoreLbl;
     TicTacTocGame game;
     SceneHandler handler = SceneHandler.getInstance();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        try {
-            game = new TicTacTocGame(this);
-            while (userName.equals("")) {
-                userName = JOptionPane.showInputDialog("please enter your name : ");
-
-                username.setText(userName);
-                lblCell1.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell1, 0));
-                lblCell2.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell2, 1));
-                lblCell3.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell3, 2));
-
-                lblCell4.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell4, 3));
-                lblCell5.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell5, 4));
-                lblCell6.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell6, 5));
-                lblCell7.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell7, 6));
-                lblCell8.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell8, 7));
-                lblCell9.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell9, 8));
-                numMatch.setText(game.getGameNum() + "");
-                userScoreLbl.setText(game.getScore() + "");
-            }
-        } catch (NullPointerException ex) {
-
+        game = new TicTacTocGame(this);
+        while (userName.equals("")) {
+            userName = JOptionPane.showInputDialog("please enter your name : ");
         }
+        username.setText(userName);
+        lblCell1.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell1, 0));
+        lblCell2.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell2, 1));
+        lblCell3.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell3, 2));
+
+        lblCell4.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell4, 3));
+        lblCell5.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell5, 4));
+        lblCell6.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell6, 5));
+        lblCell7.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell7, 6));
+        lblCell8.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell8, 7));
+        lblCell9.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell9, 8));
+        numMatch.setText(game.getGameNum() + "");
+        userScoreLbl.setText(game.getScore() + "");
+        play.setVisible(false);
+        
+       
+
     }
 
     @FXML
     private void goOnlineAction(ActionEvent event) throws IOException {
-        back.getScene().getWindow().hide();
-
+       try {
+           
+        userName="";
+        game.setScore(0);
+        game.setGameNum(0);
+            handler.setScene("/login/login.fxml", " Single Mode", 800, 800, true);
+        } catch (IOException ex) {
+            Logger.getLogger(SingleModeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-    @FXML
-    private void recordAction(ActionEvent event) {
-        XMLRecord recordObj = new XMLRecord();
-        recordObj.unmarchal();
-        final ArrayList<MoveContent> playrecord = recordObj.playRecord();
-        lblCell1.setText("");
-        lblCell2.setText("");
-        lblCell3.setText("");
-        lblCell4.setText("");
-        lblCell5.setText("");
-        lblCell6.setText("");
-        lblCell7.setText("");
-        lblCell8.setText("");
-        lblCell9.setText("");
-        new AnimationTimer() {
-            int i = 0;
-            long lastUpdate = 0;
 
-            @Override
-            public void handle(long now) {
-                if (now - lastUpdate >= 700_000_000) {
 
-                    game.playRecord(recordObj.playRecord().get(i).getPosition(), playrecord.get(i).getDraw());
-                    i++;
-                    if (i >= playrecord.size()) {
-                        stop();
-                    }
-                    lastUpdate = now;
-                }
-            }
-        }.start();
-
-    }
-
-    @FXML
-    private void backAction(ActionEvent event) throws IOException {
-        handler.setScene("/login/login.fxml", "Sign in", 500, 500, true);
-
+      @FXML
+    void playAction(ActionEvent event) {
+        try {
+            handler.setScene("/singlemode/SingleMode.fxml", " Single Mode", 800, 800, true);
+        } catch (IOException ex) {
+            Logger.getLogger(SingleModeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+ 
     }
 
 }
