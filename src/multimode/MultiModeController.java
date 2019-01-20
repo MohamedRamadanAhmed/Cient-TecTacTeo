@@ -39,8 +39,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javax.swing.JOptionPane;
 import main.XMLRecord;
-import model.ClintImp;
-import model.TicTacTocGame;
+import client.ClintImp;
+import client.TicTacTocGame;
+import javafx.scene.control.Alert;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import utils.SceneHandler;
 import utils.Utils;
 
@@ -133,7 +136,9 @@ public class MultiModeController implements Initializable {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-
+//                        Utils.showAlert(Alert.AlertType.CONFIRMATION, myGridPane.getScene().getWindow(), " ", "player "
+//                                + Utils.getlPayer().getUserName() + "accept playing ith you");
+                        JOptionPane.showConfirmDialog(null, "ConnectException");
                         myGridPane.setVisible(true);
                     }
                 });
@@ -198,7 +203,8 @@ public class MultiModeController implements Initializable {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                        txtAreaChat.appendText(player1.getUserName() + " : " + message + " " + Utils.getCurrentDate() + "\n");
+                        txtAreaChat.appendText(player1.getUserName() + " : " + message
+                                + " " + Utils.getCurrentDate() + "\n");
 
                     }
                 });
@@ -209,7 +215,8 @@ public class MultiModeController implements Initializable {
     }
 
     void showrefusedMessahe() {
-        JOptionPane.showMessageDialog(null, "sorry player" + Utils.getlPayer().getUserName() + "refused to play with you ");
+        JOptionPane.showMessageDialog(null, "sorry player" + Utils.getlPayer().getUserName()
+                + "refused to play with you ");
 
         listView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -230,6 +237,7 @@ public class MultiModeController implements Initializable {
                                                 myGridPane.setVisible(true);
                                             } else {
                                             }
+
                                         }
                                     });
 
@@ -262,7 +270,7 @@ public class MultiModeController implements Initializable {
         lable9.setText("");
     }
 
-    private class UserListItem extends ListCell<UserModel> {
+    private class UserListAdapter extends ListCell<UserModel> {
 
         private Pane pane;
         private HBox hBox;
@@ -272,11 +280,12 @@ public class MultiModeController implements Initializable {
         private Label userScoreLabel;
         private Label userScoreValueLabel;
         private VBox vBox0;
+        private Button btnInvite;
         // private Image online = new Image("images/online.png", 16, 16, false, false);
         // private Image offline = new Image("images/offline.png", 16, 16, false, false);
         private ImageView imageView;
 
-        public UserListItem() {
+        public UserListAdapter() {
             pane = new Pane();
             pane.setPrefHeight(75.0);
             pane.setPrefWidth(300.0);
@@ -315,6 +324,8 @@ public class MultiModeController implements Initializable {
             userScoreValueLabel.setMinWidth(140.0);
             userScoreValueLabel.setText("20.0");
             userScoreValueLabel.setPadding(new Insets(5.0));
+
+            btnInvite = new Button();
 
             HBox.setMargin(userScoreValueLabel, new Insets(0.0, 0.0, 0.0, 10.0));
             HBox.setMargin(vBox, new Insets(0.0));
@@ -361,6 +372,7 @@ public class MultiModeController implements Initializable {
                                                     myGridPane.setVisible(true);
                                                 } else {
                                                 }
+
                                             }
                                         });
 
@@ -404,11 +416,6 @@ public class MultiModeController implements Initializable {
                 userNameLabel.setText(user.getUserName());
                 userScoreValueLabel.setText(user.getScore() + "");
 
-                /*  if (user.isOnline()) {
-                    imageView.setImage(online);
-                } else {
-                    imageView.setImage(offline);
-                }*/
                 setGraphic(pane);
             }
         }
@@ -417,6 +424,34 @@ public class MultiModeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(TicTacTocGame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (Utils.logout) {
+                             
+                                    System.out.println(".run()");
+                                    Utils.logout = false;
+                                    JOptionPane.showMessageDialog(null, "second player terminated the game ");
+                                    
+                            }
+
+                        }
+                    });
+
+                }
+            }).start();
+
+          
+            record.setVisible(false);
             onlineUsersList = accountHandler.getOnlinePlayer();
             list = FXCollections.observableArrayList(onlineUsersList);
             txtAreaChat.setEditable(false);
@@ -426,7 +461,6 @@ public class MultiModeController implements Initializable {
 
                     list.remove(i);
                 }
-                System.out.println("i = " + i);
             }
 
         } catch (RemoteException ex) {
@@ -442,11 +476,31 @@ public class MultiModeController implements Initializable {
         Button btn = new Button("dd");
         pane.add(name, 0, 0);
         pane.add(btn, 0, 1);
-        listView.setCellFactory(param -> new UserListItem());
+        listView.setCellFactory(param -> new UserListAdapter());
         myGridPane.setVisible(false);
 
         SceneHandler.getInstance().getStage().setOnCloseRequest((event) -> {
             controoler.logOut();
+        });
+        txtFieldChat.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode().equals(KeyCode.ENTER)) {
+                    System.out.println("hello from enter key ");
+                    String message;
+
+                    try {
+                        accountHandler = Utils.establishConnection();
+                        message = txtFieldChat.getText();
+                        accountHandler.sendMessage(Utils.getCurrentUser(), Utils.getlPayer(), message);
+                        txtFieldChat.setText("");
+                    } catch (RemoteException ex) {
+                        Logger.getLogger(MultiModeController.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (NotBoundException ex) {
+                        Logger.getLogger(MultiModeController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
         });
     }
 
@@ -476,7 +530,7 @@ public class MultiModeController implements Initializable {
         Button btn = new Button("dd");
         pane.add(name, 0, 0);
         pane.add(btn, 0, 1);
-        listView.setCellFactory(param -> new UserListItem());
+        listView.setCellFactory(param -> new UserListAdapter());
         myGridPane.setVisible(false);
 
     }
@@ -489,27 +543,32 @@ public class MultiModeController implements Initializable {
 
     @FXML
     private void recordAction(ActionEvent event) {
-        recordObj.unmarchal();
-        final ArrayList<MoveContent> playrecord = recordObj.playRecord();
-        clearGrid();
-
-        new AnimationTimer() {
-            int i = 0;
-            long lastUpdate = 0;
-
-            @Override
-            public void handle(long now) {
-                if (now - lastUpdate >= 700_000_000) {
-
-                    playRecord(recordObj.playRecord().get(i).getPosition(), playrecord.get(i).getDraw());
-                    i++;
-                    if (i >= playrecord.size()) {
-                        stop();
-                    }
-                    lastUpdate = now;
-                }
-            }
-        }.start();
+        displayRecord();
+        //        recordObj.unmarchal();
+//        final ArrayList<MoveContent> playrecord = recordObj.playRecord();
+//        clearGrid();
+//
+//        new AnimationTimer() {
+//            int i = 0;
+//            long lastUpdate = 0;
+//
+//            @Override
+//            public void handle(long now) {
+//                if (now - lastUpdate >= 700_000_000) {
+//
+//                    playRecord(recordObj.playRecord().get(i).getPosition(), playrecord.get(i).getDraw());
+//                    i++;
+//                    if (i >= playrecord.size()) {
+//                        stop();
+//                    }
+//                    lastUpdate = now;
+//                }
+//            }
+//        }.start();
+//end game
+// update other player score (not done)
+//            accountHandler.closeGame(Utils.getCurrentUser(), Utils.getlPayer());
+//            System.out.println("multimode.MultiModeController.recordAction()");
     }
 
     @FXML
@@ -569,29 +628,35 @@ public class MultiModeController implements Initializable {
 
     public void newGame(String msg) {
 
-        int x = JOptionPane.showConfirmDialog(null, msg + "! play again ?");
-        System.out.println(x + "");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(TicTacTocGame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        recordObj.marchal();
+                        int recordResult = JOptionPane.showConfirmDialog(null, msg + " replay the last game ?");
+                        if (recordResult == 0) {
 
-        if (x == 0) {
-            try {
-                record.setVisible(false);
-                Utils.isPlaying = false;
-                handler.setScene("/multimode/MultiMode.fxml", "MultiMode", 800, 800, true);
-            } catch (IOException ex) {
-                Logger.getLogger(TicTacTocGame.class
-                        .getName()).log(Level.SEVERE, null, ex);
+                            displayRecord();
+                            record.setVisible(true);
+
+                        } else {
+                            record.setVisible(false);
+
+                        }
+
+                    }
+                });
+
             }
+        }).start();
 
-        } else if (x == 1) {
-
-            try {
-                handler.setScene("/multimode/MultiMode.fxml", "MultiMode", 800, 800, true);
-
-//                root = FXMLLoader.load(getClass().getResource("/sinup/signup.fxml"));
-//                Utils.switchWindow(root);
-            } catch (IOException ex) {
-            }
-        }
     }
 
     @FXML
@@ -650,7 +715,8 @@ public class MultiModeController implements Initializable {
 
             return true;
         } else {
-            if ((game_arr[0] == 1 && game_arr[1] == 1 && game_arr[2] == 1) || (game_arr[3] == 1 && game_arr[4] == 1 && game_arr[5] == 1)
+            if ((game_arr[0] == 1 && game_arr[1] == 1 && game_arr[2] == 1)
+                    || (game_arr[3] == 1 && game_arr[4] == 1 && game_arr[5] == 1)
                     || (game_arr[6] == 1 && game_arr[7] == 1 && game_arr[8] == 1)
                     || (game_arr[0] == 1 && game_arr[4] == 1 && game_arr[8] == 1)
                     || (game_arr[2] == 1 && game_arr[4] == 1 && game_arr[6] == 1)
@@ -691,26 +757,31 @@ public class MultiModeController implements Initializable {
 
     @FXML
     void imgViewAction(MouseEvent event) {
-        System.out.println("btn refreshh was clicked");
 
         try {
             UserAccountHandler accountHandler1 = Utils.establishConnection();
             onlineUsersList = accountHandler1.getOnlinePlayer();
             list = FXCollections.observableArrayList(onlineUsersList);
 
+            //remove current user from list
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getEmailAddress().equals(Utils.getCurrentUser().getEmailAddress())) {
+
+                    list.remove(i);
+                }
+            }
+            listView.setItems(list);
+            GridPane pane = new GridPane();
+            Label name = new Label("gg");
+            Button btn = new Button("dd");
+            pane.add(name, 0, 0);
+            pane.add(btn, 0, 1);
+            listView.setCellFactory(param -> new UserListAdapter());
         } catch (RemoteException | NotBoundException ex) {
             System.err.println(ex.getMessage());
         } catch (Exception ex) {
             System.err.println(ex.getMessage());
         }
-
-        listView.setItems(list);
-        GridPane pane = new GridPane();
-        Label name = new Label("gg");
-        Button btn = new Button("dd");
-        pane.add(name, 0, 0);
-        pane.add(btn, 0, 1);
-        listView.setCellFactory(param -> new UserListItem());
     }
 
     private void drawStep(int position, String symbol) {
@@ -810,6 +881,30 @@ public class MultiModeController implements Initializable {
                 lable9.setText(symbol);
                 break;
         }
+
+    }
+
+    public void displayRecord() {
+        recordObj.unmarchal();
+        final ArrayList<MoveContent> playrecord = recordObj.playRecord();
+        clearGrid();
+        new AnimationTimer() {
+            int i = 0;
+            long lastUpdate = 0;
+
+            @Override
+            public void handle(long now) {
+                if (now - lastUpdate >= 700_000_000) {
+
+                    playRecord(recordObj.playRecord().get(i).getPosition(), playrecord.get(i).getDraw());
+                    i++;
+                    if (i >= playrecord.size()) {
+                        stop();
+                    }
+                    lastUpdate = now;
+                }
+            }
+        }.start();
 
     }
 }

@@ -20,8 +20,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
-import javax.swing.JOptionPane;
-import static singlemode.SingleModeController.userName;
+import utils.Connection;
 import utils.SceneHandler;
 import utils.Utils;
 
@@ -53,27 +52,27 @@ public class SignupController implements Initializable {
         try {
             if (!(Utils.validateName(txtUserName.getText()))) {
                 Utils.showAlert(Alert.AlertType.ERROR, btnSignUp.getScene().getWindow(), "Sin up  Error!", "Please enter valid  name");
-
-                System.out.println("sin up was clicked ");
                 return;
             }
             if (!(Utils.validateEmail(txtEmailAddress.getText()))) {
                 Utils.showAlert(Alert.AlertType.ERROR, btnSignUp.getScene().getWindow(), "Sin up  Error!", "Please enter valid email address");
-                System.out.println("sin up was clicked ");
                 return;
+
             }
             if (txtPassword.getText().trim().isEmpty() || txtPassword.getText().trim().length() <= 3) {
-
                 Utils.showAlert(Alert.AlertType.ERROR, btnSignUp.getScene().getWindow(), "Sin up  Error!", "password must be 3 digits at least");
                 return;
             }
             if (!(txtConfirmPassword.getText().equals(txtConfirmPassword.getText()))) {
-
-                System.out.println("sin up was clicked ");
                 Utils.showAlert(Alert.AlertType.ERROR, btnSignUp.getScene().getWindow(), "Sin up  Error!", "password not confirmed");
                 return;
+
             }
-            System.out.println("sin up was clickeddd ");
+            if (!Connection.isConneted()) {
+                Utils.showAlert(Alert.AlertType.ERROR, btnSignUp.getScene().getWindow(), "Sin up  Error!", "check internet connection");
+                return;
+
+            }
             UserAccountHandler accountHandler = Utils.establishConnection();
             if (accountHandler.signUp(new UserModel(txtUserName.getText(), txtEmailAddress.getText(), txtPassword.getText(), "1111"))) {
                 handler.setScene("/login/login.fxml", "login", 500, 500, true);
@@ -102,16 +101,10 @@ public class SignupController implements Initializable {
 
     @FXML
     private void handlePlayNowAction(ActionEvent event) throws IOException {
-        try {
-            while (userName.equals("")) {
-
-                userName = JOptionPane.showInputDialog("please enter your name : ");
-                
-            }
-              handler.setScene("/singlemode/SingleMode.fxml", "Single Mode", 800, 500, true);
-        } catch (NullPointerException e) {
-            System.err.println("error catches");
-        }
+       
+      
+            handler.setScene("/singlemode/SingleMode.fxml", "Single Mode", 800, 500, true);
+        
 
       
     }

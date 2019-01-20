@@ -20,9 +20,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javax.swing.JOptionPane;
 import main.XMLRecord;
-import model.ClintImp;
-import model.TicTacTocGame;
+import client.ClintImp;
+import client.TicTacTocGame;
 import utils.SceneHandler;
+import utils.Utils;
 
 public class SingleModeController implements Initializable {
 
@@ -30,7 +31,7 @@ public class SingleModeController implements Initializable {
     private Button goOnline;
     @FXML
     public Button play;
-  
+
     @FXML
     public Label lblCell1;
 
@@ -73,7 +74,9 @@ public class SingleModeController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         game = new TicTacTocGame(this);
-       
+        while (!(Utils.validateName(userName))) {
+            userName = JOptionPane.showInputDialog("please enter your name : ");
+        }
         username.setText(userName);
         lblCell1.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell1, 0));
         lblCell2.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell2, 1));
@@ -88,34 +91,29 @@ public class SingleModeController implements Initializable {
         numMatch.setText(game.getGameNum() + "");
         userScoreLbl.setText(game.getScore() + "");
         play.setVisible(false);
-        
-       
 
     }
 
     @FXML
     private void goOnlineAction(ActionEvent event) throws IOException {
-       try {
-           
-        userName="";
-        game.setScore(0);
-        game.setGameNum(0);
+        try {
+            userName = "";
+            game.setScore(0);
+            game.setGameNum(0);
             handler.setScene("/login/login.fxml", " Single Mode", 800, 800, true);
         } catch (IOException ex) {
             Logger.getLogger(SingleModeController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-
-
-      @FXML
+    @FXML
     void playAction(ActionEvent event) {
         try {
             handler.setScene("/singlemode/SingleMode.fxml", " Single Mode", 800, 800, true);
         } catch (IOException ex) {
             Logger.getLogger(SingleModeController.class.getName()).log(Level.SEVERE, null, ex);
         }
- 
+
     }
 
 }

@@ -17,9 +17,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javax.swing.JOptionPane;
-import model.ClintImp;
-import static singlemode.SingleModeController.userName;
+import client.ClintImp;
+import utils.Connection;
+
 import utils.SceneHandler;
 import utils.Utils;
 
@@ -39,7 +39,6 @@ public class LoginController implements Initializable {
     private Button btnPlayNow;
 
     private SceneHandler handler = SceneHandler.getInstance();
-    Utils util = new Utils();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -51,10 +50,15 @@ public class LoginController implements Initializable {
 
         try {
             UserAccountHandler accountHandler;
+
+            if (!Connection.isConneted()) {
+                Utils.showAlert(Alert.AlertType.ERROR, btnLogin.getScene().getWindow(), "Sin up  Error!", "check internet connection");
+                return;
+
+            }
             accountHandler = Utils.establishConnection();
 
-            ClintImp clintImp = new ClintImp();
-            UserModel model = accountHandler.login(clintImp, txtUserName.getText(), txtPassword.getText());
+            UserModel model = accountHandler.login(new ClintImp(), txtUserName.getText(), txtPassword.getText());
 
             if (model != null) {
                 Utils.setCurrentUser(model);
@@ -78,25 +82,13 @@ public class LoginController implements Initializable {
 
     @FXML
     private void handleSignUpAction(ActionEvent event) throws IOException {
-//        btnLogin.getScene().getWindow().hide();
         handler.setScene("/sinup/signup.fxml", "Sign Up", 800, 800, true);
-        //utils.Utils.switchWindow(FXMLLoader.load(getClass().getResource("/sinup/signup.fxml")));
-    }
-
-    @FXML
-    private void handleSkipAction(ActionEvent event) throws IOException {
-        // handler.setScene("/sinup/signup.fxml", "Sign Up", 800, 800, true);
     }
 
     @FXML
     private void handlePlayNowAction(ActionEvent event) throws IOException {
-         try {
-            while (userName.equals("")) {
-                userName = JOptionPane.showInputDialog("please enter your name : ");
-            }
+       
               handler.setScene("/singlemode/SingleMode.fxml", "Single Mode", 800, 500, true);
-        } catch (NullPointerException e) {
-            handler.setScene("/login/login.fxml", "Single Mode", 800, 500, true);
-        }
+        
     }
 }

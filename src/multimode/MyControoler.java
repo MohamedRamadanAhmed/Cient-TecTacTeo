@@ -106,7 +106,6 @@ public class MyControoler {
                                     JOptionPane.showConfirmDialog(null, "ConnectException");
                                 } catch (RemoteException ex) {
                                     System.out.println("connection exception");
-
                                     JOptionPane.showConfirmDialog(null, "ConnectException");
 
                                 }
@@ -128,7 +127,6 @@ public class MyControoler {
                 Platform.runLater(updater);
 
             }
-
         }
         );
         thread.setDaemon(
