@@ -457,7 +457,6 @@ public class MultiModeController implements Initializable {
             @Override
             public void handle(KeyEvent event) {
                 if (event.getCode().equals(KeyCode.ENTER)) {
-                    System.out.println("hello from enter key ");
                     String message;
 
                     try {
@@ -569,7 +568,7 @@ public class MultiModeController implements Initializable {
             lable.setText(symbol);
 
             recordObj.addMove(position, symbol);
-            if (!checkWining()) {
+            if (!checkWinner()) {
                 Utils.isMyTurn = true;
             }
 
@@ -584,7 +583,7 @@ public class MultiModeController implements Initializable {
                 System.out.println("after" + Utils.isMyTurn);
                 MyControoler.transmitMove(position, Utils.getSymbol(), Utils.getlPayer());
                 recordObj.addMove(position, symbol);
-                checkWining();
+                checkWinner();
 
                 counter++;
             }
@@ -665,8 +664,8 @@ public class MultiModeController implements Initializable {
 
     }
 
-    public boolean checkWining() {
-        int score;
+    // check winner
+    public boolean checkWinner() {
         if (counter >= 8) {
             recordObj.marchal();
             newGame("no one win");
@@ -684,7 +683,7 @@ public class MultiModeController implements Initializable {
                 recordObj.marchal();
                 newGame("you win");
                 try {
-                    score = accountHandler.increaseWinnerScore(Utils.getCurrentUser().getEmailAddress());
+                    accountHandler.increaseWinnerScore(Utils.getCurrentUser().getEmailAddress());
                 } catch (RemoteException ex) {
                     Logger.getLogger(MultiModeController.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -703,7 +702,7 @@ public class MultiModeController implements Initializable {
                 recordObj.marchal();
                 newGame("you lose");
                 try {
-                    score = accountHandler.increaseWinnerScore(Utils.getlPayer().getEmailAddress());
+                    accountHandler.increaseWinnerScore(Utils.getlPayer().getEmailAddress());
                 } catch (RemoteException ex) {
                     Logger.getLogger(MultiModeController.class.getName()).log(Level.SEVERE, null, ex);
                 }
