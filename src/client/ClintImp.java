@@ -10,6 +10,8 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
+import javafx.scene.Scene;
 import javax.swing.JOptionPane;
 import multimode.MultiModeController;
 import multimode.MyControoler;
@@ -22,10 +24,11 @@ public class ClintImp extends UnicastRemoteObject implements ClientInterface {
     UserAccountHandler accountHandler;
     MyControoler controoler = new MyControoler();
     public static boolean isReceving;
+    private SceneHandler sceneHandler;
 
     public ClintImp() throws RemoteException, NotBoundException {
-
         accountHandler = Utils.establishConnection();
+        sceneHandler = SceneHandler.getInstance();
     }
 
     @Override
@@ -46,7 +49,6 @@ public class ClintImp extends UnicastRemoteObject implements ClientInterface {
     @Override
     public void startGame(UserModel player1, UserModel player2) throws RemoteException {
         controoler.startGame();
-
         MultiModeController.getInstance().startgame();
     }
 
@@ -66,14 +68,34 @@ public class ClintImp extends UnicastRemoteObject implements ClientInterface {
 
     @Override
     public void closeGame() throws RemoteException {
-        try {
-            SceneHandler handler = SceneHandler.getInstance();
-            System.err.println("entered fun 2");
-            Utils.logout=true;
-            
-            handler.setScene("/multimode/MultiMode.fxml", " Multi Mode ", 800, 800, true);
-        } catch (IOException ex) {
-            Logger.getLogger(ClintImp.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        System.err.println("entered fun 2");
+        Utils.logout = true;
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    sceneHandler.setScene("/multimode/MultiMode.fxml", "Multi Mode", 800, 800, true);
+                } catch (IOException ex) {
+                    System.err.println(ex.getMessage());
+                }
+            }
+        });
+    }
+
+    @Override
+    public void serverLogOut() throws RemoteException {
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    JOptionPane.showMessageDialog(null, "server is shut down ", "TicTacToe", JOptionPane.INFORMATION_MESSAGE);
+                    sceneHandler.setScene("/login/login.fxml", " login ", 800, 800, true);
+                } catch (IOException ex) {
+                    System.err.println(ex.getMessage());
+                }
+            }
+        });
+        System.out.println("client.ClintImp.serverLogOut()");
     }
 }
