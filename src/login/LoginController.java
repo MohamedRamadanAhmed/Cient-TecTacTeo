@@ -79,7 +79,6 @@ public class LoginController implements Initializable {
 
         } catch (NullPointerException ex) {
             Utils.showAlert(Alert.AlertType.ERROR, btnLogin.getScene().getWindow(), "server is un available", "try again later");
-
         }
     }
 

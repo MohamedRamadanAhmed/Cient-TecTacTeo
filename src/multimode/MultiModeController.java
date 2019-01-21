@@ -140,7 +140,7 @@ public class MultiModeController implements Initializable {
                     public void run() {
 //                        Utils.showAlert(Alert.AlertType.CONFIRMATION, myGridPane.getScene().getWindow(), " ", "player "
 //                                + Utils.getlPayer().getUserName() + "accept playing ith you");
-                        JOptionPane.showMessageDialog(null, "Game starts","TicTacToe",JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Game starts", "TicTacToe", JOptionPane.INFORMATION_MESSAGE);
                         myGridPane.setVisible(true);
                     }
                 });
@@ -218,7 +218,7 @@ public class MultiModeController implements Initializable {
 
     void showrefusedMessahe() {
         JOptionPane.showMessageDialog(null, "sorry player" + Utils.getlPayer().getUserName()
-                + "refused to play with you "  ,"TicTacToe",JOptionPane.INFORMATION_MESSAGE);
+                + "refused to play with you ", "TicTacToe", JOptionPane.INFORMATION_MESSAGE);
 
         listView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -442,7 +442,7 @@ public class MultiModeController implements Initializable {
 
                                 System.out.println(".run()");
                                 Utils.logout = false;
-                                JOptionPane.showMessageDialog(null, "second player terminated the game ","TicTacToe",JOptionPane.INFORMATION_MESSAGE);
+                                JOptionPane.showMessageDialog(null, "second player terminated the game ", "TicTacToe", JOptionPane.INFORMATION_MESSAGE);
 
                             }
 
@@ -675,7 +675,7 @@ public class MultiModeController implements Initializable {
                     @Override
                     public void run() {
                         recordObj.marchal();
-                        int recordResult = JOptionPane.showConfirmDialog(null, msg + " replay the last game ?","TicTacToe",JOptionPane.INFORMATION_MESSAGE);
+                        int recordResult = JOptionPane.showConfirmDialog(null, msg + " replay the last game ?", "TicTacToe", JOptionPane.INFORMATION_MESSAGE);
                         if (recordResult == 0) {
 
                             displayRecord();

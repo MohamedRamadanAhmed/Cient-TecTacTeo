@@ -27,10 +27,9 @@ public class ClintImp extends UnicastRemoteObject implements ClientInterface {
 
         accountHandler = Utils.establishConnection();
     }
-
     @Override
     public boolean requestGame(UserModel model1, UserModel player2) throws RemoteException {
-        int x = JOptionPane.showConfirmDialog(null, model1.getUserName());
+        int x = JOptionPane.showConfirmDialog(null, "player " + model1.getUserName() + " wants to play with you ");
 
         if (x == 0) {
             Utils.setPlayer(model1);
@@ -69,8 +68,8 @@ public class ClintImp extends UnicastRemoteObject implements ClientInterface {
         try {
             SceneHandler handler = SceneHandler.getInstance();
             System.err.println("entered fun 2");
-            Utils.logout=true;
-            
+            Utils.logout = true;
+
             handler.setScene("/multimode/MultiMode.fxml", " Multi Mode ", 800, 800, true);
         } catch (IOException ex) {
             Logger.getLogger(ClintImp.class.getName()).log(Level.SEVERE, null, ex);

@@ -8,14 +8,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
-import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 import main.XMLRecord;
 import singlemode.SingleModeController;
 import utils.SceneHandler;
-import utils.Utils;
 
 public class TicTacTocGame {
 
@@ -39,7 +37,7 @@ public class TicTacTocGame {
     private int game_arr[];
     private int counter;
     private boolean winFlag;
-    SingleModeController tcUI;
+    SingleModeController singlemodeController;
     private UserModel user2;
     private static int Score = 0;
     private static int ComputerScore;
@@ -52,7 +50,7 @@ public class TicTacTocGame {
         start_game_flag = false;
         game_arr = new int[9];
         counter = 0;
-        tcUI = tc;
+        singlemodeController = tc;
         recordObj = new XMLRecord();
         recordObj.unmarchal();
 
@@ -166,9 +164,9 @@ public class TicTacTocGame {
 
             winFlag = true;
             gameNum++;
-            tcUI.userScoreLbl.setText(Score + "");
-            tcUI.numMatch.setText(gameNum + "");
-            newGame("congratulation you won!");
+            singlemodeController.userScoreLbl.setText(Score + "");
+            singlemodeController.numMatch.setText(gameNum + "");
+            newGame();
             return true;
         } else {
             if ((game_arr[0] == 2 && game_arr[1] == 2 && game_arr[2] == 2)
@@ -183,9 +181,9 @@ public class TicTacTocGame {
                 winFlag = true;
                 ComputerScore += 10;
                 gameNum++;
-                tcUI.userScoreLbl.setText(Score + "");
-                tcUI.numMatch.setText(gameNum + "");
-                newGame("you lose");
+                singlemodeController.userScoreLbl.setText(Score + "");
+                singlemodeController.numMatch.setText(gameNum + "");
+                newGame();
                 return true;
             }
         }
@@ -359,6 +357,154 @@ public class TicTacTocGame {
 //    }
 //
     //calculate movement of computer
+    //Ramadan
+    public int checkWiningCell() {
+        if (game_arr[0] == 2 && game_arr[1] == 2 && game_arr[2] == 0) {
+            return 2;
+        } else if (game_arr[3] == 2 && game_arr[4] == 2 && game_arr[5] == 0) {
+            return 5;
+        } else if (game_arr[6] == 2 && game_arr[7] == 2 && game_arr[8] == 0) {
+            return 8;
+        } else if (game_arr[8] == 2 && game_arr[7] == 2 && game_arr[6] == 0) {
+            return 6;
+        } else if (game_arr[5] == 2 && game_arr[4] == 2 && game_arr[3] == 0) {
+            return 3;
+        } else if (game_arr[2] == 2 && game_arr[1] == 2 && game_arr[0] == 0) {
+            return 0;
+        } else if (game_arr[7] == 2 && game_arr[4] == 2 && game_arr[1] == 0) {
+            return 1;
+        } else if (game_arr[1] == 2 && game_arr[4] == 2 && game_arr[7] == 0) {
+            return 7;
+        } else if (game_arr[2] == 2 && game_arr[4] == 2 && game_arr[6] == 0) {
+            return 6;
+        } else if (game_arr[8] == 2 && game_arr[4] == 2 && game_arr[0] == 0) {
+            return 0;
+        } else if (game_arr[0] == 2 && game_arr[4] == 2 && game_arr[8] == 0) {
+            return 8;
+        } else if (game_arr[6] == 2 && game_arr[4] == 2 && game_arr[2] == 0) {
+            return 2;
+        } else if (game_arr[2] == 2 && game_arr[8] == 2 && game_arr[5] == 0) {
+            return 5;
+        } else if (game_arr[0] == 2 && game_arr[6] == 2 && game_arr[3] == 0) {
+            return 3;
+        } else if (game_arr[0] == 2 && game_arr[2] == 2 && game_arr[1] == 0) {
+            return 1;
+        } else if (game_arr[6] == 2 && game_arr[8] == 2 && game_arr[7] == 0) {
+            return 7;
+        } else if (game_arr[3] == 2 && game_arr[5] == 2 && game_arr[4] == 0) {
+            return 4;
+        } else if (game_arr[2] == 1 && game_arr[5] == 1 && game_arr[8] == 0) {
+            return 8;
+        } else if (game_arr[1] == 2 && game_arr[7] == 2 && game_arr[4] == 0) {
+            return 4;
+        } else {
+            return -1;
+        }
+    }
+
+    public int checkLostedCell() {
+        if (game_arr[0] == 1 && game_arr[1] == 1 && game_arr[1] == 0) {
+            return 2;
+        } else if (game_arr[3] == 1 && game_arr[4] == 1 && game_arr[5] == 0) {
+            return 5;
+        } else if (game_arr[6] == 1 && game_arr[7] == 1 && game_arr[8] == 0) {
+            return 8;
+        } else if (game_arr[8] == 1 && game_arr[7] == 1 && game_arr[6] == 0) {
+            return 6;
+        } else if (game_arr[5] == 1 && game_arr[4] == 1 && game_arr[3] == 0) {
+            return 3;
+        } else if (game_arr[2] == 1 && game_arr[1] == 1 && game_arr[0] == 0) {
+            return 0;
+        } else if (game_arr[7] == 1 && game_arr[4] == 1 && game_arr[1] == 0) {
+            return 1;
+        } else if (game_arr[1] == 1 && game_arr[4] == 1 && game_arr[7] == 0) {
+            return 7;
+        } else if (game_arr[2] == 1 && game_arr[4] == 1 && game_arr[6] == 0) {
+            return 6;
+        } else if (game_arr[8] == 1 && game_arr[4] == 1 && game_arr[0] == 0) {
+            return 0;
+        } else if (game_arr[0] == 1 && game_arr[4] == 1 && game_arr[8] == 0) {
+            return 8;
+        } else if (game_arr[6] == 1 && game_arr[4] == 1 && game_arr[2] == 0) {
+            return 2;
+        } else if (game_arr[2] == 1 && game_arr[8] == 1 && game_arr[5] == 0) {
+            return 5;
+        } else if (game_arr[0] == 1 && game_arr[6] == 1 && game_arr[3] == 0) {
+            return 3;
+        } else if (game_arr[0] == 1 && game_arr[2] == 1 && game_arr[1] == 0) {
+            return 1;
+        } else if (game_arr[6] == 1 && game_arr[8] == 1 && game_arr[7] == 0) {
+            return 7;
+        } else if (game_arr[3] == 1 && game_arr[5] == 1 && game_arr[4] == 0) {
+            return 4;
+        } else if (game_arr[1] == 1 && game_arr[7] == 1 && game_arr[4] == 0) {
+            return 4;
+        } else if (game_arr[2] == 1 && game_arr[5] == 1 && game_arr[8] == 0) {
+            return 8;
+        } else {
+            return -1;
+        }
+    }
+
+    public boolean checkCell(int move) {
+        if (game_arr[move] == 0) {
+            if (getCurrent_player().equals("X")) {
+
+                recordObj.addMove(move, getCurrent_player());
+            }
+            if (getCurrent_player().equals("O")) {
+
+                recordObj.addMove(move, getCurrent_player());
+            }
+
+            setCounter(getCounter() + 1);
+            return true;
+        }
+        return false;
+    }
+
+    public int positionsOfTwoPlayers() {
+        if (checkLostedCell() != -1) {
+            int x = checkLostedCell();
+            setGame_arr(checkLostedCell());
+            return x;
+        } else if (checkWiningCell() != -1) {
+            int x = checkWiningCell();
+            setGame_arr(checkWiningCell());
+            return x;
+        } else if (game_arr[4] == 0) {
+
+            setGame_arr(4);
+            return 4;
+
+        } else if (game_arr[0] == 0) {
+
+            setGame_arr(0);
+            return 0;
+
+        } else if (game_arr[2] == 0) {
+
+            setGame_arr(2);
+            return 2;
+
+        } else if (game_arr[6] == 0) {
+
+            setGame_arr(6);
+            return 6;
+
+        } else if (game_arr[8] == 0) {
+
+            setGame_arr(8);
+            return 8;
+
+        } else {
+            // setGame_arr(getRandom());
+            return getRandom();
+        }
+
+    }
+
+    //*********
     public int getRandom() {
         int move;
         boolean move_flag = false;
@@ -412,39 +558,39 @@ public class TicTacTocGame {
         switchPlayerSymbol();
         switch (x) {
             case 0:
-                tcUI.lblCell1.setText("O");
+                singlemodeController.lblCell1.setText("O");
                 break;
             case 1:
 
-                tcUI.lblCell2.setText("O");
+                singlemodeController.lblCell2.setText("O");
                 break;
             case 2:
 
-                tcUI.lblCell3.setText("O");
+                singlemodeController.lblCell3.setText("O");
                 break;
             case 3:
 
-                tcUI.lblCell4.setText("O");
+                singlemodeController.lblCell4.setText("O");
                 break;
             case 4:
 
-                tcUI.lblCell5.setText("O");
+                singlemodeController.lblCell5.setText("O");
                 break;
             case 5:
 
-                tcUI.lblCell6.setText("O");
+                singlemodeController.lblCell6.setText("O");
                 break;
             case 6:
 
-                tcUI.lblCell7.setText("O");
+                singlemodeController.lblCell7.setText("O");
                 break;
             case 7:
 
-                tcUI.lblCell8.setText("O");
+                singlemodeController.lblCell8.setText("O");
                 break;
             case 8:
 
-                tcUI.lblCell9.setText("O");
+                singlemodeController.lblCell9.setText("O");
                 break;
         }
 
@@ -457,39 +603,39 @@ public class TicTacTocGame {
         switchPlayerSymbol();
         switch (x) {
             case 0:
-                tcUI.lblCell1.setText(symbol);
+                singlemodeController.lblCell1.setText(symbol);
                 break;
             case 1:
 
-                tcUI.lblCell2.setText(symbol);
+                singlemodeController.lblCell2.setText(symbol);
                 break;
             case 2:
 
-                tcUI.lblCell3.setText(symbol);
+                singlemodeController.lblCell3.setText(symbol);
                 break;
             case 3:
 
-                tcUI.lblCell4.setText(symbol);
+                singlemodeController.lblCell4.setText(symbol);
                 break;
             case 4:
 
-                tcUI.lblCell5.setText(symbol);
+                singlemodeController.lblCell5.setText(symbol);
                 break;
             case 5:
 
-                tcUI.lblCell6.setText(symbol);
+                singlemodeController.lblCell6.setText(symbol);
                 break;
             case 6:
 
-                tcUI.lblCell7.setText(symbol);
+                singlemodeController.lblCell7.setText(symbol);
                 break;
             case 7:
 
-                tcUI.lblCell8.setText(symbol);
+                singlemodeController.lblCell8.setText(symbol);
                 break;
             case 8:
 
-                tcUI.lblCell9.setText(symbol);
+                singlemodeController.lblCell9.setText(symbol);
                 break;
         }
 
@@ -511,7 +657,7 @@ public class TicTacTocGame {
                             if (counter == 9) {
                                 gameNum++;
                                 recordObj.marchal();
-                                newGame("No one win");
+                                newGame();
 
                             }
                         }
@@ -522,7 +668,36 @@ public class TicTacTocGame {
         }
     }
 
-    public void newGame(String msg) {
+    //*****************************ramadan
+    public void gameHardLevelSIngleMode(Label l, int move) {
+
+        if (!winFlag) {
+            if (MySymbol.equals(getCurrent_player())) {
+                if (play(move, l)) {
+                    checkWining();
+
+                    if (!winFlag) {
+                        if (getCounter() < 9) {
+                            //computerAction(getRandom());
+                            computerAction(positionsOfTwoPlayers());
+                            checkWining();
+                        } else {
+                            if (counter == 9) {
+                                gameNum++;
+                                recordObj.marchal();
+                                newGame();
+
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+
+    //*******************************
+    public void newGame() {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -535,37 +710,38 @@ public class TicTacTocGame {
                     @Override
                     public void run() {
                         recordObj.marchal();
-                        int recordResult = JOptionPane.showConfirmDialog(null,msg+"! replay this game ?","TicTacToe",JOptionPane.INFORMATION_MESSAGE);
+                        int recordResult = JOptionPane.showConfirmDialog(null, "replay the last game ?");
                         if (recordResult == 0) {
-
                             displayRecord();
-                            tcUI.play.setVisible(true);
+                            singlemodeController.play.setVisible(true);
 
                         } else {
-                            tcUI.play.setVisible(true);
 
+                            try {
+                                handler.setScene("/singlemode/SingleMode.fxml", " Single Mode", 800, 800, true);
+                            } catch (IOException ex) {
+                                Logger.getLogger(TicTacTocGame.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                         }
 
                     }
                 });
-
             }
         }).start();
-
     }
 
     public void displayRecord() {
         recordObj.unmarchal();
         final ArrayList<MoveContent> playrecord = recordObj.playRecord();
-        tcUI.lblCell1.setText("");
-        tcUI.lblCell2.setText("");
-        tcUI.lblCell3.setText("");
-        tcUI.lblCell4.setText("");
-        tcUI.lblCell5.setText("");
-        tcUI.lblCell6.setText("");
-        tcUI.lblCell7.setText("");
-        tcUI.lblCell8.setText("");
-        tcUI.lblCell9.setText("");
+        singlemodeController.lblCell1.setText("");
+        singlemodeController.lblCell2.setText("");
+        singlemodeController.lblCell3.setText("");
+        singlemodeController.lblCell4.setText("");
+        singlemodeController.lblCell5.setText("");
+        singlemodeController.lblCell6.setText("");
+        singlemodeController.lblCell7.setText("");
+        singlemodeController.lblCell8.setText("");
+        singlemodeController.lblCell9.setText("");
         new AnimationTimer() {
             int i = 0;
             long lastUpdate = 0;
@@ -573,7 +749,6 @@ public class TicTacTocGame {
             @Override
             public void handle(long now) {
                 if (now - lastUpdate >= 700_000_000) {
-
                     playRecord(recordObj.playRecord().get(i).getPosition(), playrecord.get(i).getDraw());
                     i++;
                     if (i >= playrecord.size()) {
@@ -583,7 +758,5 @@ public class TicTacTocGame {
                 }
             }
         }.start();
-
     }
-
 }

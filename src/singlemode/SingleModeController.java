@@ -5,23 +5,19 @@
  */
 package singlemode;
 
-import demo.MoveContent;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.animation.AnimationTimer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javax.swing.JOptionPane;
-import main.XMLRecord;
-import client.ClintImp;
 import client.TicTacTocGame;
+import javafx.scene.control.RadioButton;
 import utils.SceneHandler;
 import utils.Utils;
 
@@ -66,6 +62,9 @@ public class SingleModeController implements Initializable {
     public Label numMatch;
 
     @FXML
+    private RadioButton RadioButtonHard;
+
+    @FXML
     public Label userScoreLbl;
     TicTacTocGame game;
     SceneHandler handler = SceneHandler.getInstance();
@@ -76,25 +75,85 @@ public class SingleModeController implements Initializable {
         game = new TicTacTocGame(this);
         try {
             while (!(Utils.validateName(userName))) {
-                
-                userName = JOptionPane.showInputDialog(null,"please enter your name : ","TicTacToe",JOptionPane.INFORMATION_MESSAGE);
+                userName = JOptionPane.showInputDialog("please enter your name : ");
             }
-        } 
-        catch (NullPointerException ex) 
-        {
-            
+        } catch (NullPointerException ex) {
+
         }
         username.setText(userName);
-        lblCell1.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell1, 0));
-        lblCell2.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell2, 1));
-        lblCell3.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell3, 2));
+        lblCell1.setOnMouseClicked((event) -> {
+            if (!RadioButtonHard.isSelected()) {
+                game.gameStartSingleMode(lblCell1, 0);
+            } else {
+                game.gameHardLevelSIngleMode(lblCell1, 0);
 
-        lblCell4.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell4, 3));
-        lblCell5.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell5, 4));
-        lblCell6.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell6, 5));
-        lblCell7.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell7, 6));
-        lblCell8.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell8, 7));
-        lblCell9.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell9, 8));
+            }
+        });
+        lblCell2.setOnMouseClicked((event) -> {
+            if (!RadioButtonHard.isSelected()) {
+                game.gameStartSingleMode(lblCell2, 1);
+            } else {
+                game.gameHardLevelSIngleMode(lblCell2, 1);
+            }
+
+        });
+        lblCell3.setOnMouseClicked((event) -> {
+            if (!RadioButtonHard.isSelected()) {
+                game.gameStartSingleMode(lblCell3, 2);
+            } else {
+                game.gameHardLevelSIngleMode(lblCell3, 2);
+            }
+
+        });
+
+        lblCell4.setOnMouseClicked((event) -> {
+            if (!RadioButtonHard.isSelected()) {
+                game.gameStartSingleMode(lblCell4, 3);
+            } else {
+                game.gameHardLevelSIngleMode(lblCell4, 3);
+            }
+
+        });
+        lblCell5.setOnMouseClicked((event) -> {
+            if (!RadioButtonHard.isSelected()) {
+                game.gameStartSingleMode(lblCell5, 4);
+            } else {
+                game.gameHardLevelSIngleMode(lblCell5, 4);
+            }
+
+        });
+        lblCell6.setOnMouseClicked((event) -> {
+            if (!RadioButtonHard.isSelected()) {
+                game.gameStartSingleMode(lblCell6, 5);
+            } else {
+                game.gameHardLevelSIngleMode(lblCell6, 5);
+            }
+
+        });
+        lblCell7.setOnMouseClicked((event) -> {
+            if (!RadioButtonHard.isSelected()) {
+                game.gameStartSingleMode(lblCell7, 6);
+            } else {
+                game.gameHardLevelSIngleMode(lblCell7, 6);
+            }
+
+        });
+        lblCell8.setOnMouseClicked((event) -> {
+            if (!RadioButtonHard.isSelected()) {
+                game.gameStartSingleMode(lblCell8, 7);
+            } else {
+                game.gameHardLevelSIngleMode(lblCell8, 7);
+            }
+
+        });
+        lblCell9.setOnMouseClicked((event) -> {
+            if (!RadioButtonHard.isSelected()) {
+                game.gameStartSingleMode(lblCell9, 8);
+            } else {
+                game.gameHardLevelSIngleMode(lblCell9, 8);
+            }
+
+        });
         numMatch.setText(game.getGameNum() + "");
         userScoreLbl.setText(game.getScore() + "");
         play.setVisible(false);
@@ -120,6 +179,29 @@ public class SingleModeController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(SingleModeController.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+    }
+
+    @FXML
+    void playHard(ActionEvent event) {
+        if (RadioButtonHard.isSelected()) {
+            RadioButtonHard.setText("hard mode");
+        } else {
+            RadioButtonHard.setText("easy mode");
+        }
+
+    }
+
+    public void clearGrid() {
+        lblCell1.setText("");
+        lblCell2.setText("");
+        lblCell3.setText("");
+        lblCell4.setText("");
+        lblCell5.setText("");
+        lblCell6.setText("");
+        lblCell7.setText("");
+        lblCell8.setText("");
+        lblCell9.setText("");
 
     }
 
