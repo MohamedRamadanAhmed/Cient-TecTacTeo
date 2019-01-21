@@ -34,6 +34,7 @@ public class Utils {
 
     private static String symbol = "x";
     public static boolean isMyTurn;
+    public static boolean logout;
 
     public static void setSymbol(String symbol) {
         Utils.symbol = symbol;

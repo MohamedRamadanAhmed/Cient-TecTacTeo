@@ -99,6 +99,9 @@ public class MultiModeController implements Initializable {
     @FXML
     private ImageView imgViewrefresh;
 
+    @FXML
+    private Button btnEndGame;
+
     String s;
     XMLRecord recordObj = new XMLRecord();
 
@@ -139,7 +142,6 @@ public class MultiModeController implements Initializable {
 //                        Utils.showAlert(Alert.AlertType.CONFIRMATION, myGridPane.getScene().getWindow(), " ", "player "
 //                                + Utils.getlPayer().getUserName() + "accept playing ith you");
                         JOptionPane.showConfirmDialog(null, "ConnectException");
-
                         myGridPane.setVisible(true);
                     }
                 });
@@ -238,6 +240,7 @@ public class MultiModeController implements Initializable {
                                                 myGridPane.setVisible(true);
                                             } else {
                                             }
+
                                         }
                                     });
 
@@ -372,6 +375,7 @@ public class MultiModeController implements Initializable {
                                                     myGridPane.setVisible(true);
                                                 } else {
                                                 }
+
                                             }
                                         });
 
@@ -423,6 +427,33 @@ public class MultiModeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(TicTacTocGame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (Utils.logout) {
+
+                                System.out.println(".run()");
+                                Utils.logout = false;
+                                JOptionPane.showMessageDialog(null, "second player terminated the game ");
+
+                            }
+
+                        }
+                    });
+
+                }
+            }).start();
+
+            record.setVisible(false);
             onlineUsersList = accountHandler.getOnlinePlayer();
             list = FXCollections.observableArrayList(onlineUsersList);
             txtAreaChat.setEditable(false);
@@ -513,27 +544,29 @@ public class MultiModeController implements Initializable {
 
     @FXML
     private void recordAction(ActionEvent event) {
-        recordObj.unmarchal();
-        final ArrayList<MoveContent> playrecord = recordObj.playRecord();
-        clearGrid();
+        displayRecord();
+        //        recordObj.unmarchal();
+//        final ArrayList<MoveContent> playrecord = recordObj.playRecord();
+//        clearGrid();
+//
+//        new AnimationTimer() {
+//            int i = 0;
+//            long lastUpdate = 0;
+//
+//            @Override
+//            public void handle(long now) {
+//                if (now - lastUpdate >= 700_000_000) {
+//
+//                    playRecord(recordObj.playRecord().get(i).getPosition(), playrecord.get(i).getDraw());
+//                    i++;
+//                    if (i >= playrecord.size()) {
+//                        stop();
+//                    }
+//                    lastUpdate = now;
+//                }
+//            }
+//        }.start();
 
-        new AnimationTimer() {
-            int i = 0;
-            long lastUpdate = 0;
-
-            @Override
-            public void handle(long now) {
-                if (now - lastUpdate >= 700_000_000) {
-
-                    playRecord(recordObj.playRecord().get(i).getPosition(), playrecord.get(i).getDraw());
-                    i++;
-                    if (i >= playrecord.size()) {
-                        stop();
-                    }
-                    lastUpdate = now;
-                }
-            }
-        }.start();
     }
 
     @FXML
@@ -593,27 +626,35 @@ public class MultiModeController implements Initializable {
 
     public void newGame(String msg) {
 
-        int x = JOptionPane.showConfirmDialog(null, msg + "! play again ?");
-        System.out.println(x + "");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(TicTacTocGame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        recordObj.marchal();
+                        int recordResult = JOptionPane.showConfirmDialog(null, msg + " replay the last game ?");
+                        if (recordResult == 0) {
 
-        if (x == 0) {
-            try {
-                record.setVisible(false);
-                Utils.isPlaying = false;
-                handler.setScene("/multimode/MultiMode.fxml", "MultiMode", 800, 800, true);
-            } catch (IOException ex) {
-                Logger.getLogger(TicTacTocGame.class
-                        .getName()).log(Level.SEVERE, null, ex);
+                            displayRecord();
+                            record.setVisible(true);
+
+                        } else {
+                            record.setVisible(false);
+
+                        }
+
+                    }
+                });
+
             }
+        }).start();
 
-        } else if (x == 1) {
-
-            try {
-                handler.setScene("/multimode/MultiMode.fxml", "MultiMode", 800, 800, true);
-
-            } catch (IOException ex) {
-            }
-        }
     }
 
     @FXML
@@ -837,6 +878,42 @@ public class MultiModeController implements Initializable {
 
                 lable9.setText(symbol);
                 break;
+        }
+
+    }
+
+    public void displayRecord() {
+        recordObj.unmarchal();
+        final ArrayList<MoveContent> playrecord = recordObj.playRecord();
+        clearGrid();
+        new AnimationTimer() {
+            int i = 0;
+            long lastUpdate = 0;
+
+            @Override
+            public void handle(long now) {
+                if (now - lastUpdate >= 700_000_000) {
+
+                    playRecord(recordObj.playRecord().get(i).getPosition(), playrecord.get(i).getDraw());
+                    i++;
+                    if (i >= playrecord.size()) {
+                        stop();
+                    }
+                    lastUpdate = now;
+                }
+            }
+        }.start();
+
+    }
+
+    @FXML
+    void btnEndGameAction(ActionEvent event) {
+        try {
+            //end game
+// update other player score (not done)
+            accountHandler.closeGame(Utils.getCurrentUser(), Utils.getlPayer());
+        } catch (RemoteException ex) {
+            Logger.getLogger(MultiModeController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }

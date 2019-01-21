@@ -19,6 +19,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import client.ClintImp;
 import utils.Connection;
+
 import utils.SceneHandler;
 import utils.Utils;
 
@@ -86,6 +87,8 @@ public class LoginController implements Initializable {
 
     @FXML
     private void handlePlayNowAction(ActionEvent event) throws IOException {
-        handler.setScene("/singlemode/SingleMode.fxml", "Single Mode", 800, 500, true);
+       
+              handler.setScene("/singlemode/SingleMode.fxml", "Single Mode", 800, 500, true);
+        
     }
 }

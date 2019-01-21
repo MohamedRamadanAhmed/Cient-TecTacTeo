@@ -101,7 +101,12 @@ public class SignupController implements Initializable {
 
     @FXML
     private void handlePlayNowAction(ActionEvent event) throws IOException {
-        handler.setScene("/singlemode/SingleMode.fxml", "Single Mode", 800, 500, true);
+       
+      
+            handler.setScene("/singlemode/SingleMode.fxml", "Single Mode", 800, 500, true);
+        
+
+      
     }
 
 }

@@ -101,7 +101,6 @@ public class SingleModeController implements Initializable {
     @FXML
     private void goOnlineAction(ActionEvent event) throws IOException {
         try {
-
             userName = "";
             game.setScore(0);
             game.setGameNum(0);

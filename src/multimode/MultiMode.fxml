@@ -53,6 +53,7 @@
                     </children>
                 </AnchorPane>
                 <Button fx:id="record" layoutX="328.0" layoutY="98.0" mnemonicParsing="false" onAction="#recordAction" prefHeight="25.0" prefWidth="114.0" style="-fx-background-radius: 20;" text="Record" />
+                
                 <Button fx:id="btnLogout" layoutX="331.0" layoutY="60.0" mnemonicParsing="false" onAction="#logOutAction" prefHeight="25.0" prefWidth="109.0" style="-fx-background-radius: 20;" text="Logot" />
                 <ImageView fx:id="imgViewrefresh" fitHeight="68.0" fitWidth="40.0" layoutX="397.0" layoutY="133.0" onMouseClicked="#imgViewAction" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -64,6 +65,7 @@
                   <Font size="15.0" />
                </font>
             </Label>
+            <Button fx:id="btnEndGame" layoutX="164.0" layoutY="70.0" mnemonicParsing="false" onAction="#btnEndGameAction" prefHeight="25.0" prefWidth="109.0" style="-fx-background-radius: 20;" text="End Game" />
             </children>
         </AnchorPane>
     </right>
