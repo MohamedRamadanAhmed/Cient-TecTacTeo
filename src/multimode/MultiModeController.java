@@ -946,11 +946,12 @@ public class MultiModeController implements Initializable {
     @FXML
     void btnEndGameAction(ActionEvent event) {
         try {
-            //end game
-// update other player score (not done)
+          //end game
+          //update other player score (not done)
             accountHandler.closeGame(Utils.getCurrentUser(), Utils.getlPayer());
-        } catch (RemoteException ex) {
-            Logger.getLogger(MultiModeController.class.getName()).log(Level.SEVERE, null, ex);
+            accountHandler.increaseWinnerScore(Utils.getlPayer().getEmailAddress());
+        } catch (Exception ex) {
+         System.out.println("remote ex");
         }
 
     }
