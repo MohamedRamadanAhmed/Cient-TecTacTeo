@@ -76,10 +76,13 @@ public class SingleModeController implements Initializable {
         game = new TicTacTocGame(this);
         try {
             while (!(Utils.validateName(userName))) {
-                userName = JOptionPane.showInputDialog("please enter your name : ");
+                
+                userName = JOptionPane.showInputDialog(null,"please enter your name : ","TicTacToe",JOptionPane.INFORMATION_MESSAGE);
             }
-        } catch (NullPointerException ex) {
-          
+        } 
+        catch (NullPointerException ex) 
+        {
+            
         }
         username.setText(userName);
         lblCell1.setOnMouseClicked((event) -> game.gameStartSingleMode(lblCell1, 0));

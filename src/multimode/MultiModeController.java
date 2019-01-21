@@ -140,7 +140,7 @@ public class MultiModeController implements Initializable {
                     public void run() {
 //                        Utils.showAlert(Alert.AlertType.CONFIRMATION, myGridPane.getScene().getWindow(), " ", "player "
 //                                + Utils.getlPayer().getUserName() + "accept playing ith you");
-                        JOptionPane.showConfirmDialog(null, "ConnectException");
+                        JOptionPane.showMessageDialog(null, "Game starts","TicTacToe",JOptionPane.INFORMATION_MESSAGE);
                         myGridPane.setVisible(true);
                     }
                 });
@@ -218,7 +218,7 @@ public class MultiModeController implements Initializable {
 
     void showrefusedMessahe() {
         JOptionPane.showMessageDialog(null, "sorry player" + Utils.getlPayer().getUserName()
-                + "refused to play with you ");
+                + "refused to play with you "  ,"TicTacToe",JOptionPane.INFORMATION_MESSAGE);
 
         listView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -442,7 +442,7 @@ public class MultiModeController implements Initializable {
 
                                 System.out.println(".run()");
                                 Utils.logout = false;
-                                JOptionPane.showMessageDialog(null, "second player terminated the game ");
+                                JOptionPane.showMessageDialog(null, "second player terminated the game ","TicTacToe",JOptionPane.INFORMATION_MESSAGE);
 
                             }
 
@@ -675,7 +675,7 @@ public class MultiModeController implements Initializable {
                     @Override
                     public void run() {
                         recordObj.marchal();
-                        int recordResult = JOptionPane.showConfirmDialog(null, msg + " replay the last game ?");
+                        int recordResult = JOptionPane.showConfirmDialog(null, msg + " replay the last game ?","TicTacToe",JOptionPane.INFORMATION_MESSAGE);
                         if (recordResult == 0) {
 
                             displayRecord();
@@ -746,7 +746,7 @@ public class MultiModeController implements Initializable {
     public boolean checkWinner() {
         if (counter >= 8) {
             recordObj.marchal();
-            newGame("no one win");
+            newGame("no one win!");
 
             return true;
         } else {
@@ -759,7 +759,7 @@ public class MultiModeController implements Initializable {
                     || (game_arr[1] == 1 && game_arr[4] == 1 && game_arr[7] == 1)
                     || (game_arr[2] == 1 && game_arr[5] == 1 && game_arr[8] == 1)) {
                 recordObj.marchal();
-                newGame("you win");
+                newGame("congratulation you win! ");
                 try {
                     accountHandler.increaseWinnerScore(Utils.getCurrentUser().getEmailAddress());
                 } catch (RemoteException ex) {
@@ -778,7 +778,7 @@ public class MultiModeController implements Initializable {
                     || (game_arr[2] == 2 && game_arr[5] == 2 && game_arr[8] == 2)) {
                 System.out.println("sorry you lose ");
                 recordObj.marchal();
-                newGame("you lose");
+                newGame("you lose!");
                 try {
                     accountHandler.increaseWinnerScore(Utils.getlPayer().getEmailAddress());
                 } catch (RemoteException ex) {

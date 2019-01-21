@@ -168,7 +168,7 @@ public class TicTacTocGame {
             gameNum++;
             tcUI.userScoreLbl.setText(Score + "");
             tcUI.numMatch.setText(gameNum + "");
-            newGame();
+            newGame("congratulation you won!");
             return true;
         } else {
             if ((game_arr[0] == 2 && game_arr[1] == 2 && game_arr[2] == 2)
@@ -185,7 +185,7 @@ public class TicTacTocGame {
                 gameNum++;
                 tcUI.userScoreLbl.setText(Score + "");
                 tcUI.numMatch.setText(gameNum + "");
-                newGame();
+                newGame("you lose");
                 return true;
             }
         }
@@ -511,7 +511,7 @@ public class TicTacTocGame {
                             if (counter == 9) {
                                 gameNum++;
                                 recordObj.marchal();
-                                newGame();
+                                newGame("No one win");
 
                             }
                         }
@@ -522,7 +522,7 @@ public class TicTacTocGame {
         }
     }
 
-    public void newGame() {
+    public void newGame(String msg) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -535,7 +535,7 @@ public class TicTacTocGame {
                     @Override
                     public void run() {
                         recordObj.marchal();
-                        int recordResult = JOptionPane.showConfirmDialog(null, "replay the last game ?");
+                        int recordResult = JOptionPane.showConfirmDialog(null,msg+"! replay this game ?","TicTacToe",JOptionPane.INFORMATION_MESSAGE);
                         if (recordResult == 0) {
 
                             displayRecord();
