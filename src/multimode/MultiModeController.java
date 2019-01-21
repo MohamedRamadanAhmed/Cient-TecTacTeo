@@ -41,7 +41,6 @@ import javax.swing.JOptionPane;
 import main.XMLRecord;
 import client.ClintImp;
 import client.TicTacTocGame;
-import javafx.scene.control.Alert;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import utils.SceneHandler;
@@ -533,6 +532,44 @@ public class MultiModeController implements Initializable {
         pane.add(btn, 0, 1);
         listView.setCellFactory(param -> new UserListAdapter());
         myGridPane.setVisible(false);
+
+        listView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+                    if (mouseEvent.getClickCount() == 2) {
+                        try {
+
+                            Utils.isMyTurn = true;
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+
+                                    Platform.runLater(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            if (Utils.isPlaying) {
+                                                myGridPane.setVisible(true);
+                                            } else {
+                                            }
+
+                                        }
+                                    });
+
+                                }
+                            }).start();
+                            model = listView.getSelectionModel().getSelectedItem();
+                            Utils.setPlayer(model);
+                            Utils.setSymbol("x");
+                            listView.setOnMouseClicked(null);
+                            MyControoler.requestGame(Utils.getlPayer());
+                        } catch (RemoteException | NotBoundException | NullPointerException ex) {
+                            util.missingConnection();
+                        }
+                    }
+                }
+            }
+        });
 
     }
 

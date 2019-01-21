@@ -33,10 +33,10 @@ public class SceneHandler {
         Scene scene = new Scene(root);
         stage.setTitle(scenceTitle);
         stage.getIcons().add(new Image("images/tic-tac-toe.png"));
-        stage.setResizable(isResizable);
+        stage.setResizable(false);
         stage.setScene(scene);
     }
-    
+
     public void setScene(Parent parent) throws IOException {
         Scene scene = new Scene(parent);
         stage.setTitle("Tic Tac Toe");

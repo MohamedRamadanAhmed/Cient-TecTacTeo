@@ -47,7 +47,7 @@ public class SignupController implements Initializable {
     }
 
     @FXML
-    void signupAction(ActionEvent event) {
+    void signupAction(ActionEvent event) throws IOException {
         System.out.println("sin up was clicked ");
         try {
             if (!(Utils.validateName(txtUserName.getText()))) {
@@ -82,12 +82,13 @@ public class SignupController implements Initializable {
                 Utils.showAlert(Alert.AlertType.ERROR, btnSignUp.getScene().getWindow(), "sin up error", "this email address already exists ");
             }
         } catch (RemoteException ex) {
-            ex.printStackTrace();
+            Utils.showAlert(Alert.AlertType.ERROR, btnLogin.getScene().getWindow(), "server is un available", "try again later");
+
         } catch (IOException ex) {
-            ex.printStackTrace();
+            Utils.showAlert(Alert.AlertType.ERROR, btnLogin.getScene().getWindow(), "server is un available", "try again later");
 
         } catch (NotBoundException ex) {
-            ex.printStackTrace();
+            Utils.showAlert(Alert.AlertType.ERROR, btnLogin.getScene().getWindow(), "server is un available", "try again later");
 
         }
 
@@ -101,12 +102,9 @@ public class SignupController implements Initializable {
 
     @FXML
     private void handlePlayNowAction(ActionEvent event) throws IOException {
-       
-      
-            handler.setScene("/singlemode/SingleMode.fxml", "Single Mode", 800, 500, true);
-        
 
-      
+        handler.setScene("/singlemode/SingleMode.fxml", "Single Mode", 800, 500, true);
+
     }
 
 }

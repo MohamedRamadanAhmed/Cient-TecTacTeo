@@ -91,22 +91,21 @@ public class MyControoler {
 
                             if ((accountHandler = Utils.establishConnection()) != null && selectedItem != null) {
                                 try {
-                                   if( accountHandler.requestGame(Utils.getCurrentUser(), selectedItem)){
-                                       
-                                   }
-                                   else{
-                                       MultiModeController.getInstance().showrefusedMessahe();
-                                   }
+                                    if (accountHandler.requestGame(Utils.getCurrentUser(), selectedItem)) {
+
+                                    } else {
+                                        MultiModeController.getInstance().showrefusedMessahe();
+                                    }
                                 } catch (NullPointerException ex) {
                                     System.out.println("NullPointerException");
-                                    JOptionPane.showConfirmDialog(null, "server un availale");
+                                    JOptionPane.showMessageDialog(null, " some thing wrong");
                                 } catch (ConnectException ex) {
                                     System.out.println("connection exception");
 
-                                    JOptionPane.showConfirmDialog(null, "ConnectException");
+                                    JOptionPane.showMessageDialog(null, "ConnectException");
                                 } catch (RemoteException ex) {
                                     System.out.println("connection exception");
-                                    JOptionPane.showConfirmDialog(null, "ConnectException");
+                                    JOptionPane.showMessageDialog(null, "ConnectException");
 
                                 }
 

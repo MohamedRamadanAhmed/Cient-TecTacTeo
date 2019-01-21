@@ -77,6 +77,9 @@ public class LoginController implements Initializable {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
             Utils.showAlert(Alert.AlertType.ERROR, btnLogin.getScene().getWindow(), "server is un available", "try again later");
 
+        } catch (NullPointerException ex) {
+            Utils.showAlert(Alert.AlertType.ERROR, btnLogin.getScene().getWindow(), "server is un available", "try again later");
+
         }
     }
 
@@ -87,8 +90,8 @@ public class LoginController implements Initializable {
 
     @FXML
     private void handlePlayNowAction(ActionEvent event) throws IOException {
-       
-              handler.setScene("/singlemode/SingleMode.fxml", "Single Mode", 800, 500, true);
-        
+
+        handler.setScene("/singlemode/SingleMode.fxml", "Single Mode", 800, 500, true);
+
     }
 }
