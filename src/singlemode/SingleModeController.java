@@ -17,7 +17,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javax.swing.JOptionPane;
 import client.TicTacTocGame;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextInputDialog;
 import utils.SceneHandler;
 import utils.Utils;
 
@@ -74,8 +77,16 @@ public class SingleModeController implements Initializable {
 
         game = new TicTacTocGame(this);
         try {
+            Alert alert;
             while (!(Utils.validateName(userName))) {
-                userName = JOptionPane.showInputDialog("please enter your name : ");
+                TextInputDialog dialog = new TextInputDialog("walter");
+                dialog.setTitle("Welcom To TecTacToe Game");
+                dialog.setHeaderText("Look, a Text Input Dialog");
+                    dialog.setContentText("Please enter your name:");
+                    dialog.showAndWait();
+                 // alert = new Alert(Alert.AlertType.INFORMATION, "Enter Your Name ", ButtonType.OK,ButtonType.CANCEL);
+                       // alert.showAndWait();
+                userName = dialog.getEditor().getText();// JOptionPane.showInputDialog("please enter your name : ");
             }
         } catch (NullPointerException ex) {
 
@@ -184,12 +195,7 @@ public class SingleModeController implements Initializable {
 
     @FXML
     void playHard(ActionEvent event) {
-        if (RadioButtonHard.isSelected()) {
-            RadioButtonHard.setText("hard mode");
-        } else {
-            RadioButtonHard.setText("easy mode");
-        }
-
+        
     }
 
     public void clearGrid() {

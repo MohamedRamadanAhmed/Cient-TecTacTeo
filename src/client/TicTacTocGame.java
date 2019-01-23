@@ -679,7 +679,7 @@ public class TicTacTocGame {
                     if (!winFlag) {
                         if (getCounter() < 9) {
                             //computerAction(getRandom());
-                            System.out.println("client");
+                            System.out.println("client Tic");
                             computerAction(positionsOfTwoPlayers());
                             checkWining();
                         } else {

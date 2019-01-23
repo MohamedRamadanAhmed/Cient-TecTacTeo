@@ -11,10 +11,14 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.media.AudioClip;
+import javafx.util.Duration;
 import javax.swing.JOptionPane;
 import multimode.MultiModeController;
 import multimode.MyControoler;
+import org.controlsfx.control.Notifications;
 import utils.SceneHandler;
 
 import utils.Utils;
@@ -97,5 +101,26 @@ public class ClintImp extends UnicastRemoteObject implements ClientInterface {
             }
         });
         System.out.println("client.ClintImp.serverLogOut()");
+    }
+
+    @Override
+    public void refreshOnlineUsersList(UserModel user) throws RemoteException {
+        MultiModeController multiModeController = MultiModeController.getInstance();
+        multiModeController.onlineUsersList.add(user);
+        multiModeController.refreshListt();
+        Platform.runLater(() -> {
+            Notifications notificationBuilder = Notifications.create()
+                    .title("Online Player")
+                    .text(user.getUserName() + "Just logged in")
+                    .darkStyle()
+                    .graphic(null)
+                    .hideAfter(Duration.seconds(5))
+                    .position(Pos.BOTTOM_RIGHT);
+           AudioClip note = new AudioClip(getClass().getResource("/images/definite.mp3").toString());
+           note.play();
+            notificationBuilder.showInformation();
+        });
+        
+      // Platform.runLater(runnable);
     }
 }

@@ -83,9 +83,9 @@ public class MultiModeController implements Initializable {
     @FXML
     private Button back;
     @FXML
-    public GridPane myGridPane;
+    public  GridPane myGridPane;
     @FXML
-    private JFXListView<UserModel> listView;
+    public  JFXListView<UserModel> listView;
     @FXML
     private TextArea txtAreaChat;
     @FXML
@@ -110,14 +110,15 @@ public class MultiModeController implements Initializable {
     Utils util = new Utils();
     public ObservableList<UserModel> list;
     UserModel model;
-    List<UserModel> onlineUsersList;
+   public List<UserModel> onlineUsersList;
     MyControoler controoler;
 
-    private UserAccountHandler accountHandler;
+    public UserAccountHandler accountHandler;
     private SceneHandler handler;
-    static MultiModeController m;
+    public static MultiModeController m;
     int counter = 0;
 
+ 
     public MultiModeController() {
         try {
             m = this;
@@ -453,7 +454,7 @@ public class MultiModeController implements Initializable {
             }).start();
 
             record.setVisible(false);
-            onlineUsersList = accountHandler.getOnlinePlayer();
+            onlineUsersList = accountHandler.getOnlinePlayers();
             list = FXCollections.observableArrayList(onlineUsersList);
             txtAreaChat.setEditable(false);
             for (int i = 0; i < list.size(); i++) {
@@ -507,7 +508,7 @@ public class MultiModeController implements Initializable {
     void btnRefreshAction(MouseEvent event) {
 
         try {
-            onlineUsersList = accountHandler.getOnlinePlayer();
+            onlineUsersList = accountHandler.getOnlinePlayers();
             list = FXCollections.observableArrayList(onlineUsersList);
             for (int i = 0; i < list.size(); i++) {
                 if (list.get(i).getEmailAddress().equals(Utils.getCurrentUser().getEmailAddress())) {
@@ -524,7 +525,7 @@ public class MultiModeController implements Initializable {
             System.err.println(ex.getMessage());
         }
         listView.setItems(list);
-        listView.getItems().remove(Utils.getCurrentUser());
+       // listView.getItems().remove(Utils.getCurrentUser());
         GridPane pane = new GridPane();
         Label name = new Label("gg");
         Button btn = new Button("dd");
@@ -795,7 +796,7 @@ public class MultiModeController implements Initializable {
 
         try {
             UserAccountHandler accountHandler1 = Utils.establishConnection();
-            onlineUsersList = accountHandler1.getOnlinePlayer();
+            onlineUsersList = accountHandler1.getOnlinePlayers();
             list = FXCollections.observableArrayList(onlineUsersList);
 
             //remove current user from list
@@ -954,5 +955,35 @@ public class MultiModeController implements Initializable {
          System.out.println("remote ex");
         }
 
+    }
+    
+    public void refreshListt()
+    {
+       try {
+            onlineUsersList = accountHandler.getOnlinePlayers();
+            list = FXCollections.observableArrayList(onlineUsersList);
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getEmailAddress().equals(Utils.getCurrentUser().getEmailAddress())) {
+                    System.out.println(list.get(i).getEmailAddress());
+
+                    list.remove(i);
+                }
+                System.out.println("i = " + i);
+            }
+
+        } catch (RemoteException ex) {
+            System.err.println(ex.getMessage());
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+        }
+        listView.setItems(list);
+       // listView.getItems().remove(Utils.getCurrentUser());
+        GridPane pane = new GridPane();
+        Label name = new Label("gg");
+        Button btn = new Button("dd");
+        pane.add(name, 0, 0);
+        pane.add(btn, 0, 1);
+        listView.setCellFactory(param -> new UserListAdapter());
+        myGridPane.setVisible(false);
     }
 }
